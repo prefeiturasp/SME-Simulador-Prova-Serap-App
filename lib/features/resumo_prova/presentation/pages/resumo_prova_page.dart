@@ -23,6 +23,9 @@ class _ResumoProvaPageState extends State<ResumoProvaPage> {
           padding: getPadding(),
           child: Column(
             children: [
+              const SizedBox(
+                height: 16,
+              ),
               Text(
                 'Resumo da Prova',
                 style: TextStyle(

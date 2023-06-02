@@ -21,7 +21,7 @@ class _LandingPageState extends State<LandingPage> {
       if (state is Authenticated) {
         sl<AppRouter>().replaceAll([ResumoProvaRoute()]);
       } else {
-        sl<AppRouter>().replaceAll([CodigoRoute()]);
+        sl<AppRouter>().replaceAll([LoginRoute()]);
       }
     });
     super.initState();

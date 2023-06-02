@@ -14,7 +14,6 @@ class AppRouter extends $AppRouter {
     AutoRoute(page: ResumoProvaRoute.page, path: '/resumo'),
 
     // Auth
-    AutoRoute(page: CodigoRoute.page, path: '/codigo'),
     AutoRoute(page: LoginRoute.page, path: '/login/:codigo'),
     AutoRoute(page: LandingRoute.page, path: '/'),
     RedirectRoute(path: '*', redirectTo: '/'),

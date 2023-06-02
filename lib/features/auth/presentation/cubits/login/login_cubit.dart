@@ -24,10 +24,6 @@ class LoginCubit extends Cubit<LoginState> {
     ));
 
     if (codigo == null || codigo.isEmpty) {
-      emit(state.copyWith(
-        pageStatus: PageStatus.emptyCodigo,
-        exceptionError: "Erro ao obter codigo de autenticação",
-      ));
       return;
     }
 
