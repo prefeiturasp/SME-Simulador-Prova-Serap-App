@@ -1,11 +1,13 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:serap_simulador/app/router/app_router.gr.dart';
 import 'package:serap_simulador/features/auth/data/datasources/autenticacao_local_datasource.dart';
 import 'package:serap_simulador/gen/assets.gen.dart';
 import 'package:serap_simulador/injector.dart';
 
 import '../../../core/utils/colors.dart';
+import '../../../features/auth/presentation/cubits/auth/auth_cubit.dart';
 
 class Cabecalho extends StatelessWidget implements PreferredSizeWidget {
   final String titulo;
@@ -33,9 +35,22 @@ class Cabecalho extends StatelessWidget implements PreferredSizeWidget {
             Row(
               children: [
                 _buildBackButton(context),
-                Text(
-                  titulo,
-                  style: TextStyle(fontSize: 16),
+                BlocBuilder<AuthCubit, AuthState>(
+                  builder: (context, state) {
+                    String nome = '';
+
+                    state.mapOrNull(
+                      authenticated: (value) {
+                        var nomeCompleto = value.usuario.nome.split(' ');
+                        nome = '${nomeCompleto.first} ${nomeCompleto.last}';
+                      },
+                    );
+
+                    return Text(
+                      nome,
+                      style: TextStyle(fontSize: 16),
+                    );
+                  },
                 ),
               ],
             ),

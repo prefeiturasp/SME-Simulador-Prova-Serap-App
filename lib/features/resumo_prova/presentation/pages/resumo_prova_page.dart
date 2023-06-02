@@ -1,6 +1,9 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:serap_simulador/shared/presentation/widgets/cabecalho.dart';
+
+import '../../../../core/utils/colors.dart';
 
 @RoutePage()
 class ResumoProvaPage extends StatefulWidget {
@@ -15,7 +18,33 @@ class _ResumoProvaPageState extends State<ResumoProvaPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: Cabecalho('Listagem de Prova'),
-      body: Container(),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: getPadding(),
+          child: Column(
+            children: [
+              Text(
+                'Resumo da Prova',
+                style: TextStyle(
+                  color: TemaUtil.preto,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
+  }
+
+  getPadding([EdgeInsets mobile = const EdgeInsets.all(16)]) {
+    if (kIsWeb) {
+      return EdgeInsets.symmetric(
+        horizontal: (MediaQuery.of(context).size.width - 600 - (24 * 2)) / 2,
+      );
+    } else {
+      return mobile;
+    }
   }
 }
