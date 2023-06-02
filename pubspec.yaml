@@ -1,5 +1,5 @@
 name: serap_simulador
-description: A Very Good Project created by Very Good CLI.
+description: Simulador do SERAp Estudantes
 version: 1.0.0+1
 publish_to: none
 
@@ -59,7 +59,7 @@ dependencies:
 
   # Requisições
   freezed_annotation: ^2.2.0
-  json_annotation: ^4.8.0
+  json_annotation: ^4.8.1
   jwt_decode: ^0.3.1
   retrofit: ^4.0.1
   #-Dio

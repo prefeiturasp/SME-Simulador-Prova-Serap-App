@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:serap_simulador/features/auth/presentation/cubits/login/login_cubit.dart';
 import 'package:serap_simulador/shared/presentation/widgets/rodape.dart';
 
+import '../../../../app/router/app_router.gr.dart';
 import '../../../../core/utils/colors.dart';
 
 @RoutePage()
@@ -29,13 +30,38 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(height: 44),
-            BlocBuilder<LoginCubit, LoginState>(
+            Visibility(
+              visible: widget.codigo == null,
+              child: Center(
+                child: Container(
+                  constraints: BoxConstraints(maxWidth: 600),
+                  child: Column(
+                    children: [
+                      Text(
+                        'Código de Autenticação',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      TextField(
+                        onSubmitted: (value) {
+                          context.read<LoginCubit>().loginByCode(value);
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            BlocConsumer<LoginCubit, LoginState>(
+              listener: (context, state) {
+                if (state.pageStatus == PageStatus.sucesso) {
+                  context.router.replaceAll([ResumoProvaRoute()]);
+                }
+              },
               builder: (context, state) {
                 if (state.pageStatus.isLoading) {
                   return Center(

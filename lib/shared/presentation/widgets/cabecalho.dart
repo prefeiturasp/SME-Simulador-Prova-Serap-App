@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:serap_simulador/app/router/app_router.gr.dart';
 import 'package:serap_simulador/features/auth/data/datasources/autenticacao_local_datasource.dart';
-import 'package:serap_simulador/gen/assets.gen.dart';
 import 'package:serap_simulador/injector.dart';
 
 import '../../../core/utils/colors.dart';
@@ -81,7 +80,8 @@ class Cabecalho extends StatelessWidget implements PreferredSizeWidget {
         onPressed: () {
           Navigator.maybePop(context);
         },
-        icon: Assets.icons.arrowBack.svg(width: 16),
+        iconSize: 16,
+        icon: Icon(Icons.arrow_back),
       );
     }
 
