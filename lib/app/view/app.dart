@@ -1,0 +1,103 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:serap_simulador/app/router/app_router.dart';
+import 'package:serap_simulador/core/extensions/context_extensions.dart';
+import 'package:serap_simulador/core/utils/colors.dart';
+import 'package:serap_simulador/core/utils/constants.dart';
+import 'package:serap_simulador/features/auth/presentation/cubits/auth/auth_cubit.dart';
+import 'package:serap_simulador/features/auth/presentation/cubits/login/login_cubit.dart';
+import 'package:serap_simulador/injector.dart';
+import 'package:serap_simulador/l10n/l10n.dart';
+import 'package:serap_simulador/shared/flash/presentation/blocs/cubit/flash_cubit.dart';
+
+class App extends StatelessWidget {
+  const App({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => sl<AuthCubit>()),
+        BlocProvider(create: (context) => sl<FlashCubit>()),
+        BlocProvider(create: (context) => sl<LoginCubit>()),
+      ],
+      child: MultiBlocListener(
+        listeners: [
+          BlocListener<FlashCubit, FlashState>(
+            listener: (context, state) {
+              state.when(
+                disappeared: () => null,
+                appeared: (message) => context.showSnackbar(
+                  message: message,
+                ),
+              );
+            },
+          ),
+        ],
+        child: ScreenUtilInit(
+          designSize: const Size(ScreenUtilSize.width, ScreenUtilSize.height),
+          minTextAdapt: true,
+          splitScreenMode: true,
+          builder: (context, child) {
+            return MaterialApp.router(
+              scaffoldMessengerKey: rootScaffoldMessengerKey,
+              localizationsDelegates: const [
+                AppLocalizations.delegate,
+                GlobalMaterialLocalizations.delegate,
+              ],
+              supportedLocales: AppLocalizations.supportedLocales,
+              routerConfig: sl<AppRouter>().config(),
+              builder: (context, widget) {
+                return Theme(
+                  data: ThemeData(
+                    scaffoldBackgroundColor: TemaUtil.corDeFundo,
+                    fontFamily: GoogleFonts.poppins().fontFamily,
+                    colorScheme: ColorScheme.fromSwatch(
+                      accentColor: AppColor.primary,
+                    ),
+                    primaryColor: TemaUtil.amarelo01,
+                    appBarTheme: AppBarTheme(
+                      iconTheme: IconThemeData(color: TemaUtil.preto01),
+                      foregroundColor: TemaUtil.branco,
+                      color: TemaUtil.appBar,
+                    ),
+                    textTheme: Theme.of(context).textTheme.apply(
+                          bodyColor: TemaUtil.preto01,
+                          displayColor: TemaUtil.preto01,
+                          fontSizeFactor: 1.sp,
+                        ),
+                    textButtonTheme: TextButtonThemeData(
+                      style: TextButton.styleFrom(
+                        backgroundColor: TemaUtil.amarelo01,
+                        foregroundColor: TemaUtil.preto02,
+                        textStyle: TextStyle(
+                          fontSize: 14,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18.0),
+                        ),
+                        minimumSize: Size(MediaQuery.of(context).size.width - 20, 40),
+                      ),
+                    ),
+                    buttonTheme: ButtonThemeData(
+                      buttonColor: Colors.yellow,
+                      textTheme: ButtonTextTheme.primary,
+                      colorScheme: Theme.of(context).colorScheme.copyWith(secondary: Colors.white),
+                    ),
+                  ),
+                  child: MediaQuery(
+                    data: MediaQuery.of(context).copyWith(textScaleFactor: 1.sp),
+                    child: widget!,
+                  ),
+                );
+              },
+            );
+          },
+        ),
+      ),
+    );
+  }
+}
