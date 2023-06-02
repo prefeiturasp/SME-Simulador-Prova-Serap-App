@@ -67,6 +67,7 @@ class App extends StatelessWidget {
                     textTheme: Theme.of(context).textTheme.apply(
                           bodyColor: TemaUtil.preto01,
                           displayColor: TemaUtil.preto01,
+                          fontFamily: GoogleFonts.poppins().fontFamily,
                           fontSizeFactor: 1.sp,
                         ),
                     textButtonTheme: TextButtonThemeData(
