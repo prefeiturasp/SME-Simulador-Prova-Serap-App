@@ -16,8 +16,8 @@ abstract class QuestaoCompletaModel with _$QuestaoCompletaModel {
 
   factory QuestaoCompletaModel({
     required int id,
-    @JsonKey(name: 'textoBase') String? titulo,
-    @JsonKey(name: 'enunciado') required String descricao,
+    String? titulo,
+    required String descricao,
     required int ordem,
     required EnumTipoQuestao tipo,
     required int quantidadeAlternativas,
