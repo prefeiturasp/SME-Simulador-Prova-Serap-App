@@ -10,8 +10,8 @@ abstract class ProvaResumoModel with _$ProvaResumoModel {
 
   factory ProvaResumoModel({
     required int id,
-    String? titulo,
-    String? descricao,
+    @JsonKey(name: 'textoBase') String? titulo,
+    @JsonKey(name: 'enunciado') required String descricao,
     required String caderno,
     required int ordem,
   }) = _ProvaResumoModel;
@@ -20,10 +20,10 @@ abstract class ProvaResumoModel with _$ProvaResumoModel {
   ProvaResumo toDomain() {
     return ProvaResumo(
       id: id,
-      caderno: caderno,
-      ordem: ordem,
       descricao: descricao,
       titulo: titulo,
+      caderno: caderno,
+      ordem: ordem,
     );
   }
 }
