@@ -26,7 +26,9 @@ pipeline {
           withCredentials([ file(credentialsId: "simulador-prova-serap-front-environment-${branchname}", variable: 'ENVS')]) {
             script {
               sh 'if [ -d "envs" ]; then rm -f envs; fi'
-              sh 'mv ${ENVS} .env && . $(realpath .env)'
+              sh "sed 's/^export //' envs > .env"
+              sh 'if [ -d "envs" ]; then rm -f envs; fi'
+              sh '. $(realpath .env)'
               sh 'echo $ENVIRON'
               def environment = sh(script: 'echo $ENVIRON', returnStdout: true).trim()
               imagename1 = "registry.sme.prefeitura.sp.gov.br/${env.branchname}/sme-simulador-prova-serap-front"
@@ -59,6 +61,7 @@ pipeline {
     post {
       always { 
         sh('if [ -f '+"$home"+'/.kube/config ];then rm -f '+"$home"+'/.kube/config; fi')
+        sh 'if [ -d "envs" ]; then rm -f envs; fi'
         sh('if [ -f .env ];then rm -f .env; fi')
       }
     }
