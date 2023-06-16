@@ -25,9 +25,10 @@ pipeline {
         steps {
           withCredentials([ file(credentialsId: "simulador-prova-serap-front-environment-${branchname}", variable: 'ENVS')]) {
             script {
-              def environment = sh(script: 'echo $ENVIRON', returnStdout: true).trim()
               sh 'if [ -d "envs" ]; then rm -f envs; fi'
               sh 'mv ${ENVS} .env && . $(realpath .env)'
+              sh 'echo $ENVIRON'
+              def environment = sh(script: 'echo $ENVIRON', returnStdout: true).trim()
               imagename1 = "registry.sme.prefeitura.sp.gov.br/${env.branchname}/sme-simulador-prova-serap-front"
               dockerImage1 = docker.build(imagename1, " --build-arg ENVIRONMENT=${environment} -f Dockerfile .")
               docker.withRegistry( 'https://registry.sme.prefeitura.sp.gov.br', registryCredential ) {
