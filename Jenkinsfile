@@ -26,6 +26,7 @@ pipeline {
           withCredentials([ file(credentialsId: "simulador-prova-serap-front-environment-${branchname}", variable: 'ENVS')]) {
             script {
               sh 'if [ -d "envs" ]; then rm -f envs; fi'
+              sh 'cp ${ENVS} envs'
               sh "sed 's/^export //' envs > .env"
               sh 'if [ -d "envs" ]; then rm -f envs; fi'
               sh '. $(realpath .env)'

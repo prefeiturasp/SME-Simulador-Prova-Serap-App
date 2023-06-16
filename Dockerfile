@@ -7,12 +7,12 @@ COPY . .
 ARG ENVIRONMENT
 RUN flutter pub get
 RUN flutter pub run build_runner build --delete-conflicting-outputs
-RUN flutter build web --web-renderer html --profile -t lib/main_$ENVIRONMENT.dart
+RUN flutter build web --web-renderer html  --base-href '/simulador/' --profile -t lib/main_$ENVIRONMENT.dart
 
 FROM nginx:1.20.1-alpine
 
-COPY configuracoes/default.conf /etc/nginx/conf.d/
+#COPY configuracoes/default.conf /etc/nginx/conf.d/
 #COPY --from=build /usr/src/app/config /usr/share/nginx/html/config
-COPY --from=build /usr/src/app/build/web /usr/share/nginx/html
+COPY --from=build /usr/src/app/build/web /usr/share/nginx/html/simulador
 
 EXPOSE 80
