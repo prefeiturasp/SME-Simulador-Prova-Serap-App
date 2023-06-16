@@ -21,6 +21,24 @@ pipeline {
             steps { checkout scm }            
         }
 
+      stage('Build Dev') {when { anyOf {  branch 'develop'; } }
+        steps {
+          withCredentials([ file(credentialsId: "simulador-prova-serap-front-environment-${branchname}", variable: 'ENVS')]) {
+            script {
+              sh 'if [ -d "envs" ]; then rm -f envs; fi'
+              sh 'cp ${ENVS} .env'
+              sh 'if [ -d "envs" ]; then rm -f envs; fi'
+              imagename1 = "registry.sme.prefeitura.sp.gov.br/${env.branchname}/sme-simulador-prova-serap-front"
+              dockerImage1 = docker.build(imagename1, " --build-arg ENVIRONMENT=development -f Dockerfile .")
+              docker.withRegistry( 'https://registry.sme.prefeitura.sp.gov.br', registryCredential ) {
+              dockerImage1.push()
+              }
+              sh "docker rmi $imagename1"
+            }
+          }
+        }
+      }
+
       stage('Build Hom') {when { anyOf {  branch 'release'; } }
         steps {
           withCredentials([ file(credentialsId: "simulador-prova-serap-front-environment-${branchname}", variable: 'ENVS')]) {
@@ -30,6 +48,24 @@ pipeline {
               sh 'if [ -d "envs" ]; then rm -f envs; fi'
               imagename1 = "registry.sme.prefeitura.sp.gov.br/${env.branchname}/sme-simulador-prova-serap-front"
               dockerImage1 = docker.build(imagename1, " --build-arg ENVIRONMENT=staging -f Dockerfile .")
+              docker.withRegistry( 'https://registry.sme.prefeitura.sp.gov.br', registryCredential ) {
+              dockerImage1.push()
+              }
+              sh "docker rmi $imagename1"
+            }
+          }
+        }
+      }
+
+        stage('Build Prod') {when { anyOf {  branch 'master'; } }
+        steps {
+          withCredentials([ file(credentialsId: "simulador-prova-serap-front-environment-${branchname}", variable: 'ENVS')]) {
+            script {
+              sh 'if [ -d "envs" ]; then rm -f envs; fi'
+              sh 'cp ${ENVS} .env'
+              sh 'if [ -d "envs" ]; then rm -f envs; fi'
+              imagename1 = "registry.sme.prefeitura.sp.gov.br/${env.branchname}/sme-simulador-prova-serap-front"
+              dockerImage1 = docker.build(imagename1, " --build-arg ENVIRONMENT=production -f Dockerfile .")
               docker.withRegistry( 'https://registry.sme.prefeitura.sp.gov.br', registryCredential ) {
               dockerImage1.push()
               }
