@@ -21,25 +21,20 @@ pipeline {
             steps { checkout scm }            
         }
 
-      stage('Build') {when { anyOf {  branch 'master'; branch 'main'; branch 'development'; branch 'release'; branch 'release-r2'; } }
+      stage('Build Hom') {when { anyOf {  branch 'release'; } }
         steps {
           withCredentials([ file(credentialsId: "simulador-prova-serap-front-environment-${branchname}", variable: 'ENVS')]) {
             script {
               sh 'if [ -d "envs" ]; then rm -f envs; fi'
-              sh 'cp ${ENVS} envs'
-              sh '. $(realpath envs)'
-              sh "sed 's/^export //' envs > .env"
+              sh 'cp ${ENVS} .env'
               sh 'if [ -d "envs" ]; then rm -f envs; fi'
-              sh 'echo $ENVIRON'
-              def environment = sh(script: 'echo $ENVIRON', returnStdout: true).trim()
               imagename1 = "registry.sme.prefeitura.sp.gov.br/${env.branchname}/sme-simulador-prova-serap-front"
-              dockerImage1 = docker.build(imagename1, " --build-arg ENVIRONMENT=${environment} -f Dockerfile .")
+              dockerImage1 = docker.build(imagename1, " --build-arg ENVIRONMENT=release -f Dockerfile .")
               docker.withRegistry( 'https://registry.sme.prefeitura.sp.gov.br', registryCredential ) {
-                dockerImage1.push()
+              dockerImage1.push()
               }
               sh "docker rmi $imagename1"
             }
-
           }
         }
       }
