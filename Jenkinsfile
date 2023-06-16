@@ -29,7 +29,7 @@ pipeline {
               sh 'cp ${ENVS} .env'
               sh 'if [ -d "envs" ]; then rm -f envs; fi'
               imagename1 = "registry.sme.prefeitura.sp.gov.br/${env.branchname}/sme-simulador-prova-serap-front"
-              dockerImage1 = docker.build(imagename1, " --build-arg ENVIRONMENT=release -f Dockerfile .")
+              dockerImage1 = docker.build(imagename1, " --build-arg ENVIRONMENT=staging -f Dockerfile .")
               docker.withRegistry( 'https://registry.sme.prefeitura.sp.gov.br', registryCredential ) {
               dockerImage1.push()
               }
