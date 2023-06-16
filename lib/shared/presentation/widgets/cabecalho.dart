@@ -37,16 +37,19 @@ class Cabecalho extends StatelessWidget implements PreferredSizeWidget {
                 BlocBuilder<AuthCubit, AuthState>(
                   builder: (context, state) {
                     String nome = '';
+                    String login = '';
 
                     state.mapOrNull(
                       authenticated: (value) {
                         var nomeCompleto = value.usuario.nome.split(' ');
                         nome = '${nomeCompleto.first} ${nomeCompleto.last}';
+
+                        login = value.usuario.login;
                       },
                     );
 
                     return Text(
-                      nome,
+                      '$nome ($login)',
                       style: TextStyle(fontSize: 16),
                     );
                   },

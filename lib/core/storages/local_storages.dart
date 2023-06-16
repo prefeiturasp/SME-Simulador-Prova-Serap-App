@@ -11,6 +11,9 @@ abstract class LocalStorage {
   Future<bool> deleteRefreshToken();
 
   Future<void> removeTokens();
+
+  Future<bool> saveCadernoId(int cadernoId);
+  Future<int?> getCadernoId();
 }
 
 @Singleton(as: LocalStorage)
@@ -19,6 +22,7 @@ class LocalStorageImpl implements LocalStorage {
   final SharedPreferences _storage;
   static const _apiAccessToken = 'accessToken';
   static const _apiRefreshToken = 'refreshToken';
+  static const _cadernoId = 'cadernoId';
 
   @override
   Future<String?> getAccessToken() {
@@ -62,5 +66,19 @@ class LocalStorageImpl implements LocalStorage {
   Future<void> removeTokens() async {
     await deleteAccessToken();
     await deleteRefreshToken();
+  }
+
+  @override
+  Future<int?> getCadernoId() async {
+    return Future.value(
+      _storage.getInt(_cadernoId),
+    );
+  }
+
+  @override
+  Future<bool> saveCadernoId(int cadernoId) async {
+    return await Future.value(
+      _storage.setInt(_cadernoId, cadernoId),
+    );
   }
 }
