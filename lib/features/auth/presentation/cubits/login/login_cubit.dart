@@ -10,6 +10,7 @@ part 'login_cubit.freezed.dart';
 @singleton
 class LoginCubit extends Cubit<LoginState> {
   final AuthCubit authCubit;
+
   final AutenticarUseCase autenticarUseCase;
 
   LoginCubit(
