@@ -14,6 +14,8 @@ abstract class ProvaResumoModel with _$ProvaResumoModel {
     @JsonKey(name: 'enunciado') required String descricao,
     required String caderno,
     required int ordem,
+    required int idProva,
+    required String descricaoProva,
   }) = _ProvaResumoModel;
   factory ProvaResumoModel.fromJson(Map<String, dynamic> json) => _$ProvaResumoModelFromJson(json);
 
@@ -24,6 +26,8 @@ abstract class ProvaResumoModel with _$ProvaResumoModel {
       titulo: titulo,
       caderno: caderno,
       ordem: ordem,
+      idProva: idProva,
+      descricaoProva: descricaoProva,
     );
   }
 }
