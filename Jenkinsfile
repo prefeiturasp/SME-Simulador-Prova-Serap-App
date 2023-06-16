@@ -27,9 +27,9 @@ pipeline {
             script {
               sh 'if [ -d "envs" ]; then rm -f envs; fi'
               sh 'cp ${ENVS} envs'
+              sh '. $(realpath envs)'
               sh "sed 's/^export //' envs > .env"
               sh 'if [ -d "envs" ]; then rm -f envs; fi'
-              sh '. $(realpath .env)'
               sh 'echo $ENVIRON'
               def environment = sh(script: 'echo $ENVIRON', returnStdout: true).trim()
               imagename1 = "registry.sme.prefeitura.sp.gov.br/${env.branchname}/sme-simulador-prova-serap-front"
