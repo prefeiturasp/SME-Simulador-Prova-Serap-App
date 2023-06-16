@@ -9,6 +9,7 @@ targets:
         generate_for:
           - lib/**.codegen.dart
           - lib/**.model.dart
+          - lib/**_model.dart
         options:
           # field_rename: snake
           explicit_to_json: true
@@ -17,7 +18,9 @@ targets:
           - lib/**/blocs/**.dart
           - lib/**/cubits/**.dart
           - lib/**.entity.dart
+          - lib/**_entity.dart
           - lib/**.model.dart
+          - lib/**_model.dart
           - lib/**.codegen.dart
       injectable_generator:injectable_config_builder:
         generate_for:
