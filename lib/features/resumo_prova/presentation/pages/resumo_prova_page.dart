@@ -58,6 +58,29 @@ class _ResumoProvaPageState extends State<ResumoProvaPage> {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
+                  BlocBuilder<ProvaResumoCubit, ProvaResumoState>(
+                    builder: (context, state) {
+                      return state.maybeWhen(
+                        carregado: (provaResumo) {
+                          return Text.rich(
+                            TextSpan(
+                              children: [
+                                TextSpan(text: provaResumo.first.idProva.toString()),
+                                TextSpan(text: ' - '),
+                                TextSpan(text: provaResumo.first.descricaoProva),
+                                TextSpan(text: ' - '),
+                                TextSpan(text: 'Caderno '),
+                                TextSpan(text: provaResumo.first.caderno),
+                              ],
+                            ),
+                          );
+                        },
+                        orElse: () {
+                          return SizedBox.shrink();
+                        },
+                      );
+                    },
+                  ),
                   SizedBox(height: 20),
                   BlocBuilder<ProvaResumoCubit, ProvaResumoState>(
                     builder: (context, state) {
