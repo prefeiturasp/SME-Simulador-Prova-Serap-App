@@ -22,7 +22,7 @@ class _LandingPageState extends State<LandingPage> {
       if (state is Authenticated) {
         context.read<CacheCadernoIdCubit>().obterCadernoId().then((cadernoId) {
           if (cadernoId != null) {
-            sl<AppRouter>().replaceAll([ResumoProvaRoute(cadernoId: cadernoId)]);
+            sl<AppRouter>().replaceAll([ResumoCadernoProvaRoute(cadernoId: cadernoId)]);
           }
         });
       } else {

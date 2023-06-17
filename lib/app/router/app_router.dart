@@ -11,7 +11,7 @@ class AppRouter extends $AppRouter {
   @override
   final List<AutoRoute> routes = [
     // Resumo Prova
-    AutoRoute(page: ResumoProvaRoute.page, path: '/resumo/:cadernoId'),
+    AutoRoute(page: ResumoCadernoProvaRoute.page, path: '/resumo/caderno/:cadernoId'),
 
     // Detalhes da Questao
     AutoRoute(page: QuestaoRoute.page, path: '/prova/caderno/:cadernoId/questao/:questaoId'),

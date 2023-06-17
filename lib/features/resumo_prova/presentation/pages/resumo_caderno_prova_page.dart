@@ -14,8 +14,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import '../../../../core/utils/colors.dart';
 
 @RoutePage()
-class ResumoProvaPage extends StatefulHookWidget {
-  const ResumoProvaPage({
+class ResumoCadernoProvaPage extends StatefulHookWidget {
+  const ResumoCadernoProvaPage({
     super.key,
     @PathParam('cadernoId') required this.cadernoId,
   });
@@ -23,10 +23,10 @@ class ResumoProvaPage extends StatefulHookWidget {
   final int cadernoId;
 
   @override
-  State createState() => _ResumoProvaPageState();
+  State createState() => _ResumoCadernoProvaPageState();
 }
 
-class _ResumoProvaPageState extends State<ResumoProvaPage> {
+class _ResumoCadernoProvaPageState extends State<ResumoCadernoProvaPage> {
   @override
   Widget build(BuildContext context) {
     final eventoDetalhesCubit = BlocProvider.of<ProvaResumoCubit>(context);
@@ -38,7 +38,7 @@ class _ResumoProvaPageState extends State<ResumoProvaPage> {
     }, const []);
 
     return Scaffold(
-      appBar: Cabecalho('Listagem de Prova'),
+      appBar: Cabecalho(),
       body: SingleChildScrollView(
         child: Container(
           padding: EdgeInsets.all(16),
@@ -198,6 +198,7 @@ class _ResumoProvaPageState extends State<ResumoProvaPage> {
           child: Text(
             titulo,
             maxLines: 1,
+            overflow: TextOverflow.ellipsis,
             style: TextStyle(fontSize: 14),
           ),
         ),
