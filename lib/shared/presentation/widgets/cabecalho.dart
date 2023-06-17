@@ -9,19 +9,19 @@ import '../../../core/utils/colors.dart';
 import '../../../features/auth/presentation/cubits/auth/auth_cubit.dart';
 
 class Cabecalho extends StatelessWidget implements PreferredSizeWidget {
-  final String titulo;
+  final String? titulo;
 
   @override
   Size get preferredSize => Size.fromHeight(kToolbarHeight);
 
-  const Cabecalho(this.titulo, {super.key});
+  const Cabecalho({super.key, this.titulo});
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
       // 24 for default icon size
       toolbarHeight: kToolbarHeight,
-      centerTitle: false,
+      centerTitle: true,
       leadingWidth: 0,
       titleSpacing: 0,
       automaticallyImplyLeading: false,
@@ -29,47 +29,48 @@ class Cabecalho extends StatelessWidget implements PreferredSizeWidget {
         height: kToolbarHeight,
         padding: EdgeInsets.symmetric(horizontal: 16),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 _buildBackButton(context),
-                BlocBuilder<AuthCubit, AuthState>(
-                  builder: (context, state) {
-                    String nome = '';
-                    String login = '';
-
-                    state.mapOrNull(
-                      authenticated: (value) {
-                        var nomeCompleto = value.usuario.nome.split(' ');
-                        nome = '${nomeCompleto.first} ${nomeCompleto.last}';
-
-                        login = value.usuario.login;
-                      },
-                    );
-
-                    return Text(
-                      '$nome ($login)',
-                      style: TextStyle(fontSize: 16),
-                    );
-                  },
+                Text(
+                  titulo ?? 'Simulador SERAp Estudantes',
+                  style: TextStyle(fontSize: 24),
                 ),
               ],
-            ),
-            InkWell(
-              onTap: () async {
-                await sl<IAutenticacaoLocalDataSource>().apagarToken();
-                context.replaceRoute(LoginRoute());
-              },
-              child: Row(
-                children: [
-                  Icon(Icons.exit_to_app_outlined, color: TemaUtil.laranja02),
-                ],
-              ),
             ),
           ],
         ),
       ),
+      actions: [
+        BlocBuilder<AuthCubit, AuthState>(
+          builder: (context, state) {
+            return state.maybeWhen(
+              authenticated: (usuario) {
+                return InkWell(
+                  onTap: () async {
+                    await sl<IAutenticacaoLocalDataSource>().apagarToken();
+                    context.replaceRoute(LoginRoute());
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: [
+                        Icon(Icons.exit_to_app_outlined, color: TemaUtil.laranja02),
+                      ],
+                    ),
+                  ),
+                );
+              },
+              orElse: () {
+                return SizedBox.shrink();
+              },
+            );
+          },
+        ),
+      ],
     );
   }
 

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:serap_simulador/features/auth/presentation/cubits/cache_caderno_id/cache_caderno_id_cubit.dart';
 import 'package:serap_simulador/features/auth/presentation/cubits/login/login_cubit.dart';
+import 'package:serap_simulador/shared/presentation/widgets/cabecalho.dart';
 import 'package:serap_simulador/shared/presentation/widgets/rodape.dart';
 
 import '../../../../app/router/app_router.gr.dart';
@@ -40,6 +41,7 @@ class _LoginPageState extends State<LoginPage> {
     var textControllerCaderno = useTextEditingController();
 
     return Scaffold(
+      appBar: Cabecalho(),
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -81,9 +83,10 @@ class _LoginPageState extends State<LoginPage> {
               listener: (context, state) {
                 if (state.pageStatus == PageStatus.sucesso) {
                   if (widget.cadernoId != null) {
-                    context.router.replaceAll([ResumoProvaRoute(cadernoId: widget.cadernoId!)]);
+                    context.router.replaceAll([ResumoCadernoProvaRoute(cadernoId: widget.cadernoId!)]);
                   } else {
-                    context.router.replaceAll([ResumoProvaRoute(cadernoId: int.parse(textControllerCaderno.text))]);
+                    context.router
+                        .replaceAll([ResumoCadernoProvaRoute(cadernoId: int.parse(textControllerCaderno.text))]);
                   }
                 }
               },

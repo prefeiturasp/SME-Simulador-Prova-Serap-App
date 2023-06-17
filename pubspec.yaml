@@ -95,6 +95,9 @@ dependencies:
 
   # Reprodução
   flutter_sound: ^9.2.13
+    # git:
+    #   url: https://github.com/rajkovukovic/flutter_sound
+    #   ref: FIX#965
 
   # Video player
   video_player: ^2.6.1
