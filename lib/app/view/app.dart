@@ -8,7 +8,9 @@ import 'package:serap_simulador/core/extensions/context_extensions.dart';
 import 'package:serap_simulador/core/utils/colors.dart';
 import 'package:serap_simulador/core/utils/constants.dart';
 import 'package:serap_simulador/features/auth/presentation/cubits/auth/auth_cubit.dart';
+import 'package:serap_simulador/features/auth/presentation/cubits/cache_caderno_id/cache_caderno_id_cubit.dart';
 import 'package:serap_simulador/features/auth/presentation/cubits/login/login_cubit.dart';
+import 'package:serap_simulador/features/resumo_prova/presentation/cubits/prova_resumo/prova_resumo_cubit.dart';
 import 'package:serap_simulador/injector.dart';
 import 'package:serap_simulador/l10n/l10n.dart';
 import 'package:serap_simulador/shared/flash/presentation/blocs/cubit/flash_cubit.dart';
@@ -23,6 +25,8 @@ class App extends StatelessWidget {
         BlocProvider(create: (context) => sl<AuthCubit>()),
         BlocProvider(create: (context) => sl<FlashCubit>()),
         BlocProvider(create: (context) => sl<LoginCubit>()),
+        BlocProvider(create: (context) => sl<CacheCadernoIdCubit>()),
+        BlocProvider(create: (context) => sl<ProvaResumoCubit>()),
       ],
       child: MultiBlocListener(
         listeners: [
@@ -68,7 +72,6 @@ class App extends StatelessWidget {
                           bodyColor: TemaUtil.preto01,
                           displayColor: TemaUtil.preto01,
                           fontFamily: GoogleFonts.poppins().fontFamily,
-                          fontSizeFactor: 1.sp,
                         ),
                     textButtonTheme: TextButtonThemeData(
                       style: TextButton.styleFrom(
@@ -89,10 +92,7 @@ class App extends StatelessWidget {
                       colorScheme: Theme.of(context).colorScheme.copyWith(secondary: Colors.white),
                     ),
                   ),
-                  child: MediaQuery(
-                    data: MediaQuery.of(context).copyWith(textScaleFactor: 1.sp),
-                    child: widget!,
-                  ),
+                  child: widget!,
                 );
               },
             );

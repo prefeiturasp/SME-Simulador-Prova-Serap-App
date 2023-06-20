@@ -11,13 +11,13 @@ abstract class AutenticacaoRemoteService {
   @factoryMethod
   factory AutenticacaoRemoteService(Dio dio) = _AutenticacaoRemoteService;
 
-  @POST('admin/autenticacao/validar')
+  @POST('autenticacao/validar')
   @Headers({'requiresToken': false})
   Future<HttpResponse<AutenticacaoModel>> loginByCodigoAutenticacao({
     @Field() required String codigo,
   });
 
-  @POST('admin/autenticacao/revalidar')
+  @POST('autenticacao/revalidar')
   Future<HttpResponse<AutenticacaoModel>> revalidar({
     @Field() required String token,
   });

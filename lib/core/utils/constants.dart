@@ -17,8 +17,8 @@ class Environment {
 
 class ScreenUtilSize {
   const ScreenUtilSize._();
-  static const double width = 390;
-  static const double height = 844;
+  static const double width = 960;
+  static const double height = 600;
 }
 
 final GlobalKey<ScaffoldMessengerState> rootScaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
