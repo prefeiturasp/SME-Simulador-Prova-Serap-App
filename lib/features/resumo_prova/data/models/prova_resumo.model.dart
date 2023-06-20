@@ -10,20 +10,24 @@ abstract class ProvaResumoModel with _$ProvaResumoModel {
 
   factory ProvaResumoModel({
     required int id,
-    String? titulo,
-    String? descricao,
+    @JsonKey(name: 'textoBase') String? titulo,
+    @JsonKey(name: 'enunciado') required String descricao,
     required String caderno,
     required int ordem,
+    required int idProva,
+    required String descricaoProva,
   }) = _ProvaResumoModel;
   factory ProvaResumoModel.fromJson(Map<String, dynamic> json) => _$ProvaResumoModelFromJson(json);
 
   ProvaResumo toDomain() {
     return ProvaResumo(
       id: id,
-      caderno: caderno,
-      ordem: ordem,
       descricao: descricao,
       titulo: titulo,
+      caderno: caderno,
+      ordem: ordem,
+      idProva: idProva,
+      descricaoProva: descricaoProva,
     );
   }
 }

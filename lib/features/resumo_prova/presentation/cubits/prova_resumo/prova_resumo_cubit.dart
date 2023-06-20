@@ -15,12 +15,14 @@ class ProvaResumoCubit extends Cubit<ProvaResumoState> {
 
   ProvaResumoCubit(this.obterResumoProvaUseCase) : super(ProvaResumoState.inicial());
 
-  void carregarResumo(int provaId) async {
+  void carregarResumo(int cadernoId) async {
     emit(ProvaResumoState.carregando());
 
     debugPrint('Carregando prova');
 
-    var result = await obterResumoProvaUseCase(Params(cadernoId: 1753));
+    var result = await obterResumoProvaUseCase(Params(
+      cadernoId: cadernoId,
+    ));
 
     result.fold(
       (Failure l) {
