@@ -17,14 +17,12 @@ class QuestaoRepository implements IQuestaoRepository {
   @override
   Future<Either<Failure, QuestaoCompleta>> getQuestaoCompleta({
     required int questaoId,
-    required int provaId,
     required int cadernoId,
   }) async {
     try {
       if (await networkInfo.isConnected) {
         var detalhes = await provaRemoteDataSource.getQuestaoCompleta(
           questaoId: questaoId,
-          provaId: provaId,
           cadernoId: cadernoId,
         );
 

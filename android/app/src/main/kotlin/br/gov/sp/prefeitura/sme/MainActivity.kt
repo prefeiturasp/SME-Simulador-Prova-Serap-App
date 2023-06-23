@@ -1,4 +1,4 @@
-package br.gov.sp.prefeitura.sme.serap_simulador
+package br.gov.sp.prefeitura.sme.serap.simulador
 
 import io.flutter.embedding.android.FlutterActivity
 

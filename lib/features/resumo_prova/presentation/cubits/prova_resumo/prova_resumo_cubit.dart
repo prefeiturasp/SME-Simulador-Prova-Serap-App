@@ -18,7 +18,7 @@ class ProvaResumoCubit extends Cubit<ProvaResumoState> {
   void carregarResumo(int cadernoId) async {
     emit(ProvaResumoState.carregando());
 
-    debugPrint('Carregando prova');
+    debugPrint('Carregando reumo da prova caderno $cadernoId');
 
     var result = await obterResumoProvaUseCase(Params(
       cadernoId: cadernoId,
