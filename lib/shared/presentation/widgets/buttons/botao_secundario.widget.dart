@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:serap_simulador/core/utils/colors.dart';
 
 class BotaoSecundarioWidget extends StatelessWidget {
@@ -18,9 +17,9 @@ class BotaoSecundarioWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 50,
+    return Container(
       width: largura,
+      constraints: BoxConstraints(minHeight: 50),
       child: TextButton(
         onPressed: onPressed,
         style: ButtonStyle(
@@ -35,18 +34,14 @@ class BotaoSecundarioWidget extends StatelessWidget {
           ),
         ),
         child: Center(
-          child: Observer(
-            builder: (_) {
-              return Text(
-                textoBotao,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: corDoTexto,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                ),
-              );
-            },
+          child: Text(
+            textoBotao,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: corDoTexto,
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+            ),
           ),
         ),
       ),

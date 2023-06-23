@@ -7,21 +7,26 @@ import 'questao_entity.dart';
 
 class QuestaoCompleta extends Equatable {
   final int id;
+  final String caderno;
   final Questao questao;
 
-  final List<Arquivo> imagens;
   final List<Arquivo> audios;
   final List<ArquivoVideo> videos;
 
   final List<Alternativa> alternativas;
 
+  final int? questaoAnteriorId;
+  final int? proximaQuestaoId;
+
   QuestaoCompleta({
     required this.id,
     required this.questao,
-    required this.imagens,
     required this.audios,
     required this.videos,
     required this.alternativas,
+    required this.caderno,
+    this.questaoAnteriorId,
+    this.proximaQuestaoId,
   });
 
   @override

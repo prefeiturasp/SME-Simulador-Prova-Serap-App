@@ -76,7 +76,7 @@ pipeline {
       }
         
         stage('Deploy'){
-            when { anyOf {  branch 'master'; branch 'main'; branch 'development'; branch 'release'; branch 'homolog';  } }        
+            when { anyOf {  branch 'master'; branch 'main'; branch 'develop'; branch 'release'; branch 'homolog';  } }        
             steps {
                 script{
                     withCredentials([file(credentialsId: "${kubeconfig}", variable: 'config')]){
@@ -104,5 +104,5 @@ def getKubeconf(branchName) {
     else if ("master".equals(branchName)) { return "config_prd"; }
     else if ("homolog".equals(branchName)) { return "config_hom"; }
     else if ("release".equals(branchName)) { return "config_hom"; }
-    else if ("development".equals(branchName)) { return "config_dev"; }  
+    else if ("develop".equals(branchName)) { return "config_dev"; }  
 }
