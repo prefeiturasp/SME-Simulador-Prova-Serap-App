@@ -16,32 +16,37 @@ abstract class QuestaoCompletaModel with _$QuestaoCompletaModel {
 
   factory QuestaoCompletaModel({
     required int id,
-    String? titulo,
-    required String descricao,
+    @JsonKey(name: 'textoBase') String? titulo,
+    @JsonKey(name: 'enunciado') required String descricao,
     required int ordem,
-    required EnumTipoQuestao tipo,
+    @JsonKey(name: 'tipoItem') required EnumTipoQuestao tipo,
     required int quantidadeAlternativas,
-    required List<ArquivoModel> arquivos,
+    required String caderno,
     required List<ArquivoModel> audios,
     required List<ArquivoVideoModel> videos,
     required List<AlternativaModel> alternativas,
+    int? questaoAnteriorId,
+    int? proximaQuestaoId,
   }) = _QuestaoCompletaModel;
   factory QuestaoCompletaModel.fromJson(Map<String, dynamic> json) => _$QuestaoCompletaModelFromJson(json);
 
   QuestaoCompleta toModel() {
     return QuestaoCompleta(
       id: id,
+      caderno: caderno,
       questao: Questao(
         questaoLegadoId: id,
         descricao: descricao,
+        titulo: titulo,
         tipo: tipo,
         ordem: ordem,
         quantidadeAlternativas: quantidadeAlternativas,
       ),
-      imagens: arquivos.map((e) => e.toModel()).toList(),
       audios: audios.map((e) => e.toModel()).toList(),
       videos: videos.map((e) => e.toModel()).toList(),
       alternativas: alternativas.map((e) => e.toModel()).toList(),
+      questaoAnteriorId: questaoAnteriorId,
+      proximaQuestaoId: proximaQuestaoId,
     );
   }
 }

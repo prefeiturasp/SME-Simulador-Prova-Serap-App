@@ -5,7 +5,6 @@ import 'package:serap_simulador/features/questao/domain/entities/questao_complet
 abstract class IQuestaoRepository {
   Future<Either<Failure, QuestaoCompleta>> getQuestaoCompleta({
     required int questaoId,
-    required int provaId,
     required int cadernoId,
   });
 }

@@ -21,7 +21,7 @@ class BotaoDefaultWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: largura,
-      constraints: BoxConstraints(minHeight: 40),
+      constraints: BoxConstraints(minHeight: 50),
       child: TextButton(
         onPressed: desabilitado ? null : onPressed,
         style: ButtonStyle(
@@ -30,14 +30,11 @@ class BotaoDefaultWidget extends StatelessWidget {
               borderRadius: BorderRadius.circular(12),
             ),
           ),
-          // backgroundColor: MaterialStateProperty.all<Color>(TemaUtil.laranja01),
           padding: MaterialStateProperty.all(
             EdgeInsets.symmetric(horizontal: 12, vertical: 12),
           ),
         ),
-        child: Center(
-          child: _buildChild(),
-        ),
+        child: _buildChild(),
       ),
     );
   }

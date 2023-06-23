@@ -10,11 +10,16 @@ import '../../../features/auth/presentation/cubits/auth/auth_cubit.dart';
 
 class Cabecalho extends StatelessWidget implements PreferredSizeWidget {
   final String? titulo;
+  final Widget? leading;
 
   @override
   Size get preferredSize => Size.fromHeight(kToolbarHeight);
 
-  const Cabecalho({super.key, this.titulo});
+  const Cabecalho({
+    super.key,
+    this.titulo,
+    this.leading,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,24 +27,21 @@ class Cabecalho extends StatelessWidget implements PreferredSizeWidget {
       // 24 for default icon size
       toolbarHeight: kToolbarHeight,
       centerTitle: true,
-      leadingWidth: 0,
-      titleSpacing: 0,
       automaticallyImplyLeading: false,
+      leading: leading ?? _buildBackButton(context),
       title: Container(
         height: kToolbarHeight,
         padding: EdgeInsets.symmetric(horizontal: 16),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.max,
           children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                _buildBackButton(context),
-                Text(
+            Expanded(
+              child: Center(
+                child: Text(
                   titulo ?? 'Simulador SERAp Estudantes',
                   style: TextStyle(fontSize: 24),
                 ),
-              ],
+              ),
             ),
           ],
         ),
@@ -80,15 +82,18 @@ class Cabecalho extends StatelessWidget implements PreferredSizeWidget {
     final bool canPop = parentRoute?.canPop ?? false;
 
     if ((canPop) || (parentRoute?.impliesAppBarDismissal ?? false)) {
-      return IconButton(
-        onPressed: () {
+      return InkWell(
+        onTap: () {
           Navigator.maybePop(context);
         },
-        iconSize: 16,
-        icon: Icon(Icons.arrow_back),
+        child: Icon(
+          size: 25,
+          Icons.arrow_back,
+          color: Colors.white,
+        ),
       );
+    } else {
+      return SizedBox.shrink();
     }
-
-    return SizedBox.shrink();
   }
 }
