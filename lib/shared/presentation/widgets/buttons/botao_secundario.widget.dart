@@ -17,26 +17,16 @@ class BotaoSecundarioWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: largura,
-      constraints: BoxConstraints(minHeight: 50),
-      child: TextButton(
-        onPressed: onPressed,
-        style: ButtonStyle(
-          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
-          ),
-          backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
-          padding: MaterialStateProperty.all(
-            EdgeInsets.fromLTRB(20, 0, 20, 0),
-          ),
-        ),
+    return InkWell(
+      borderRadius: BorderRadius.circular(12.0),
+      onTap: onPressed,
+      child: Container(
+        width: largura,
+        constraints: BoxConstraints(minHeight: 40),
+        margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
         child: Center(
           child: Text(
             textoBotao,
-            textAlign: TextAlign.center,
             style: TextStyle(
               color: corDoTexto,
               fontWeight: FontWeight.bold,

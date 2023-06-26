@@ -91,6 +91,7 @@ mixin ProvaViewUtil {
       style: {
         '*': Style.fromTextStyle(
           TextStyle(
+            color: TemaUtil.preto,
             fontSize: 16,
             fontWeight: FontWeight.w500,
           ),
