@@ -255,7 +255,6 @@ class _QuestaoPageState extends State<QuestaoPage> {
     Widget botoesRespondendoProva = Row(
       crossAxisAlignment: CrossAxisAlignment.end,
       mainAxisAlignment: MainAxisAlignment.end,
-      mainAxisSize: MainAxisSize.min,
       children: [
         _buildBotaoVoltar(questaoIdAnterior),
         _buildBotaoProximo(questaoIdProxima),
@@ -282,7 +281,6 @@ class _QuestaoPageState extends State<QuestaoPage> {
     }
 
     return BotaoSecundarioWidget(
-      largura: 250,
       textoBotao: 'Item anterior',
       onPressed: () async {
         context.router.replace(
@@ -299,7 +297,6 @@ class _QuestaoPageState extends State<QuestaoPage> {
   Widget _buildBotaoProximo(int? questaoIdProxima) {
     if (questaoIdProxima != null) {
       return BotaoDefaultWidget(
-        largura: 250,
         textoBotao: 'Próximo item',
         onPressed: () async {
           context.router.replace(
@@ -314,7 +311,6 @@ class _QuestaoPageState extends State<QuestaoPage> {
     }
 
     return BotaoDefaultWidget(
-      largura: 250,
       textoBotao: 'Voltar para o resumo',
       onPressed: () async {
         context.router.replace(
