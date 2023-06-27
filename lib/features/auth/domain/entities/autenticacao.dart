@@ -9,6 +9,8 @@ class Autenticacao extends Equatable {
   final String nome;
   final String perfil;
 
+  final bool permiteEditarItem;
+
   Autenticacao({
     required this.token,
     required this.dataHoraExpiracao,
@@ -16,6 +18,7 @@ class Autenticacao extends Equatable {
     required this.login,
     required this.nome,
     required this.perfil,
+    required this.permiteEditarItem,
   });
 
   @override

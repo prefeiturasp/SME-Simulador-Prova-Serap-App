@@ -6,6 +6,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:serap_simulador/app/router/app_router.gr.dart';
 import 'package:serap_simulador/core/utils/colors.dart';
 import 'package:serap_simulador/core/utils/tela_adaptativa.dart';
+import 'package:serap_simulador/features/auth/presentation/cubits/auth/auth_cubit.dart';
 import 'package:serap_simulador/features/questao/domain/entities/arquivo_entity.dart';
 import 'package:serap_simulador/features/questao/domain/entities/arquivo_video_entity.dart';
 import 'package:serap_simulador/features/questao/domain/entities/questao_completa_entity.dart';
@@ -35,7 +36,11 @@ class QuestaoPage extends StatefulHookWidget {
 class _QuestaoPageState extends State<QuestaoPage> {
   PreferredSizeWidget buildAppBar() {
     return Cabecalho(
+      mostrarBotaoSair: false,
       leading: _buildBotaoVoltarLeading(context),
+      actions: [
+        _buildBotaoEditar(widget.cadernoId, widget.questaoId),
+      ],
     );
   }
 
@@ -341,5 +346,33 @@ class _QuestaoPageState extends State<QuestaoPage> {
     }
 
     return true;
+  }
+
+  Widget _buildBotaoEditar(int cadernoId, int questaoId) {
+    return BlocBuilder<AuthCubit, AuthState>(
+      builder: (context, state) {
+        return state.maybeMap(
+          authenticated: (value) {
+            if (value.usuario.permiteEditarItem) {
+              return Padding(
+                padding: const EdgeInsets.only(right: 8),
+                child: IconButton(
+                  onPressed: () {
+                    context.router.push(QuestaoEditRoute(cadernoId: cadernoId, questaoId: questaoId));
+                  },
+                  icon: Icon(
+                    Icons.edit,
+                    size: 24,
+                  ),
+                ),
+              );
+            } else {
+              return SizedBox.shrink();
+            }
+          },
+          orElse: () => SizedBox.shrink(),
+        );
+      },
+    );
   }
 }
