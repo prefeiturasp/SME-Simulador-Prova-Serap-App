@@ -15,6 +15,7 @@ class AppRouter extends $AppRouter {
 
     // Detalhes da Questao
     AutoRoute(page: QuestaoRoute.page, path: '/prova/caderno/:cadernoId/questao/:questaoId'),
+    AutoRoute(page: QuestaoEditRoute.page, path: '/prova/caderno/:cadernoId/questao/:questaoId/editar'),
 
     // Auth
     AutoRoute(page: LoginRoute.page, path: '/login/:codigo/:cadernoId'),

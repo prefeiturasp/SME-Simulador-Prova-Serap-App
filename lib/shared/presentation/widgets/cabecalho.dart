@@ -9,16 +9,21 @@ import '../../../core/utils/colors.dart';
 import '../../../features/auth/presentation/cubits/auth/auth_cubit.dart';
 
 class Cabecalho extends StatelessWidget implements PreferredSizeWidget {
+  final bool mostrarBotaoSair;
+
   final String? titulo;
   final Widget? leading;
+  final List<Widget>? actions;
 
   @override
   Size get preferredSize => Size.fromHeight(kToolbarHeight);
 
   const Cabecalho({
     super.key,
+    this.mostrarBotaoSair = true,
     this.titulo,
     this.leading,
+    this.actions,
   });
 
   @override
@@ -29,49 +34,47 @@ class Cabecalho extends StatelessWidget implements PreferredSizeWidget {
       centerTitle: true,
       automaticallyImplyLeading: false,
       leading: leading ?? _buildBackButton(context),
-      title: Container(
-        height: kToolbarHeight,
-        padding: EdgeInsets.symmetric(horizontal: 16),
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Expanded(
-              child: Center(
-                child: Text(
-                  titulo ?? 'Simulador SERAp Estudantes',
-                  style: TextStyle(fontSize: 24),
-                ),
+      title: Row(
+        children: [
+          Expanded(
+            child: Center(
+              child: Text(
+                titulo ?? 'Simulador SERAp Estudantes',
+                style: TextStyle(fontSize: 24),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
       actions: [
-        BlocBuilder<AuthCubit, AuthState>(
-          builder: (context, state) {
-            return state.maybeWhen(
-              authenticated: (usuario) {
-                return InkWell(
-                  onTap: () async {
-                    await sl<IAutenticacaoLocalDataSource>().apagarToken();
-                    context.replaceRoute(LoginRoute());
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: [
-                        Icon(Icons.exit_to_app_outlined, color: TemaUtil.laranja02),
-                      ],
-                    ),
-                  ),
-                );
-              },
-              orElse: () {
-                return SizedBox.shrink();
-              },
-            );
-          },
-        ),
+        ...actions ?? [],
+        mostrarBotaoSair
+            ? BlocBuilder<AuthCubit, AuthState>(
+                builder: (context, state) {
+                  return state.maybeWhen(
+                    authenticated: (usuario) {
+                      return InkWell(
+                        onTap: () async {
+                          await sl<IAutenticacaoLocalDataSource>().apagarToken();
+                          context.replaceRoute(LoginRoute());
+                        },
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.exit_to_app_outlined,
+                              color: TemaUtil.laranja02,
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                    orElse: () {
+                      return SizedBox.shrink();
+                    },
+                  );
+                },
+              )
+            : SizedBox.shrink(),
       ],
     );
   }
@@ -87,7 +90,7 @@ class Cabecalho extends StatelessWidget implements PreferredSizeWidget {
           Navigator.maybePop(context);
         },
         child: Icon(
-          size: 25,
+          size: 24,
           Icons.arrow_back,
           color: Colors.white,
         ),

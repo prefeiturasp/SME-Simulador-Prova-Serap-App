@@ -27,6 +27,7 @@ class AutenticacaoModel with _$AutenticacaoModel {
       login: tokenParsed['LOGIN'],
       nome: tokenParsed['NOME'],
       perfil: tokenParsed['PERFIL'],
+      permiteEditarItem: bool.parse(tokenParsed['PERMITEEDITARITEM'].toString().toLowerCase()),
     );
   }
 }
