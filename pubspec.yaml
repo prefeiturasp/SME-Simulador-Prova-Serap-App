@@ -91,6 +91,7 @@ dependencies:
 
   # Editor de texto
   html_editor_enhanced: ^2.5.1
+  quill_html_editor: ^2.1.9
 
   # Reprodução
   audioplayers: ^4.1.0
