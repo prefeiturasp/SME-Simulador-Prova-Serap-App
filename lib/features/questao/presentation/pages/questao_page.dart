@@ -361,7 +361,7 @@ class _QuestaoPageState extends State<QuestaoPage> {
                   carregado: (value) => value.questaoCompleta.isProvaIniciada,
                 );
 
-                if (value.usuario.permiteEditarItem && (isProvaIniciada != null && !+isProvaIniciada)) {
+                if (value.usuario.permiteEditarItem && (isProvaIniciada != null && !isProvaIniciada)) {
                   return Padding(
                     padding: const EdgeInsets.only(right: 8),
                     child: IconButton(
