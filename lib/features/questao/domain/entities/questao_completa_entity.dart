@@ -9,6 +9,7 @@ class QuestaoCompleta extends Equatable {
   final int id;
   final String caderno;
   final Questao questao;
+  final bool isProvaIniciada;
 
   final List<Arquivo> audios;
   final List<ArquivoVideo> videos;
@@ -20,15 +21,16 @@ class QuestaoCompleta extends Equatable {
 
   QuestaoCompleta({
     required this.id,
+    required this.caderno,
+    required this.isProvaIniciada,
     required this.questao,
     required this.audios,
     required this.videos,
     required this.alternativas,
-    required this.caderno,
     this.questaoAnteriorId,
     this.proximaQuestaoId,
   });
 
   @override
-  List<Object?> get props => [int];
+  List<Object?> get props => [id, caderno];
 }

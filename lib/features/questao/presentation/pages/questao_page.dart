@@ -353,22 +353,32 @@ class _QuestaoPageState extends State<QuestaoPage> {
       builder: (context, state) {
         return state.maybeMap(
           authenticated: (value) {
-            if (value.usuario.permiteEditarItem) {
-              return Padding(
-                padding: const EdgeInsets.only(right: 8),
-                child: IconButton(
-                  onPressed: () {
-                    context.router.push(QuestaoEditRoute(cadernoId: cadernoId, questaoId: questaoId));
-                  },
-                  icon: Icon(
-                    Icons.edit,
-                    size: 24,
-                  ),
-                ),
-              );
-            } else {
-              return SizedBox.shrink();
-            }
+            return BlocBuilder<QuestaoCubit, QuestaoState>(
+              builder: (context, state) {
+                bool? isProvaIniciada = false;
+
+                isProvaIniciada = state.mapOrNull(
+                  carregado: (value) => value.questaoCompleta.isProvaIniciada,
+                );
+
+                if (value.usuario.permiteEditarItem && (isProvaIniciada != null && !+isProvaIniciada)) {
+                  return Padding(
+                    padding: const EdgeInsets.only(right: 8),
+                    child: IconButton(
+                      onPressed: () {
+                        context.router.push(QuestaoEditRoute(cadernoId: cadernoId, questaoId: questaoId));
+                      },
+                      icon: Icon(
+                        Icons.edit,
+                        size: 24,
+                      ),
+                    ),
+                  );
+                } else {
+                  return SizedBox.shrink();
+                }
+              },
+            );
           },
           orElse: () => SizedBox.shrink(),
         );
