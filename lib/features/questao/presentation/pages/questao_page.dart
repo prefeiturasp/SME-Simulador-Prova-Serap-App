@@ -74,7 +74,6 @@ class _QuestaoPageState extends State<QuestaoPage> {
       child: Scaffold(
         backgroundColor: TemaUtil.corDeFundo,
         appBar: buildAppBar(),
-        persistentFooterButtons: _buildPersistentFooterButtons(),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -98,20 +97,6 @@ class _QuestaoPageState extends State<QuestaoPage> {
         ),
       ),
     );
-  }
-
-  List<Widget>? _buildPersistentFooterButtons() {
-    return [
-      Center(
-        child: Text(
-          '1.0.0',
-          style: TextStyle(
-            color: TemaUtil.preto,
-            fontSize: 14,
-          ),
-        ),
-      )
-    ];
   }
 
   getPadding([EdgeInsets mobile = EdgeInsets.zero]) {
