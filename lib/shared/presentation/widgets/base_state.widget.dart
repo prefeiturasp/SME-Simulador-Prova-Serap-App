@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:serap_simulador/core/interfaces/I_loggable.dart';
-import 'package:serap_simulador/core/utils/colors.dart';
 
 import 'appbar/appbar.widget.dart';
 import 'base_statefull.widget.dart';
@@ -51,7 +50,6 @@ abstract class BaseStateWidget<TWidget extends BaseStatefulWidget> extends State
           backgroundColor: backgroundColor,
           appBar: _showAppBar(),
           bottomNavigationBar: _buildBottomNavigationBar(),
-          persistentFooterButtons: _buildPersistentFooterButtons(),
           floatingActionButton: buildFloatingActionButton(),
           body: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -122,26 +120,6 @@ abstract class BaseStateWidget<TWidget extends BaseStatefulWidget> extends State
 
   Widget? _buildBottomNavigationBar() {
     return null;
-  }
-
-  List<Widget>? _buildPersistentFooterButtons() {
-    return [
-      Center(
-        child: Observer(
-          builder: (_) {
-            var cor = TemaUtil.preto;
-
-            return Text(
-              '1.0.0',
-              style: TextStyle(
-                color: cor,
-                fontSize: 14,
-              ),
-            );
-          },
-        ),
-      )
-    ];
   }
 
   Widget builder(BuildContext context);
