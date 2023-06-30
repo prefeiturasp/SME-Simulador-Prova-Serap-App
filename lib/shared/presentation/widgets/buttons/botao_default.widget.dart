@@ -23,7 +23,7 @@ class BotaoDefaultWidget extends StatelessWidget {
     return InkWell(
       borderRadius: BorderRadius.circular(12.0),
       onTap: onPressed,
-      child: Ink(
+      child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12.0),
           color: TemaUtil.laranja01,
