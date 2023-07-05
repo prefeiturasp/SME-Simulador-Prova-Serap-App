@@ -6,10 +6,12 @@ class EditorHtmlEnhanced extends StatefulWidget {
     super.key,
     required this.text,
     required this.onTextChanged,
+    this.height = 300,
   });
 
   final String text;
   final Function(String?) onTextChanged;
+  final double height;
 
   @override
   State<EditorHtmlEnhanced> createState() => _EditorHtmlEnhancedState();
@@ -30,6 +32,11 @@ class _EditorHtmlEnhancedState extends State<EditorHtmlEnhanced> {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
+        borderRadius: BorderRadius.all(Radius.circular(8)),
+        border: Border.all(
+          color: Colors.grey,
+          width: 1,
+        ),
       ),
       child: HtmlEditor(
         controller: controller,
@@ -37,25 +44,8 @@ class _EditorHtmlEnhancedState extends State<EditorHtmlEnhanced> {
           onChangeContent: widget.onTextChanged,
         ),
         htmlToolbarOptions: HtmlToolbarOptions(
-          toolbarType: ToolbarType.nativeGrid,
+          toolbarType: ToolbarType.nativeScrollable,
           defaultToolbarButtons: [
-            FontButtons(
-              subscript: false,
-              superscript: false,
-            ),
-            ListButtons(
-              listStyles: false,
-            ),
-            ParagraphButtons(
-              lineHeight: false,
-              caseConverter: false,
-              textDirection: false,
-            ),
-            InsertButtons(
-              audio: false,
-              picture: false,
-              video: false,
-            ),
             OtherButtons(
               fullscreen: false,
               copy: false,
@@ -64,13 +54,36 @@ class _EditorHtmlEnhancedState extends State<EditorHtmlEnhanced> {
               undo: false,
               redo: false,
             ),
+            FontButtons(
+              subscript: false,
+              superscript: false,
+              clearAll: false,
+              strikethrough: false,
+            ),
+            ListButtons(
+              listStyles: false,
+            ),
+            ParagraphButtons(
+              lineHeight: false,
+              caseConverter: false,
+              textDirection: false,
+              decreaseIndent: false,
+              increaseIndent: false,
+            ),
+            InsertButtons(
+              audio: false,
+              video: false,
+              link: false,
+              otherFile: false,
+            ),
           ],
         ),
         htmlEditorOptions: HtmlEditorOptions(
           initialText: widget.text,
+          autoAdjustHeight: true,
         ),
         otherOptions: OtherOptions(
-          height: 300,
+          height: widget.height,
         ),
       ),
     );

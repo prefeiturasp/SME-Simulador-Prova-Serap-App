@@ -58,13 +58,12 @@ class Cabecalho extends StatelessWidget implements PreferredSizeWidget {
                           await sl<IAutenticacaoLocalDataSource>().apagarToken();
                           context.replaceRoute(LoginRoute());
                         },
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.exit_to_app_outlined,
-                              color: TemaUtil.laranja02,
-                            ),
-                          ],
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 8.0),
+                          child: Icon(
+                            Icons.exit_to_app_outlined,
+                            color: TemaUtil.laranja02,
+                          ),
                         ),
                       );
                     },

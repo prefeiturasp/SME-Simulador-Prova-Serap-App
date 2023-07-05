@@ -366,7 +366,7 @@ class _QuestaoPageState extends State<QuestaoPage> {
                     padding: const EdgeInsets.only(right: 8),
                     child: IconButton(
                       onPressed: () {
-                        context.router.push(QuestaoEditRoute(cadernoId: cadernoId, questaoId: questaoId));
+                        context.router.push(QuestaoEditarRoute(cadernoId: cadernoId, questaoId: questaoId));
                       },
                       icon: Icon(
                         Icons.edit,

@@ -10,7 +10,7 @@ abstract class AlternativaModel with _$AlternativaModel {
 
   factory AlternativaModel({
     required int id,
-    @JsonKey(name: 'questaoId') required int questaoLegadoId,
+    @JsonKey(name: 'questaoId') required int questaoId,
     required String descricao,
     required int ordem,
     required String numeracao,
@@ -20,7 +20,7 @@ abstract class AlternativaModel with _$AlternativaModel {
   Alternativa toModel() {
     return Alternativa(
       id: id,
-      questaoLegadoId: questaoLegadoId,
+      questaoId: questaoId,
       descricao: descricao,
       ordem: ordem,
       numeracao: numeracao,

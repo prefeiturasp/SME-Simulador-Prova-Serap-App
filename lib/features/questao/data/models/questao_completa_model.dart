@@ -17,8 +17,8 @@ abstract class QuestaoCompletaModel with _$QuestaoCompletaModel {
   factory QuestaoCompletaModel({
     required int id,
     @JsonKey(name: 'ehProvaIniciada') required bool isProvaIniciada,
-    @JsonKey(name: 'textoBase') String? titulo,
-    @JsonKey(name: 'enunciado') required String descricao,
+    @JsonKey(name: 'textoBase') String? textoBase,
+    @JsonKey(name: 'enunciado') required String enunciado,
     required int ordem,
     @JsonKey(name: 'tipoItem') required EnumTipoQuestao tipo,
     required int quantidadeAlternativas,
@@ -38,8 +38,8 @@ abstract class QuestaoCompletaModel with _$QuestaoCompletaModel {
       isProvaIniciada: isProvaIniciada,
       questao: Questao(
         questaoLegadoId: id,
-        descricao: descricao,
-        titulo: titulo,
+        textoBase: textoBase,
+        enunciado: enunciado,
         tipo: tipo,
         ordem: ordem,
         quantidadeAlternativas: quantidadeAlternativas,

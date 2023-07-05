@@ -4,8 +4,8 @@ import 'package:serap_simulador/shared/enums/tipo_questao.enum.dart';
 
 class Questao extends Equatable {
   final int questaoLegadoId;
-  final String? titulo;
-  final String descricao;
+  final String? textoBase;
+  final String enunciado;
   final int ordem;
   final EnumTipoQuestao tipo;
 
@@ -13,13 +13,13 @@ class Questao extends Equatable {
 
   Questao({
     required this.questaoLegadoId,
-    this.titulo,
-    required this.descricao,
+    this.textoBase,
+    required this.enunciado,
     required this.tipo,
     required this.ordem,
     required this.quantidadeAlternativas,
   });
 
   @override
-  List<Object> get props => [questaoLegadoId, descricao, tipo];
+  List<Object> get props => [questaoLegadoId, enunciado, tipo];
 }

@@ -27,14 +27,14 @@ class QuestaoAdminWidget extends StatelessWidget with ProvaViewUtil {
       children: [
         renderizarHtml(
           context,
-          questao.titulo,
+          questao.textoBase,
           EnumTipoImagem.QUESTAO,
           TratamentoImagemEnum.URL,
         ),
         SizedBox(height: 8),
         renderizarHtml(
           context,
-          questao.descricao,
+          questao.enunciado,
           EnumTipoImagem.QUESTAO,
           TratamentoImagemEnum.URL,
         ),
