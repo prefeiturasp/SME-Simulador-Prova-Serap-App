@@ -31,6 +31,20 @@ class QuestaoCompleta extends Equatable {
     this.proximaQuestaoId,
   });
 
+  copyWith({Questao? questao, List<Alternativa>? alternativas}) {
+    return QuestaoCompleta(
+      id: id,
+      caderno: caderno,
+      isProvaIniciada: isProvaIniciada,
+      questao: questao ?? this.questao,
+      audios: audios,
+      videos: videos,
+      alternativas: alternativas ?? this.alternativas,
+      proximaQuestaoId: proximaQuestaoId,
+      questaoAnteriorId: questaoAnteriorId,
+    );
+  }
+
   @override
-  List<Object?> get props => [id, caderno];
+  List<Object?> get props => [id, caderno, questao, alternativas];
 }

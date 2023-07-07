@@ -1,9 +1,13 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:equatable/equatable.dart';
+import 'package:floor/floor.dart';
 import 'package:serap_simulador/shared/enums/tipo_questao.enum.dart';
 
+@entity
 class Questao extends Equatable {
-  final int questaoLegadoId;
+  @primaryKey
+  final int id;
+
   final String? textoBase;
   final String enunciado;
   final int ordem;
@@ -12,7 +16,7 @@ class Questao extends Equatable {
   final int quantidadeAlternativas;
 
   Questao({
-    required this.questaoLegadoId,
+    required this.id,
     this.textoBase,
     required this.enunciado,
     required this.tipo,
@@ -20,6 +24,20 @@ class Questao extends Equatable {
     required this.quantidadeAlternativas,
   });
 
+  copyWith({
+    String? textoBase,
+    String? enunciado,
+  }) {
+    return Questao(
+      id: id,
+      textoBase: textoBase ?? this.textoBase,
+      enunciado: enunciado ?? this.enunciado,
+      tipo: tipo,
+      ordem: ordem,
+      quantidadeAlternativas: quantidadeAlternativas,
+    );
+  }
+
   @override
-  List<Object> get props => [questaoLegadoId, enunciado, tipo];
+  List<Object> get props => [id, textoBase ?? '', enunciado, tipo];
 }

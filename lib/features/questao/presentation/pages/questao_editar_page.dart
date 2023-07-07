@@ -7,6 +7,7 @@ import 'package:serap_simulador/app/router/app_router.gr.dart';
 import 'package:serap_simulador/core/utils/colors.dart';
 import 'package:serap_simulador/features/questao/domain/entities/alternativa_entity.dart';
 import 'package:serap_simulador/features/questao/presentation/cubits/questao/questao_cubit.dart';
+import 'package:serap_simulador/features/questao/presentation/cubits/questao_editar/questao_editar_cubit.dart';
 import 'package:serap_simulador/shared/presentation/widgets/cabecalho.dart';
 import 'package:serap_simulador/shared/presentation/widgets/separador.dart';
 
@@ -34,7 +35,7 @@ class _QuestaoEditarPageState extends State<QuestaoEditarPage> {
     super.initState();
 
     scheduleMicrotask(() {
-      context.read<QuestaoCubit>().carregarQuestao(widget.cadernoId, widget.questaoId);
+      context.read<QuestaoEditarCubit>().carregarQuestao(widget.cadernoId, widget.questaoId);
     });
   }
 
@@ -79,6 +80,8 @@ class _QuestaoEditarPageState extends State<QuestaoEditarPage> {
                       );
                     },
                     carregado: (questaoCompleta) {
+                      context.read<QuestaoEditarCubit>().setQuestaoCompleta(questaoCompleta);
+
                       var questao = questaoCompleta.questao;
                       var alternativas = questaoCompleta.alternativas;
 
@@ -96,12 +99,24 @@ class _QuestaoEditarPageState extends State<QuestaoEditarPage> {
                           Separador(espacamento: 2),
 
                           // Titulo
-                          _buildEditor('Texto base', questao.textoBase),
+                          _buildEditor(
+                            titulo: 'Texto base',
+                            content: questao.textoBase,
+                            onTextChanged: (text) {
+                              context.read<QuestaoEditarCubit>().changeTextoBase(text ?? '');
+                            },
+                          ),
 
                           Separador(espacamento: 3),
 
                           // Descricao
-                          _buildEditor('Enunciado', questao.enunciado),
+                          _buildEditor(
+                            titulo: 'Enunciado',
+                            content: questao.enunciado,
+                            onTextChanged: (text) {
+                              context.read<QuestaoEditarCubit>().changeEnunciado(text ?? '');
+                            },
+                          ),
 
                           Separador(espacamento: 3),
 
@@ -123,13 +138,13 @@ class _QuestaoEditarPageState extends State<QuestaoEditarPage> {
     );
   }
 
-  Widget _buildEditor(String titulo, String? content) {
+  Widget _buildEditor({required String titulo, String? content, required Function(String? text) onTextChanged}) {
     return _buildExpansionTile(
       titulo: titulo,
       children: [
         EditorHtmlEnhanced(
           text: content ?? '',
-          onTextChanged: (p0) {},
+          onTextChanged: onTextChanged,
         ),
       ],
     );
@@ -174,7 +189,9 @@ class _QuestaoEditarPageState extends State<QuestaoEditarPage> {
         EditorHtmlEnhanced(
           height: 100,
           text: alternativa.descricao,
-          onTextChanged: (p0) {},
+          onTextChanged: (text) {
+            context.read<QuestaoEditarCubit>().changeAlternativa(alternativa.ordem, text);
+          },
         ),
       ],
     );
@@ -183,9 +200,9 @@ class _QuestaoEditarPageState extends State<QuestaoEditarPage> {
   Widget _buildBotaoAplicar(int cadernoId, int questaoId) {
     return InkWell(
       onTap: () {
-        context.router.push(
-          // TODO Gravar alterações
+        context.read<QuestaoEditarCubit>().salvarQuestaoLocal();
 
+        context.router.push(
           QuestaoEditarPreviewRoute(
             cadernoId: cadernoId,
             questaoId: questaoId,

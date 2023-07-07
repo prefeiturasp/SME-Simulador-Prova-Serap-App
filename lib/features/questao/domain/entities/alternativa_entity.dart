@@ -1,6 +1,9 @@
 import 'package:equatable/equatable.dart';
+import 'package:floor/floor.dart';
 
+@entity
 class Alternativa extends Equatable {
+  @primaryKey
   final int id;
   final int questaoId;
   final String descricao;
@@ -17,4 +20,16 @@ class Alternativa extends Equatable {
 
   @override
   List<Object> get props => [id, questaoId, descricao, ordem, numeracao];
+
+  Alternativa copyWith({
+    String? descricao,
+  }) {
+    return Alternativa(
+      id: id,
+      questaoId: questaoId,
+      descricao: descricao ?? '',
+      ordem: ordem,
+      numeracao: numeracao,
+    );
+  }
 }

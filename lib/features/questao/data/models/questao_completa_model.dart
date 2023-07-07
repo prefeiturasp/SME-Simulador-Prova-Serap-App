@@ -37,7 +37,7 @@ abstract class QuestaoCompletaModel with _$QuestaoCompletaModel {
       caderno: caderno,
       isProvaIniciada: isProvaIniciada,
       questao: Questao(
-        questaoLegadoId: id,
+        id: id,
         textoBase: textoBase,
         enunciado: enunciado,
         tipo: tipo,
@@ -49,6 +49,28 @@ abstract class QuestaoCompletaModel with _$QuestaoCompletaModel {
       alternativas: alternativas.map((e) => e.toModel()).toList(),
       questaoAnteriorId: questaoAnteriorId,
       proximaQuestaoId: proximaQuestaoId,
+    );
+  }
+
+  factory QuestaoCompletaModel.fromModel(QuestaoCompleta questaoCompleta) {
+    return QuestaoCompletaModel(
+      id: questaoCompleta.id,
+      isProvaIniciada: questaoCompleta.isProvaIniciada,
+      //
+      enunciado: questaoCompleta.questao.enunciado,
+      textoBase: questaoCompleta.questao.textoBase,
+      ordem: questaoCompleta.questao.ordem,
+      tipo: questaoCompleta.questao.tipo,
+      quantidadeAlternativas: questaoCompleta.questao.quantidadeAlternativas,
+      caderno: questaoCompleta.caderno,
+      //
+      audios: questaoCompleta.audios.map((e) => ArquivoModel.fromModel(e)).toList(),
+      videos: questaoCompleta.videos.map((e) => ArquivoVideoModel.fromModel(e)).toList(),
+      //
+      alternativas: questaoCompleta.alternativas.map((e) => AlternativaModel.fromModel(e)).toList(),
+      //
+      proximaQuestaoId: questaoCompleta.proximaQuestaoId,
+      questaoAnteriorId: questaoCompleta.questaoAnteriorId,
     );
   }
 }

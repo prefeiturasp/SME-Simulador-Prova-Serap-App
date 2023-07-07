@@ -26,4 +26,14 @@ abstract class AlternativaModel with _$AlternativaModel {
       numeracao: numeracao,
     );
   }
+
+  factory AlternativaModel.fromModel(Alternativa alternativa) {
+    return AlternativaModel(
+      id: alternativa.id,
+      questaoId: alternativa.questaoId,
+      descricao: alternativa.descricao,
+      ordem: alternativa.ordem,
+      numeracao: alternativa.numeracao,
+    );
+  }
 }
