@@ -24,7 +24,7 @@ class AutenticacaoRemoteDataSource implements IAutenticacaoRemoteDataSource {
       final response = await autenticacaoRemoteService.loginByCodigoAutenticacao(codigo: codigo);
 
       return response.data;
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw handleNertorkError(e);
     }
   }
@@ -34,7 +34,7 @@ class AutenticacaoRemoteDataSource implements IAutenticacaoRemoteDataSource {
     try {
       final response = await autenticacaoRemoteService.revalidar(token: token);
       return response.data;
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw handleNertorkError(e);
     }
   }

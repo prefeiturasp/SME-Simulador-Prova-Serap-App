@@ -30,9 +30,9 @@ class AuthInterceptor extends QueuedInterceptor {
     if (authData == null) {
       await _performLogout();
 
-      final error = DioError(
+      final error = DioException(
         requestOptions: options..extra["tokenErrorType"] = TokenErrorType.tokenNotFound,
-        type: DioErrorType.unknown,
+        type: DioExceptionType.unknown,
         message: 'Token nao encontrado',
       );
       return handler.reject(error);
@@ -54,7 +54,7 @@ class AuthInterceptor extends QueuedInterceptor {
         } else {
           refreshed = false;
         }
-      } on DioError catch (e) {
+      } on DioException catch (e) {
         debugPrint('Erro ao atualizar token: $e');
         refreshed = false;
       }
@@ -64,9 +64,9 @@ class AuthInterceptor extends QueuedInterceptor {
       options.headers["Authorization"] = "Bearer $token";
       return handler.next(options);
     } else {
-      final error = DioError(
+      final error = DioException(
         requestOptions: options..extra["tokenErrorType"] = TokenErrorType.failedToRegeneratetoken,
-        type: DioErrorType.unknown,
+        type: DioExceptionType.unknown,
         message: 'Falha ao regenerar o token de acesso',
       );
       return handler.reject(error);
@@ -74,12 +74,12 @@ class AuthInterceptor extends QueuedInterceptor {
   }
 
   @override
-  void onError(DioError err, ErrorInterceptorHandler handler) {
+  void onError(DioException err, ErrorInterceptorHandler handler) {
     if (err.response?.statusCode == 401) {
       _performLogout();
 
-      err = DioError(
-        type: DioErrorType.unknown,
+      err = DioException(
+        type: DioExceptionType.unknown,
         requestOptions: err.requestOptions..extra["tokenErrorType"] = TokenErrorType.invalidtoken,
         message: 'Token de acesso inválido',
       );

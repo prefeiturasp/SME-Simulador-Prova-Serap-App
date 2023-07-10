@@ -9,11 +9,13 @@ import 'package:serap_simulador/core/utils/constants.dart';
 import 'package:serap_simulador/features/auth/presentation/cubits/auth/auth_cubit.dart';
 import 'package:serap_simulador/features/auth/presentation/cubits/cache_caderno_id/cache_caderno_id_cubit.dart';
 import 'package:serap_simulador/features/auth/presentation/cubits/login/login_cubit.dart';
-import 'package:serap_simulador/features/questao/presentation/cubits/questao/questao_cubit.dart';
 import 'package:serap_simulador/features/resumo_prova/presentation/cubits/prova_resumo/prova_resumo_cubit.dart';
 import 'package:serap_simulador/injector.dart';
 import 'package:serap_simulador/l10n/l10n.dart';
 import 'package:serap_simulador/shared/flash/presentation/blocs/cubit/flash_cubit.dart';
+
+import '../../features/questao/presentation/cubits/questao/questao_cubit.dart';
+import '../../features/questao/presentation/cubits/questao_editar/questao_editar_cubit.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -28,6 +30,7 @@ class App extends StatelessWidget {
         BlocProvider(create: (context) => sl<CacheCadernoIdCubit>()),
         BlocProvider(create: (context) => sl<ProvaResumoCubit>()),
         BlocProvider(create: (context) => sl<QuestaoCubit>()),
+        BlocProvider(create: (context) => sl<QuestaoEditarCubit>()),
       ],
       child: MultiBlocListener(
         listeners: [
