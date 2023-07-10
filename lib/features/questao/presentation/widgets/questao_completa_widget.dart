@@ -14,10 +14,12 @@ class QuestaoCompletaWidget extends StatefulWidget {
     super.key,
     required this.cadernoId,
     required this.questaoCompleta,
+    this.exibirBotoes = true,
   });
 
   final int cadernoId;
   final QuestaoCompleta questaoCompleta;
+  final bool exibirBotoes;
 
   @override
   State<QuestaoCompletaWidget> createState() => _QuestaoCompletaWidgetState();
@@ -41,10 +43,7 @@ class _QuestaoCompletaWidgetState extends State<QuestaoCompletaWidget> {
                     QuestaoConteudoWidget(questaoCompleta: widget.questaoCompleta),
 
                     // Botões
-                    BotoesControleWidget(
-                      cadernoId: widget.cadernoId,
-                      questaoCompleta: widget.questaoCompleta,
-                    ),
+                    _buildBotoesControle(),
                   ],
                 ),
               ),
@@ -53,6 +52,17 @@ class _QuestaoCompletaWidgetState extends State<QuestaoCompletaWidget> {
         ),
       ],
     );
+  }
+
+  Widget _buildBotoesControle() {
+    if (widget.exibirBotoes) {
+      return BotoesControleWidget(
+        cadernoId: widget.cadernoId,
+        questaoCompleta: widget.questaoCompleta,
+      );
+    } else {
+      return SizedBox.shrink();
+    }
   }
 
   Widget _buildLayout({required List<ArquivoVideo> videos, required Widget body}) {

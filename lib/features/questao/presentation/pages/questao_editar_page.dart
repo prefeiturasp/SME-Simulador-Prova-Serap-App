@@ -3,14 +3,13 @@ import 'dart:async';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:serap_simulador/app/router/app_router.gr.dart';
-import 'package:serap_simulador/core/utils/colors.dart';
-import 'package:serap_simulador/features/questao/domain/entities/alternativa_entity.dart';
-import 'package:serap_simulador/features/questao/presentation/cubits/questao/questao_cubit.dart';
-import 'package:serap_simulador/features/questao/presentation/cubits/questao_editar/questao_editar_cubit.dart';
-import 'package:serap_simulador/shared/presentation/widgets/cabecalho.dart';
-import 'package:serap_simulador/shared/presentation/widgets/separador.dart';
 
+import '../../../../app/router/app_router.gr.dart';
+import '../../../../core/utils/colors.dart';
+import '../../../../shared/presentation/widgets/cabecalho.dart';
+import '../../../../shared/presentation/widgets/separador.dart';
+import '../../domain/entities/alternativa_entity.dart';
+import '../cubits/questao_editar/questao_editar_cubit.dart';
 import '../widgets/editor_html_enhanced.dart';
 import '../widgets/titulo_editar_widget.dart';
 
@@ -43,12 +42,17 @@ class _QuestaoEditarPageState extends State<QuestaoEditarPage> {
     return IconButton(
       icon: Icon(Icons.arrow_back),
       onPressed: () async {
-        context.router.replace(
-          ResumoCadernoProvaRoute(
-            key: Key('${widget.cadernoId}'),
-            cadernoId: widget.cadernoId,
-          ),
-        );
+        if (context.router.canPop()) {
+          context.router.pop();
+        } else {
+          context.router.replace(
+            QuestaoRoute(
+              key: Key('${widget.cadernoId}-${widget.questaoId}'),
+              cadernoId: widget.cadernoId,
+              questaoId: widget.questaoId,
+            ),
+          );
+        }
       },
     );
   }
@@ -56,14 +60,12 @@ class _QuestaoEditarPageState extends State<QuestaoEditarPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Cabecalho(
-          leading: _buildBotaoVoltarLeading(context),
-          mostrarBotaoSair: false,
-          actions: [
-            _buildBotaoAplicar(widget.cadernoId, widget.questaoId),
-          ],
-        ),
+      appBar: Cabecalho(
+        mostrarBotaoSair: false,
+        leading: _buildBotaoVoltarLeading(context),
+        actions: [
+          _buildBotaoAplicar(widget.cadernoId, widget.questaoId),
+        ],
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -71,25 +73,23 @@ class _QuestaoEditarPageState extends State<QuestaoEditarPage> {
             child: Container(
               constraints: BoxConstraints(maxWidth: 600),
               padding: const EdgeInsets.all(8.0),
-              child: BlocBuilder<QuestaoCubit, QuestaoState>(
+              child: BlocBuilder<QuestaoEditarCubit, QuestaoEditarState>(
                 builder: (context, state) {
-                  return state.maybeWhen(
-                    carregando: () {
+                  switch (state.status) {
+                    case Status.carregando:
                       return Center(
                         child: CircularProgressIndicator(),
                       );
-                    },
-                    carregado: (questaoCompleta) {
-                      context.read<QuestaoEditarCubit>().setQuestaoCompleta(questaoCompleta);
 
-                      var questao = questaoCompleta.questao;
-                      var alternativas = questaoCompleta.alternativas;
+                    case Status.carregado:
+                      var questao = state.questaoCompleta!.questao;
+                      var alternativas = state.questaoCompleta!.alternativas;
 
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Questao ${questao.ordem + 1}',
+                            'Questão ${questao.ordem + 1}',
                             style: TextStyle(
                               fontSize: 32,
                               fontWeight: FontWeight.bold,
@@ -126,9 +126,10 @@ class _QuestaoEditarPageState extends State<QuestaoEditarPage> {
                           Separador(espacamento: 3),
                         ],
                       );
-                    },
-                    orElse: () => SizedBox.shrink(),
-                  );
+
+                    default:
+                      return SizedBox.shrink();
+                  }
                 },
               ),
             ),
@@ -212,7 +213,10 @@ class _QuestaoEditarPageState extends State<QuestaoEditarPage> {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Center(
-          child: Text('Aplicar'),
+          child: Icon(
+            Icons.save_as,
+            size: 32,
+          ),
         ),
       ),
     );

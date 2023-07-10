@@ -1,16 +1,18 @@
+import 'dart:async';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:serap_simulador/app/router/app_router.gr.dart';
-import 'package:serap_simulador/features/auth/presentation/cubits/auth/auth_cubit.dart';
-import 'package:serap_simulador/features/questao/presentation/cubits/questao/questao_cubit.dart';
-import 'package:serap_simulador/features/questao/presentation/widgets/base_widget.dart';
-import 'package:serap_simulador/features/questao/presentation/widgets/questao_completa_widget.dart';
-import 'package:serap_simulador/shared/presentation/widgets/cabecalho.dart';
+
+import '../../../../app/router/app_router.gr.dart';
+import '../../../../shared/presentation/widgets/cabecalho.dart';
+import '../../../auth/presentation/cubits/auth/auth_cubit.dart';
+import '../cubits/questao/questao_cubit.dart';
+import '../widgets/base_widget.dart';
+import '../widgets/questao_completa_widget.dart';
 
 @RoutePage()
-class QuestaoPage extends StatefulHookWidget {
+class QuestaoPage extends StatefulWidget {
   final int cadernoId;
   final int questaoId;
 
@@ -39,12 +41,16 @@ class _QuestaoPageState extends State<QuestaoPage> {
     return IconButton(
       icon: Icon(Icons.arrow_back),
       onPressed: () async {
-        context.router.replace(
-          ResumoCadernoProvaRoute(
-            key: Key('${widget.cadernoId}'),
-            cadernoId: widget.cadernoId,
-          ),
-        );
+        if (context.router.canPop()) {
+          context.router.pop();
+        } else {
+          context.router.replace(
+            ResumoCadernoProvaRoute(
+              key: Key('${widget.cadernoId}'),
+              cadernoId: widget.cadernoId,
+            ),
+          );
+        }
       },
     );
   }
@@ -52,49 +58,49 @@ class _QuestaoPageState extends State<QuestaoPage> {
   double defaultPadding = 16;
 
   @override
-  Widget build(BuildContext context) {
-    final eventoDetalhesCubit = BlocProvider.of<QuestaoCubit>(context);
+  void initState() {
+    super.initState();
 
-    useEffect(() {
-      eventoDetalhesCubit.carregarQuestaoCompleta(widget.cadernoId, widget.questaoId);
-
-      return null;
-    }, []);
-
-    return BaseWidget(
-      appBar: buildAppBar(),
-      child: builder(context),
-    );
+    scheduleMicrotask(() {
+      context.read<QuestaoCubit>().carregarQuestaoCompleta(widget.cadernoId, widget.questaoId);
+    });
   }
 
-  Widget builder(BuildContext context) {
-    return BlocBuilder<QuestaoCubit, QuestaoState>(
-      builder: (context, state) {
-        return state.maybeWhen(
-          carregando: () {
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                CircularProgressIndicator(),
-                SizedBox(
-                  height: 10,
-                ),
-                Text("Carregando..."),
-              ],
-            );
-          },
-          carregado: (questaoCompleta) {
-            return QuestaoCompletaWidget(
-              cadernoId: widget.cadernoId,
-              questaoCompleta: questaoCompleta,
-            );
-          },
-          orElse: () {
-            return SizedBox.shrink();
-          },
-        );
-      },
+  @override
+  Widget build(BuildContext context) {
+    return BaseWidget(
+      appBar: buildAppBar(),
+      child: BlocBuilder<QuestaoCubit, QuestaoState>(
+        builder: (context, state) {
+          return state.maybeWhen(
+            carregando: () {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  CircularProgressIndicator(),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text("Carregando..."),
+                ],
+              );
+            },
+            carregado: (questaoCompleta) {
+              return QuestaoCompletaWidget(
+                cadernoId: widget.cadernoId,
+                questaoCompleta: questaoCompleta,
+              );
+            },
+            erro: (erro) {
+              return Text(erro);
+            },
+            orElse: () {
+              return SizedBox.shrink();
+            },
+          );
+        },
+      ),
     );
   }
 

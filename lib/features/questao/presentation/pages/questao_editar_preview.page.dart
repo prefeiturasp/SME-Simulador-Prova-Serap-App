@@ -1,9 +1,12 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:serap_simulador/features/questao/presentation/cubits/questao_editar/questao_editar_cubit.dart';
-import 'package:serap_simulador/features/questao/presentation/widgets/base_widget.dart';
-import 'package:serap_simulador/features/questao/presentation/widgets/questao_widget.dart';
+import 'package:serap_simulador/shared/presentation/widgets/cabecalho.dart';
+
+import '../../../../app/router/app_router.gr.dart';
+import '../cubits/questao_editar/questao_editar_cubit.dart';
+import '../widgets/base_widget.dart';
+import '../widgets/questao_completa_widget.dart';
 
 @RoutePage()
 class QuestaoEditarPreviewPage extends StatefulWidget {
@@ -21,15 +24,40 @@ class QuestaoEditarPreviewPage extends StatefulWidget {
 }
 
 class _QuestaoEditarPreviewPageState extends State<QuestaoEditarPreviewPage> {
+  double defaultPadding = 16;
+
   @override
   void initState() {
     super.initState();
     context.read<QuestaoEditarCubit>().carregarQuestao(widget.cadernoId, widget.questaoId);
   }
 
+  Widget? _buildBotaoVoltarLeading(BuildContext context) {
+    return IconButton(
+      icon: Icon(Icons.arrow_back),
+      onPressed: () async {
+        if (context.router.canPop()) {
+          context.router.pop();
+        } else {
+          context.router.replace(
+            QuestaoRoute(
+              key: Key('${widget.cadernoId}-${widget.questaoId}'),
+              cadernoId: widget.cadernoId,
+              questaoId: widget.questaoId,
+            ),
+          );
+        }
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return BaseWidget(
+      appBar: Cabecalho(
+        mostrarBotaoSair: false,
+        leading: _buildBotaoVoltarLeading(context),
+      ),
       child: BlocBuilder<QuestaoEditarCubit, QuestaoEditarState>(
         builder: (context, state) {
           switch (state.status) {
@@ -39,8 +67,10 @@ class _QuestaoEditarPreviewPageState extends State<QuestaoEditarPreviewPage> {
               );
 
             case Status.carregado:
-              return QuestaoConteudoWidget(
+              return QuestaoCompletaWidget(
                 questaoCompleta: state.questaoCompleta!,
+                cadernoId: widget.cadernoId,
+                exibirBotoes: false,
               );
 
             default:

@@ -57,7 +57,6 @@ class _EditorHtmlEnhancedState extends State<EditorHtmlEnhanced> {
             FontButtons(
               subscript: false,
               superscript: false,
-              clearAll: false,
               strikethrough: false,
             ),
             ListButtons(

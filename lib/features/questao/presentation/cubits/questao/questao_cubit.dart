@@ -19,26 +19,7 @@ class QuestaoCubit extends Cubit<QuestaoState> {
   carregarQuestaoCompleta(int cadernoId, int questaoId) async {
     emit(QuestaoState.carregando());
 
-    debugPrint('Carregando questao caderno: $cadernoId, questaoId: $questaoId');
-
-    Either<Failure, QuestaoCompleta> result = await _obterQuestaoCompletaUseCase(
-      Params(
-        questaoId: questaoId,
-        cadernoId: cadernoId,
-      ),
-    );
-
-    result.fold((Failure l) {
-      emit(QuestaoState.erro(l.message));
-    }, (QuestaoCompleta r) {
-      emit(QuestaoState.carregado(r));
-    });
-  }
-
-  carregarQuestaoCache(int cadernoId, int questaoId) async {
-    emit(QuestaoState.carregando());
-
-    debugPrint('Carregando questao local: $cadernoId, questaoId: $questaoId');
+    debugPrint('Carregando questao completa do caderno: $cadernoId, questaoId: $questaoId');
 
     Either<Failure, QuestaoCompleta> result = await _obterQuestaoCompletaUseCase(
       Params(

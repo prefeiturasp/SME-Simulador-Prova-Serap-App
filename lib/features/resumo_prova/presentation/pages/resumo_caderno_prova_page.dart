@@ -10,12 +10,11 @@ import 'package:serap_simulador/features/resumo_prova/domain/entities/prova_resu
 import 'package:serap_simulador/features/resumo_prova/presentation/cubits/prova_resumo/prova_resumo_cubit.dart';
 import 'package:serap_simulador/gen/assets.gen.dart';
 import 'package:serap_simulador/shared/presentation/widgets/cabecalho.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 
 import '../../../../core/utils/colors.dart';
 
 @RoutePage()
-class ResumoCadernoProvaPage extends StatefulHookWidget {
+class ResumoCadernoProvaPage extends StatefulWidget {
   const ResumoCadernoProvaPage({
     super.key,
     @PathParam('cadernoId') required this.cadernoId,
@@ -29,15 +28,14 @@ class ResumoCadernoProvaPage extends StatefulHookWidget {
 
 class _ResumoCadernoProvaPageState extends State<ResumoCadernoProvaPage> {
   @override
+  void initState() {
+    super.initState();
+
+    context.read<ProvaResumoCubit>().carregarResumo(widget.cadernoId);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final eventoDetalhesCubit = BlocProvider.of<ProvaResumoCubit>(context);
-
-    useEffect(() {
-      eventoDetalhesCubit.carregarResumo(widget.cadernoId);
-
-      return null;
-    }, const []);
-
     return Scaffold(
       appBar: Cabecalho(),
       body: SingleChildScrollView(
