@@ -10,7 +10,7 @@ abstract class ArquivoModel with _$ArquivoModel {
 
   factory ArquivoModel({
     required int id,
-    required int tamanhoBytes,
+    int? tamanhoBytes,
     required String caminho,
   }) = _ArquivoModel;
   factory ArquivoModel.fromJson(Map<String, dynamic> json) => _$ArquivoModelFromJson(json);
@@ -19,6 +19,13 @@ abstract class ArquivoModel with _$ArquivoModel {
     return Arquivo(
       id: id,
       caminho: caminho,
+    );
+  }
+
+  factory ArquivoModel.fromModel(Arquivo arquivo) {
+    return ArquivoModel(
+      id: arquivo.id,
+      caminho: arquivo.caminho,
     );
   }
 }

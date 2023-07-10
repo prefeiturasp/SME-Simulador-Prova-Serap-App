@@ -29,7 +29,9 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
+
     context.read<LoginCubit>().loginByCode(widget.codigo);
+
     if (widget.cadernoId != null) {
       context.read<CacheCadernoIdCubit>().salvarCadernoId(widget.cadernoId!);
     }

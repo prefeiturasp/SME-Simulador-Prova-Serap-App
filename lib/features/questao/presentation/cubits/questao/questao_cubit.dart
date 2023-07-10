@@ -16,10 +16,10 @@ class QuestaoCubit extends Cubit<QuestaoState> {
 
   final ObterQuestaoCompletaUseCase _obterQuestaoCompletaUseCase;
 
-  carregarQuestao(int cadernoId, int questaoId) async {
+  carregarQuestaoCompleta(int cadernoId, int questaoId) async {
     emit(QuestaoState.carregando());
 
-    debugPrint('Carregando questao caderno: $cadernoId, questaoId: $questaoId');
+    debugPrint('Carregando questao completa do caderno: $cadernoId, questaoId: $questaoId');
 
     Either<Failure, QuestaoCompleta> result = await _obterQuestaoCompletaUseCase(
       Params(

@@ -39,12 +39,12 @@ abstract class DioClient {
   }
 }
 
-extension DioErrorX on DioError {
+extension DioExceptionX on DioException {
   bool get isNoConnectionError =>
-      type == DioErrorType.unknown && error is SocketException; // import 'dart:io' for SocketException
+      type == DioExceptionType.unknown && error is SocketException; // import 'dart:io' for SocketException
 }
 
-handleNertorkError(DioError e) {
+handleNertorkError(DioException e) {
   if (e.isNoConnectionError) {
     throw Failure.serverFailure(message: 'Erro ao se conectar com o servidor');
   }

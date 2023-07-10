@@ -11,7 +11,7 @@ abstract class ArquivoVideoModel with _$ArquivoVideoModel {
   factory ArquivoVideoModel({
     @JsonKey(name: 'videoId') required int id,
     required String caminhoVideo,
-    required String caminhoThumbnailVideo,
+    String? caminhoThumbnailVideo,
     String? caminhoVideoConvertido,
   }) = _ArquivoVideoModel;
   factory ArquivoVideoModel.fromJson(Map<String, dynamic> json) => _$ArquivoVideoModelFromJson(json);
@@ -20,6 +20,13 @@ abstract class ArquivoVideoModel with _$ArquivoVideoModel {
     return ArquivoVideo(
       id: id,
       path: caminhoVideo,
+    );
+  }
+
+  factory ArquivoVideoModel.fromModel(ArquivoVideo arquivoVideo) {
+    return ArquivoVideoModel(
+      id: arquivoVideo.id,
+      caminhoVideo: arquivoVideo.path,
     );
   }
 }

@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:injectable/injectable.dart';
+import 'package:serap_simulador/features/questao/data/models/questao_completa_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class LocalStorage {
@@ -14,6 +17,9 @@ abstract class LocalStorage {
 
   Future<bool> saveCadernoId(int cadernoId);
   Future<int?> getCadernoId();
+
+  Future<bool> saveQuestaoCompleta(QuestaoCompletaModel questaoCompletaModel);
+  Future<QuestaoCompletaModel?> getQuestaoCompleta(int questaoId);
 }
 
 @Singleton(as: LocalStorage)
@@ -79,6 +85,26 @@ class LocalStorageImpl implements LocalStorage {
   Future<bool> saveCadernoId(int cadernoId) async {
     return await Future.value(
       _storage.setInt(_cadernoId, cadernoId),
+    );
+  }
+
+  @override
+  Future<QuestaoCompletaModel?> getQuestaoCompleta(int questaoId) async {
+    String? questaoString = _storage.getString(questaoId.toString());
+
+    if (questaoString != null) {
+      return Future.value(
+        QuestaoCompletaModel.fromJson(jsonDecode(questaoString)),
+      );
+    }
+
+    return null;
+  }
+
+  @override
+  Future<bool> saveQuestaoCompleta(QuestaoCompletaModel questaoCompletaModel) async {
+    return await Future.value(
+      _storage.setString(questaoCompletaModel.id.toString(), jsonEncode(questaoCompletaModel.toJson())),
     );
   }
 }

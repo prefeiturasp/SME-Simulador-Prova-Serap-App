@@ -7,4 +7,13 @@ abstract class IQuestaoRepository {
     required int questaoId,
     required int cadernoId,
   });
+
+  Future<Either<Failure, QuestaoCompleta>> getQuestaoCompletaLocal({
+    required int questaoId,
+    required int cadernoId,
+  });
+
+  Future<Either<Failure, bool>> salvarQuestaoCompletaLocal({
+    required QuestaoCompleta questaoCompleta,
+  });
 }
