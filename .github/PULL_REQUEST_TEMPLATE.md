@@ -1,23 +1,17 @@
-<!--
-  Thanks for contributing!
+## Descrição
 
-  Provide a description of your changes below and a general summary in the title
+AB#
 
-  Please look at the following checklist to ensure that your PR can be accepted quickly:
--->
 
-## Description
+## Tipo de Mudança
 
-<!--- Describe your changes in detail -->
+<!--- Coloque um `x` em todas as caixas que se aplicam: -->
 
-## Type of Change
-
-<!--- Put an `x` in all the boxes that apply: -->
-
-- [ ] ✨ New feature (non-breaking change which adds functionality)
-- [ ] 🛠️ Bug fix (non-breaking change which fixes an issue)
-- [ ] ❌ Breaking change (fix or feature that would cause existing functionality to change)
-- [ ] 🧹 Code refactor
-- [ ] ✅ Build configuration change
-- [ ] 📝 Documentation
-- [ ] 🗑️ Chore
+- [ ] ✨ Novo recurso (alteração ininterrupta que adiciona funcionalidade)
+- [ ] 🛠️ Bug fix (mudança ininterrupta que corrige um problema)
+- [ ] ❌ Breaking change (correção ou recurso que faria com que a funcionalidade existente fosse alterada)
+- [ ] 🧹 Refatoração de código
+- [ ] ✅ Alteração de configuração de compilação
+- [ ] 📝 Documentação
+- [ ] 🗑️ Chore (Tarefa) 
+- [ ] 🔄 Sincronização de branch
