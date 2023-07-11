@@ -7,10 +7,12 @@ class EditorHtmlQuill extends StatefulWidget {
     super.key,
     required this.text,
     this.onTextChanged,
+    this.height = 300,
   });
 
   final String text;
   final Function(String)? onTextChanged;
+  final double height;
 
   @override
   State<EditorHtmlQuill> createState() => _EditorHtmlQuillState();
@@ -54,6 +56,7 @@ class _EditorHtmlQuillState extends State<EditorHtmlQuill> {
     super.initState();
 
     controller = QuillEditorController();
+    controller.setText(widget.text);
   }
 
   @override
