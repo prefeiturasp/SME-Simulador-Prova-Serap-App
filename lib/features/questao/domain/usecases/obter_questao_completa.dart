@@ -18,7 +18,6 @@ class ObterQuestaoCompletaUseCase implements IUseCase<QuestaoCompleta, Params> {
   Future<Either<Failure, QuestaoCompleta>> call(Params params) async {
     var result = await repository.getQuestaoCompleta(
       questaoId: params.questaoId,
-      provaId: params.provaId,
       cadernoId: params.cadernoId,
     );
     return result;
@@ -27,15 +26,13 @@ class ObterQuestaoCompletaUseCase implements IUseCase<QuestaoCompleta, Params> {
 
 class Params extends Equatable {
   final int questaoId;
-  final int provaId;
   final int cadernoId;
 
   const Params({
     required this.questaoId,
-    required this.provaId,
     required this.cadernoId,
   });
 
   @override
-  List<Object> get props => [questaoId, provaId, cadernoId];
+  List<Object> get props => [questaoId, cadernoId];
 }

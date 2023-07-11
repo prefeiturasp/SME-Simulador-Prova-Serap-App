@@ -7,6 +7,9 @@ const String CACHED_TOKEN = 'autenticacao';
 
 const String DATABASE_NAME = 'app_database.db';
 
+const DEBUG_LOGIN_CODE = String.fromEnvironment('LOGIN_CODE', defaultValue: '');
+const DEBUG_CADERNO_ID = String.fromEnvironment('CADERNO_ID', defaultValue: '');
+
 class Environment {
   const Environment._();
   static const String development = 'development';

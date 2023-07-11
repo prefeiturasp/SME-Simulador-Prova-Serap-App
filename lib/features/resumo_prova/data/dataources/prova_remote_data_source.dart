@@ -26,7 +26,7 @@ class ProvaRemoteDataSource implements IProvaRemoteDataSource {
       );
 
       return response.data;
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw handleNertorkError(e);
     }
   }

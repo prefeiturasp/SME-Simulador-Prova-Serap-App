@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:serap_simulador/core/utils/colors.dart';
 import 'package:serap_simulador/shared/presentation/widgets/texto_default.widget.dart';
 
 class BotaoDefaultWidget extends StatelessWidget {
@@ -19,23 +20,18 @@ class BotaoDefaultWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: largura,
-      constraints: BoxConstraints(minHeight: 40),
-      child: TextButton(
-        onPressed: desabilitado ? null : onPressed,
-        style: ButtonStyle(
-          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
-          ),
-          // backgroundColor: MaterialStateProperty.all<Color>(TemaUtil.laranja01),
-          padding: MaterialStateProperty.all(
-            EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-          ),
+    return InkWell(
+      borderRadius: BorderRadius.circular(12.0),
+      onTap: onPressed,
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12.0),
+          color: TemaUtil.laranja01,
         ),
-        child: Center(
+        width: largura,
+        padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
+        child: Container(
+          constraints: BoxConstraints(minHeight: 40),
           child: _buildChild(),
         ),
       ),
@@ -44,13 +40,15 @@ class BotaoDefaultWidget extends StatelessWidget {
 
   _buildChild() {
     if (textoBotao != null) {
-      return Texto(
-        textoBotao!,
-        center: true,
-        color: Colors.white,
-        fontSize: 16,
-        fontWeight: FontWeight.w500,
-        maxLines: 2,
+      return Center(
+        child: Texto(
+          textoBotao!,
+          center: true,
+          color: Colors.white,
+          fontSize: 16,
+          fontWeight: FontWeight.w500,
+          maxLines: 2,
+        ),
       );
     }
 

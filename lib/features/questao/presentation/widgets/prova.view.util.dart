@@ -8,20 +8,22 @@ import 'package:http/http.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:flutter_html_all/flutter_html_all.dart';
 import 'package:serap_simulador/core/utils/colors.dart';
-import 'package:serap_simulador/features/questao/domain/entities/arquivo_entity.dart';
 import 'package:serap_simulador/shared/enums/tipo_imagem.enum.dart';
 import 'package:serap_simulador/shared/enums/tratamento_imagem.enum.dart';
 
 mixin ProvaViewUtil {
   String tratarArquivos(
     String? texto,
-    List<Arquivo> arquivos,
     EnumTipoImagem tipoImagem,
     TratamentoImagemEnum tratamentoImagem,
   ) {
     if (texto == null) {
       return "";
     }
+
+    texto = texto.replaceAllMapped(RegExp(r'(<img[^>]*>)'), (match) {
+      return '<div style="text-align: center; position:relative">${match.group(0)}<p><span>Toque na imagem para ampliar</span></p></div>';
+    });
 
     return texto;
 
@@ -57,7 +59,6 @@ mixin ProvaViewUtil {
   Widget renderizarHtml(
     BuildContext context,
     String? texto,
-    List<Arquivo> imagens,
     EnumTipoImagem tipoImagem,
     TratamentoImagemEnum tratamentoImagem,
   ) {
@@ -86,18 +87,17 @@ mixin ProvaViewUtil {
           },
         ),
       ],
-      data: tratarArquivos(texto, imagens, tipoImagem, tratamentoImagem),
+      data: tratarArquivos(texto, tipoImagem, tratamentoImagem),
       style: {
         '*': Style.fromTextStyle(
           TextStyle(
+            color: TemaUtil.preto,
             fontSize: 16,
-            fontFamily: 'Poopins',
           ),
         ),
         'span': Style.fromTextStyle(
           TextStyle(
             fontSize: 16,
-            fontFamily: 'Poopins',
             color: TemaUtil.pretoSemFoco3,
           ),
         ),
@@ -166,6 +166,7 @@ mixin ProvaViewUtil {
                               'Fechar',
                               style: TextStyle(
                                 fontSize: 18,
+                                color: Colors.white,
                               ),
                             );
                           },

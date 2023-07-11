@@ -9,7 +9,6 @@ import 'questao_remote_service.dart';
 abstract class IQuestaoRemoteDataSource {
   Future<QuestaoCompletaModel> getQuestaoCompleta({
     required int questaoId,
-    required int provaId,
     required int cadernoId,
   });
 }
@@ -25,18 +24,16 @@ class QuestaoRemoteDataSource implements IQuestaoRemoteDataSource {
   @override
   Future<QuestaoCompletaModel> getQuestaoCompleta({
     required int questaoId,
-    required int provaId,
     required int cadernoId,
   }) async {
     try {
       final response = await questaoRemoteService.getQuestaoCompleta(
         questaoId: questaoId,
-        provaId: provaId,
         cadernoId: cadernoId,
       );
 
       return response.data;
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw handleNertorkError(e);
     }
   }

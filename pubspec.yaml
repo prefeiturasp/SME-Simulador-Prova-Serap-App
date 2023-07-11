@@ -22,7 +22,6 @@ dependencies:
   rxdart: ^0.27.5
   uuid: ^3.0.6
   envied: ^0.3.0
-  google_fonts: ^5.0.0
   idb_shim: ^2.0.1
   http: ^1.0.0
   logger: ^1.4.0
@@ -60,7 +59,7 @@ dependencies:
   get_it: ^7.2.0
 
   # Rotas
-  auto_route: ^6.2.0
+  auto_route: ^7.4.0
 
   # Estados
   flutter_bloc: ^8.1.2
@@ -92,12 +91,10 @@ dependencies:
 
   # Editor de texto
   html_editor_enhanced: ^2.5.1
+  quill_html_editor: ^2.1.9
 
   # Reprodução
-  flutter_sound: ^9.2.13
-    # git:
-    #   url: https://github.com/rajkovukovic/flutter_sound
-    #   ref: FIX#965
+  audioplayers: ^4.1.0
 
   # Video player
   video_player: ^2.6.1
@@ -126,7 +123,7 @@ dev_dependencies:
   freezed: ^2.3.2
 
   # Rotas
-  auto_route_generator: ^6.2.0
+  auto_route_generator: ^7.1.1
 
   # Icones
   flutter_launcher_icons: "^0.12.0"
@@ -160,9 +157,35 @@ flutter:
 
   assets:
     - assets/fonts/
-    - assets/google_fonts/
     - assets/icons/
     - assets/images/
+
+  fonts:
+    - family: Poppins
+      fonts:
+        - asset: assets/fonts/Poppins/Poppins-Regular.ttf
+        - asset: assets/fonts/Poppins/Poppins-ExtraLight.ttf
+          weight: 100
+        - asset: assets/fonts/Poppins/Poppins-Thin.ttf
+          weight: 200
+        - asset: assets/fonts/Poppins/Poppins-Light.ttf
+          weight: 300          
+        - asset: assets/fonts/Poppins/Poppins-Medium.ttf          
+          weight: 500
+        - asset: assets/fonts/Poppins/Poppins-SemiBold.ttf          
+          weight: 600
+        - asset: assets/fonts/Poppins/Poppins-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Poppins/Poppins-Black.ttf
+          weight: 800
+        - asset: assets/fonts/Poppins/Poppins-ExtraBold.ttf
+          weight: 900   
+          
+    - family: OpenDyslexic
+      fonts:
+        - asset: assets/fonts/OpenDyslexic/OpenDyslexic-Regular.ttf 
+        - asset: assets/fonts/OpenDyslexic/OpenDyslexic-Bold.ttf
+          weight: 700
 
 scripts:
   build-clean: flutter packages pub run build_runner clean

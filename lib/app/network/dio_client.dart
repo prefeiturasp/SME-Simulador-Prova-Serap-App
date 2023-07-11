@@ -20,37 +20,31 @@ abstract class DioClient {
     final dio = Dio(options);
 
     final dioAuth = Dio(dio.options);
-    dioAuth.interceptors.add(PrettyDioLogger(
-      compact: true,
+    var prettyDioLogger = PrettyDioLogger(
+      compact: false,
       error: true,
       request: false,
       responseBody: false,
       responseHeader: false,
       requestBody: false,
       requestHeader: false,
-    ));
+    );
+
+    dioAuth.interceptors.add(prettyDioLogger);
 
     dio.interceptors.add(AuthInterceptor(dioAuth));
-    dio.interceptors.add(PrettyDioLogger(
-      compact: true,
-      error: true,
-      request: false,
-      responseBody: true,
-      requestBody: false,
-      responseHeader: false,
-      requestHeader: false,
-    ));
+    dio.interceptors.add(prettyDioLogger);
 
     return dio;
   }
 }
 
-extension DioErrorX on DioError {
+extension DioExceptionX on DioException {
   bool get isNoConnectionError =>
-      type == DioErrorType.unknown && error is SocketException; // import 'dart:io' for SocketException
+      type == DioExceptionType.unknown && error is SocketException; // import 'dart:io' for SocketException
 }
 
-handleNertorkError(DioError e) {
+handleNertorkError(DioException e) {
   if (e.isNoConnectionError) {
     throw Failure.serverFailure(message: 'Erro ao se conectar com o servidor');
   }

@@ -9,12 +9,22 @@ import '../../../core/utils/colors.dart';
 import '../../../features/auth/presentation/cubits/auth/auth_cubit.dart';
 
 class Cabecalho extends StatelessWidget implements PreferredSizeWidget {
+  final bool mostrarBotaoSair;
+
   final String? titulo;
+  final Widget? leading;
+  final List<Widget>? actions;
 
   @override
   Size get preferredSize => Size.fromHeight(kToolbarHeight);
 
-  const Cabecalho({super.key, this.titulo});
+  const Cabecalho({
+    super.key,
+    this.mostrarBotaoSair = true,
+    this.titulo,
+    this.leading,
+    this.actions,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,54 +32,48 @@ class Cabecalho extends StatelessWidget implements PreferredSizeWidget {
       // 24 for default icon size
       toolbarHeight: kToolbarHeight,
       centerTitle: true,
-      leadingWidth: 0,
-      titleSpacing: 0,
       automaticallyImplyLeading: false,
-      title: Container(
-        height: kToolbarHeight,
-        padding: EdgeInsets.symmetric(horizontal: 16),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                _buildBackButton(context),
-                Text(
-                  titulo ?? 'Simulador SERAp Estudantes',
-                  style: TextStyle(fontSize: 24),
-                ),
-              ],
+      leading: leading ?? _buildBackButton(context),
+      title: Row(
+        children: [
+          Expanded(
+            child: Center(
+              child: Text(
+                titulo ?? 'Simulador SERAp Estudantes',
+                style: TextStyle(fontSize: 24),
+              ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
       actions: [
-        BlocBuilder<AuthCubit, AuthState>(
-          builder: (context, state) {
-            return state.maybeWhen(
-              authenticated: (usuario) {
-                return InkWell(
-                  onTap: () async {
-                    await sl<IAutenticacaoLocalDataSource>().apagarToken();
-                    context.replaceRoute(LoginRoute());
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: [
-                        Icon(Icons.exit_to_app_outlined, color: TemaUtil.laranja02),
-                      ],
-                    ),
-                  ),
-                );
-              },
-              orElse: () {
-                return SizedBox.shrink();
-              },
-            );
-          },
-        ),
+        ...actions ?? [],
+        mostrarBotaoSair
+            ? BlocBuilder<AuthCubit, AuthState>(
+                builder: (context, state) {
+                  return state.maybeWhen(
+                    authenticated: (usuario) {
+                      return InkWell(
+                        onTap: () async {
+                          await sl<IAutenticacaoLocalDataSource>().apagarToken();
+                          context.replaceRoute(LoginRoute());
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 8.0),
+                          child: Icon(
+                            Icons.exit_to_app_outlined,
+                            color: TemaUtil.laranja02,
+                          ),
+                        ),
+                      );
+                    },
+                    orElse: () {
+                      return SizedBox.shrink();
+                    },
+                  );
+                },
+              )
+            : SizedBox.shrink(),
       ],
     );
   }
@@ -80,15 +84,18 @@ class Cabecalho extends StatelessWidget implements PreferredSizeWidget {
     final bool canPop = parentRoute?.canPop ?? false;
 
     if ((canPop) || (parentRoute?.impliesAppBarDismissal ?? false)) {
-      return IconButton(
-        onPressed: () {
+      return InkWell(
+        onTap: () {
           Navigator.maybePop(context);
         },
-        iconSize: 16,
-        icon: Icon(Icons.arrow_back),
+        child: Icon(
+          size: 24,
+          Icons.arrow_back,
+          color: Colors.white,
+        ),
       );
+    } else {
+      return SizedBox.shrink();
     }
-
-    return SizedBox.shrink();
   }
 }

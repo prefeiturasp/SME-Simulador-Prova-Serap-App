@@ -4,17 +4,17 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:serap_simulador/app/router/app_router.gr.dart';
 import 'package:serap_simulador/core/extensions/string_extensions.dart';
 import 'package:serap_simulador/features/resumo_prova/domain/entities/prova_resumo.dart';
 import 'package:serap_simulador/features/resumo_prova/presentation/cubits/prova_resumo/prova_resumo_cubit.dart';
 import 'package:serap_simulador/gen/assets.gen.dart';
 import 'package:serap_simulador/shared/presentation/widgets/cabecalho.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 
 import '../../../../core/utils/colors.dart';
 
 @RoutePage()
-class ResumoCadernoProvaPage extends StatefulHookWidget {
+class ResumoCadernoProvaPage extends StatefulWidget {
   const ResumoCadernoProvaPage({
     super.key,
     @PathParam('cadernoId') required this.cadernoId,
@@ -28,15 +28,14 @@ class ResumoCadernoProvaPage extends StatefulHookWidget {
 
 class _ResumoCadernoProvaPageState extends State<ResumoCadernoProvaPage> {
   @override
+  void initState() {
+    super.initState();
+
+    context.read<ProvaResumoCubit>().carregarResumo(widget.cadernoId);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final eventoDetalhesCubit = BlocProvider.of<ProvaResumoCubit>(context);
-
-    useEffect(() {
-      eventoDetalhesCubit.carregarResumo(widget.cadernoId);
-
-      return null;
-    }, const []);
-
     return Scaffold(
       appBar: Cabecalho(),
       body: SingleChildScrollView(
@@ -205,22 +204,26 @@ class _ResumoCadernoProvaPageState extends State<ResumoCadernoProvaPage> {
         Flexible(
           flex: 3,
           child: Center(
-            child: _buildVisualizar(questaoResumo.ordem, questaoResumo.id),
+            child: _buildVisualizar(questaoResumo.id),
           ),
         )
       ],
     );
   }
 
-  _buildVisualizar(int questaoOrdem, int questaoId) {
+  _buildVisualizar(int questaoId) {
     return InkWell(
       borderRadius: BorderRadius.all(
         Radius.circular(10),
       ),
       onTap: () {
-        // context.router.push(
-        //   "/prova/caderno/${widget.cadernoId}/questao/$questaoId",
-        // );
+        context.router.push(
+          QuestaoRoute(
+            key: Key('${widget.cadernoId}-$questaoId'),
+            cadernoId: widget.cadernoId,
+            questaoId: questaoId,
+          ),
+        );
       },
       child: Assets.icons.iconeRevisao.svg(),
     );

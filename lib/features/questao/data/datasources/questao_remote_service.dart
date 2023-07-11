@@ -11,11 +11,9 @@ abstract class QuestaoRemoteService {
   @factoryMethod
   factory QuestaoRemoteService(Dio dio) = _QuestaoRemoteService;
 
-  // @GET('prova/caderno/{cadernoId}')
-  @GET('https://mocki.io/v1/72b01441-f71f-4ee9-b91c-947b46477bca')
+  @GET('questao/completa')
   Future<HttpResponse<QuestaoCompletaModel>> getQuestaoCompleta({
-    @Path() required int questaoId,
-    @Path() required int provaId,
-    @Path() required int cadernoId,
+    @Query('cadernoId') required int cadernoId,
+    @Query('questaoId') required int questaoId,
   });
 }

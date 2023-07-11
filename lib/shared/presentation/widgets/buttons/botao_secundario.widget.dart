@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:serap_simulador/core/utils/colors.dart';
 
 class BotaoSecundarioWidget extends StatelessWidget {
@@ -18,35 +17,21 @@ class BotaoSecundarioWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 50,
-      width: largura,
-      child: TextButton(
-        onPressed: onPressed,
-        style: ButtonStyle(
-          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
-          ),
-          backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
-          padding: MaterialStateProperty.all(
-            EdgeInsets.fromLTRB(20, 0, 20, 0),
-          ),
-        ),
+    return InkWell(
+      borderRadius: BorderRadius.circular(12.0),
+      onTap: onPressed,
+      child: Container(
+        width: largura,
+        constraints: BoxConstraints(minHeight: 40),
+        margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
         child: Center(
-          child: Observer(
-            builder: (_) {
-              return Text(
-                textoBotao,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: corDoTexto,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                ),
-              );
-            },
+          child: Text(
+            textoBotao,
+            style: TextStyle(
+              color: corDoTexto,
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+            ),
           ),
         ),
       ),
