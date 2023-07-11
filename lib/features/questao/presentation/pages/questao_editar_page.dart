@@ -10,7 +10,7 @@ import '../../../../shared/presentation/widgets/cabecalho.dart';
 import '../../../../shared/presentation/widgets/separador.dart';
 import '../../domain/entities/alternativa_entity.dart';
 import '../cubits/questao_editar/questao_editar_cubit.dart';
-import '../widgets/editor_html_enhanced.dart';
+import '../widgets/editor_html/editor_html_enhanced.dart';
 import '../widgets/titulo_editar_widget.dart';
 
 @RoutePage()

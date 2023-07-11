@@ -42,49 +42,57 @@ class _EditorHtmlEnhancedState extends State<EditorHtmlEnhanced> {
         controller: controller,
         callbacks: Callbacks(
           onChangeContent: widget.onTextChanged,
+          onInit: () {
+            controller.setText(widget.text);
+            controller.setFullScreen();
+            controller.setHint('Digite o texto');
+          },
         ),
-        htmlToolbarOptions: HtmlToolbarOptions(
-          toolbarType: ToolbarType.nativeScrollable,
-          defaultToolbarButtons: [
-            OtherButtons(
-              fullscreen: false,
-              copy: false,
-              paste: false,
-              help: false,
-              undo: false,
-              redo: false,
-            ),
-            FontButtons(
-              subscript: false,
-              superscript: false,
-              strikethrough: false,
-            ),
-            ListButtons(
-              listStyles: false,
-            ),
-            ParagraphButtons(
-              lineHeight: false,
-              caseConverter: false,
-              textDirection: false,
-              decreaseIndent: false,
-              increaseIndent: false,
-            ),
-            InsertButtons(
-              audio: false,
-              video: false,
-              link: false,
-              otherFile: false,
-            ),
-          ],
-        ),
+        htmlToolbarOptions: _setToolbarOptions(),
         htmlEditorOptions: HtmlEditorOptions(
-          initialText: widget.text,
           autoAdjustHeight: true,
         ),
         otherOptions: OtherOptions(
           height: widget.height,
         ),
       ),
+    );
+  }
+
+  _setToolbarOptions() {
+    return HtmlToolbarOptions(
+      toolbarType: ToolbarType.nativeScrollable,
+      defaultToolbarButtons: [
+        OtherButtons(
+          fullscreen: false,
+          copy: false,
+          paste: false,
+          help: false,
+          undo: false,
+          redo: false,
+        ),
+        FontButtons(
+          subscript: false,
+          superscript: false,
+          strikethrough: false,
+        ),
+        ListButtons(
+          listStyles: false,
+        ),
+        ParagraphButtons(
+          lineHeight: false,
+          caseConverter: false,
+          textDirection: false,
+          decreaseIndent: false,
+          increaseIndent: false,
+        ),
+        InsertButtons(
+          audio: false,
+          video: false,
+          link: false,
+          otherFile: false,
+        ),
+      ],
     );
   }
 }

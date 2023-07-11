@@ -79,14 +79,14 @@ class App extends StatelessWidget {
                     textButtonTheme: TextButtonThemeData(
                       style: TextButton.styleFrom(
                         backgroundColor: TemaUtil.laranja01,
-                        foregroundColor: TemaUtil.preto02,
+                        foregroundColor: TemaUtil.branco,
                         textStyle: TextStyle(
                           fontSize: 14,
+                          color: TemaUtil.branco,
                         ),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(18.0),
                         ),
-                        minimumSize: Size(MediaQuery.of(context).size.width - 20, 40),
                       ),
                     ),
                     buttonTheme: ButtonThemeData(
