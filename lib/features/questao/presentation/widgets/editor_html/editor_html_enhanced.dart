@@ -43,7 +43,10 @@ class _EditorHtmlEnhancedState extends State<EditorHtmlEnhanced> {
         callbacks: Callbacks(
           onChangeContent: widget.onTextChanged,
           onInit: () {
-            controller.setText(widget.text);
+            // Correção de tratamento de quebras de linhas e espaços
+            var text = widget.text.replaceAll('\n', " ");
+
+            controller.setText(text);
             controller.setFullScreen();
             controller.setHint('Digite o texto');
           },
