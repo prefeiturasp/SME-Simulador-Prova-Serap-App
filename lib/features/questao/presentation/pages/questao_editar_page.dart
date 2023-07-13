@@ -188,7 +188,6 @@ class _QuestaoEditarPageState extends State<QuestaoEditarPage> {
         ),
         TituloEditarWidget(alternativa.numeracao),
         EditorHtmlEnhanced(
-          height: 100,
           text: alternativa.descricao,
           onTextChanged: (text) {
             context.read<QuestaoEditarCubit>().changeAlternativa(alternativa.ordem, text);
