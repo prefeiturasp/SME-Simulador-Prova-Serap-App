@@ -6,7 +6,7 @@ class EditorHtmlEnhanced extends StatefulWidget {
     super.key,
     required this.text,
     required this.onTextChanged,
-    this.height = 300,
+    this.height = 350,
   });
 
   final String text;
