@@ -52,7 +52,7 @@ abstract class QuestaoCompletaModel with _$QuestaoCompletaModel {
     );
   }
 
-  factory QuestaoCompletaModel.fromModel(QuestaoCompleta questaoCompleta) {
+  factory QuestaoCompletaModel.fromEntity(QuestaoCompleta questaoCompleta) {
     return QuestaoCompletaModel(
       id: questaoCompleta.id,
       isProvaIniciada: questaoCompleta.isProvaIniciada,

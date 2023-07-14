@@ -16,7 +16,7 @@ abstract class QuestaoSalvarModel with _$QuestaoSalvarModel {
 
   factory QuestaoSalvarModel.fromJson(Map<String, dynamic> json) => _$QuestaoSalvarModelFromJson(json);
 
-  factory QuestaoSalvarModel.fromModel(QuestaoSalvar questao) {
+  factory QuestaoSalvarModel.fromEntity(QuestaoSalvar questao) {
     return QuestaoSalvarModel(
       id: questao.id,
       textoBase: questao.textoBase,
