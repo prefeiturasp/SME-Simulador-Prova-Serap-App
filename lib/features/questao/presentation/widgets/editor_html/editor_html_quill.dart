@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:quill_html_editor/quill_html_editor.dart';
 import 'package:serap_simulador/core/utils/colors.dart';
@@ -57,6 +59,7 @@ class _EditorHtmlQuillState extends State<EditorHtmlQuill> {
 
     controller = QuillEditorController();
     controller.setText(widget.text);
+    controller.onTextChanged(widget.onTextChanged);
   }
 
   @override
@@ -68,30 +71,47 @@ class _EditorHtmlQuillState extends State<EditorHtmlQuill> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        ToolBar(
-          toolBarColor: Colors.cyan.shade50,
-          activeIconColor: Colors.green,
-          padding: const EdgeInsets.all(8),
-          iconSize: 20,
-          toolBarConfig: _customToolBarList,
-          controller: controller,
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.all(Radius.circular(8)),
+        border: Border.all(
+          color: Colors.grey,
+          width: 1,
         ),
-        QuillHtmlEditor(
-          controller: controller,
-          text: widget.text,
-          isEnabled: true,
-          minHeight: 300,
-          textStyle: _editorTextStyle,
-          hintTextStyle: _hintTextStyle,
-          hintTextAlign: TextAlign.start,
-          padding: const EdgeInsets.only(left: 10, top: 5),
-          hintTextPadding: EdgeInsets.zero,
-          backgroundColor: _backgroundColor,
-          onTextChanged: widget.onTextChanged,
-        ),
-      ],
+      ),
+      child: Column(
+        children: [
+          ToolBar(
+            toolBarColor: TemaUtil.branco,
+            activeIconColor: TemaUtil.laranja01,
+            padding: const EdgeInsets.all(8),
+            iconSize: 20,
+            controller: controller,
+            toolBarConfig: _customToolBarList,
+            customButtons: [
+              InkWell(
+                child: const Icon(Icons.code),
+                onTap: () {},
+              ),
+            ],
+          ),
+          QuillHtmlEditor(
+            text: widget.text,
+            hintText: 'Digite o texto',
+            controller: controller,
+            isEnabled: true,
+            minHeight: 300,
+            textStyle: _editorTextStyle,
+            hintTextStyle: _hintTextStyle,
+            hintTextAlign: TextAlign.start,
+            padding: const EdgeInsets.only(left: 10, top: 5),
+            hintTextPadding: EdgeInsets.zero,
+            backgroundColor: _backgroundColor,
+            onTextChanged: widget.onTextChanged,
+          ),
+        ],
+      ),
     );
   }
 }
