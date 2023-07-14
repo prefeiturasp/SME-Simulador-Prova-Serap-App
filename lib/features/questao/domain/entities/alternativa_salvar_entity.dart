@@ -1,13 +1,13 @@
 import 'package:equatable/equatable.dart';
 
-class AlternativaBean extends Equatable {
+class AlternativaSalvar extends Equatable {
   final int id;
   final String descricao;
 
-  AlternativaBean(
-    this.id,
-    this.descricao,
-  );
+  AlternativaSalvar({
+    required this.id,
+    required this.descricao,
+  });
 
   @override
   List<Object> get props => [id, descricao];

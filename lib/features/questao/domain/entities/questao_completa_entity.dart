@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'alternativa_entity.dart';
 import 'arquivo_entity.dart';
 import 'arquivo_video_entity.dart';
+import 'questao_completa_salvar_entity.dart';
 import 'questao_entity.dart';
 
 class QuestaoCompleta extends Equatable {
@@ -42,6 +43,14 @@ class QuestaoCompleta extends Equatable {
       alternativas: alternativas ?? this.alternativas,
       proximaQuestaoId: proximaQuestaoId,
       questaoAnteriorId: questaoAnteriorId,
+    );
+  }
+
+  QuestaoCompletaSalvar toQuestaoSalvar(List<int> provasId) {
+    return QuestaoCompletaSalvar(
+      provasId: provasId,
+      questao: questao.toQuestaoSalvar(),
+      alternativas: alternativas.map((e) => e.toAlternativaSalvar()).toList(),
     );
   }
 
