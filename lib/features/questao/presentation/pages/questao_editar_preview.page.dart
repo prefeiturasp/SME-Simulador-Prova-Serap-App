@@ -60,7 +60,17 @@ class _QuestaoEditarPreviewPageState extends State<QuestaoEditarPreviewPage> {
         mostrarBotaoSair: false,
         leading: _buildBotaoVoltarLeading(context),
       ),
-      child: BlocBuilder<QuestaoEditarCubit, QuestaoEditarState>(
+      child: BlocConsumer<QuestaoEditarCubit, QuestaoEditarState>(
+        listener: (context, state) {
+          if (state.status == Status.salvo) {
+            context.router.navigate(
+              ResumoCadernoProvaRoute(
+                key: Key('${widget.cadernoId}'),
+                cadernoId: widget.cadernoId,
+              ),
+            );
+          }
+        },
         builder: (context, state) {
           switch (state.status) {
             case Status.carregando:
@@ -79,7 +89,9 @@ class _QuestaoEditarPreviewPageState extends State<QuestaoEditarPreviewPage> {
                   onPressed: () async {
                     var provasId = await mostrarDialogSelecaoProva(context, widget.questaoId);
 
-                    context.read<QuestaoEditarCubit>().salvarQuestao(provasId!);
+                    if (provasId != null) {
+                      context.read<QuestaoEditarCubit>().salvarQuestao(provasId);
+                    }
                   },
                 ),
               );

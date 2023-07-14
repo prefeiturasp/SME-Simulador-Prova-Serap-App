@@ -15,7 +15,7 @@ abstract class AlternativaSalvarModel with _$AlternativaSalvarModel {
 
   factory AlternativaSalvarModel.fromJson(Map<String, dynamic> json) => _$AlternativaSalvarModelFromJson(json);
 
-  factory AlternativaSalvarModel.fromModel(AlternativaSalvar entity) {
+  factory AlternativaSalvarModel.fromEntity(AlternativaSalvar entity) {
     return AlternativaSalvarModel(
       id: entity.id,
       descricao: entity.descricao,
