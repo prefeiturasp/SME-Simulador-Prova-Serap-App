@@ -21,10 +21,18 @@ class QuestaoProvasCubit extends Cubit<QuestaoProvasState> {
 
     result.fold(
       (l) {
-        emit(state.copyWith(status: Status.erro, errorMessage: l.toString(), provasMarcadas: []));
+        emit(state.copyWith(
+          status: Status.erro,
+          errorMessage: l.toString(),
+          provasMarcadas: [],
+        ));
       },
       (r) {
-        emit(state.copyWith(status: Status.carregado, data: r, provasMarcadas: r.map((e) => e.id).toList()));
+        emit(state.copyWith(
+          status: Status.carregado,
+          data: r,
+          provasMarcadas: r.map((e) => e.id).toList(),
+        ));
       },
     );
   }
