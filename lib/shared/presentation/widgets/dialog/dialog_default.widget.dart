@@ -47,7 +47,7 @@ class DialogDefaultWidget extends StatelessWidget {
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.only(top: 16),
-                child: cabecalho!,
+                child: cabecalho ?? SizedBox.shrink(),
               ),
 
               // CORPO

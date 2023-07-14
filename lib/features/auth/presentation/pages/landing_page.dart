@@ -19,28 +19,6 @@ class LandingPage extends StatefulWidget {
 class _LandingPageState extends State<LandingPage> {
   @override
   void initState() {
-    context.read<AuthCubit>().stream.listen((state) {
-      if (state is Authenticated) {
-        context.read<CacheCadernoIdCubit>().obterCadernoId().then((cadernoId) {
-          if (cadernoId != null) {
-            sl<AppRouter>().replaceAll([ResumoCadernoProvaRoute(cadernoId: cadernoId)]);
-          } else {
-            sl<AppRouter>().replaceAll([LoginRoute()]);
-          }
-        });
-      } else {
-        if (DEBUG_LOGIN_CODE.isNotEmpty && DEBUG_CADERNO_ID.isNotEmpty) {
-          sl<AppRouter>().replaceAll([
-            LoginRoute(
-              codigo: DEBUG_LOGIN_CODE,
-              cadernoId: int.parse(DEBUG_CADERNO_ID),
-            )
-          ]);
-        } else {
-          sl<AppRouter>().replaceAll([LoginRoute()]);
-        }
-      }
-    });
     super.initState();
   }
 
@@ -48,7 +26,33 @@ class _LandingPageState extends State<LandingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Container(),
+        child: BlocListener<AuthCubit, AuthState>(
+          listener: (context, state) {
+            if (state is Authenticated) {
+              context.read<CacheCadernoIdCubit>().obterCadernoId().then((cadernoId) {
+                if (cadernoId != null) {
+                  sl<AppRouter>().replaceAll([ResumoCadernoProvaRoute(cadernoId: cadernoId)]);
+                } else {
+                  sl<AppRouter>().replaceAll([LoginRoute()]);
+                }
+              });
+            } else {
+              if (DEBUG_LOGIN_CODE.isNotEmpty && DEBUG_CADERNO_ID.isNotEmpty) {
+                sl<AppRouter>().replaceAll([
+                  LoginRoute(
+                    codigo: DEBUG_LOGIN_CODE,
+                    cadernoId: int.parse(DEBUG_CADERNO_ID),
+                  )
+                ]);
+              } else {
+                sl<AppRouter>().replaceAll([LoginRoute()]);
+              }
+            }
+          },
+          child: Center(
+            child: CircularProgressIndicator(),
+          ),
+        ),
       ),
     );
   }

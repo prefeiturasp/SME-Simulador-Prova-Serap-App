@@ -7,6 +7,8 @@ import 'package:serap_simulador/features/questao/domain/entities/questao_entity.
 import 'package:serap_simulador/features/questao/domain/usecases/obter_questao_completa_local.dart';
 import 'package:serap_simulador/features/questao/domain/usecases/salvar_questao_completa_local.dart';
 
+import '../../../domain/usecases/salvar_alteracoes_usecase.dart';
+
 part 'questao_editar_state.dart';
 part 'questao_editar_cubit.freezed.dart';
 
@@ -21,10 +23,12 @@ class QuestaoEditarCubit extends Cubit<QuestaoEditarState> {
   QuestaoEditarCubit(
     this._obterQuestaoCompletaLocalUseCase,
     this._salvarQuestaoCompletaLocal,
+    this._salvarAlteracoesUseCase,
   ) : super(QuestaoEditarState());
 
   final ObterQuestaoCompletaLocal _obterQuestaoCompletaLocalUseCase;
   final SalvarQuestaoCompletaLocal _salvarQuestaoCompletaLocal;
+  final SalvarAlteracoesUseCase _salvarAlteracoesUseCase;
 
   carregarQuestao(int cadernoId, int questaoId) async {
     emit(state.copyWith(status: Status.carregando));
@@ -86,5 +90,12 @@ class QuestaoEditarCubit extends Cubit<QuestaoEditarState> {
 
   void setQuestaoCompleta(QuestaoCompleta questaoCompleta) {
     emit(state.copyWith(questaoCompleta: questaoCompleta));
+  }
+
+  void salvarQuestao(List<int> provasId) {
+    _salvarAlteracoesUseCase.call(ParamsSalvarAlteracoes(
+      provasId: provasId,
+      questaoCompleta: state.questaoCompleta!,
+    ));
   }
 }
