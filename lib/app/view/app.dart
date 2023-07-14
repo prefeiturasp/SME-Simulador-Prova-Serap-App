@@ -16,6 +16,7 @@ import 'package:serap_simulador/shared/flash/presentation/blocs/cubit/flash_cubi
 
 import '../../features/questao/presentation/cubits/questao/questao_cubit.dart';
 import '../../features/questao/presentation/cubits/questao_editar/questao_editar_cubit.dart';
+import '../../features/questao/presentation/cubits/questao_provas/questao_provas_cubit.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -31,6 +32,7 @@ class App extends StatelessWidget {
         BlocProvider(create: (context) => sl<ProvaResumoCubit>()),
         BlocProvider(create: (context) => sl<QuestaoCubit>()),
         BlocProvider(create: (context) => sl<QuestaoEditarCubit>()),
+        BlocProvider(create: (context) => sl<QuestaoProvasCubit>()),
       ],
       child: MultiBlocListener(
         listeners: [

@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:equatable/equatable.dart';
 import 'package:floor/floor.dart';
+import 'package:serap_simulador/features/questao/domain/entities/questao_salvar_entity.dart';
 import 'package:serap_simulador/shared/enums/tipo_questao.enum.dart';
 
 @entity
@@ -40,4 +41,12 @@ class Questao extends Equatable {
 
   @override
   List<Object> get props => [id, textoBase ?? '', enunciado, tipo];
+
+  QuestaoSalvar toQuestaoSalvar() {
+    return QuestaoSalvar(
+      id: id,
+      textoBase: textoBase,
+      enunciado: enunciado,
+    );
+  }
 }

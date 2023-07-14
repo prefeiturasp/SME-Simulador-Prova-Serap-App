@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:serap_simulador/core/utils/tela_adaptativa.dart';
 import 'package:serap_simulador/shared/presentation/widgets/buttons/botao_default.widget.dart';
 
 // ignore: must_be_immutable
@@ -47,7 +46,7 @@ class DialogDefaultWidget extends StatelessWidget {
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.only(top: 16),
-                child: cabecalho!,
+                child: cabecalho ?? SizedBox.shrink(),
               ),
 
               // CORPO
@@ -69,17 +68,10 @@ class DialogDefaultWidget extends StatelessWidget {
   }
 
   _buildButtonsLauout(context) {
-    if (kIsTablet) {
-      return Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: _buildButtons(context),
-      );
-    } else {
-      return Column(
-        mainAxisSize: MainAxisSize.min,
-        children: _buildButtons(context),
-      );
-    }
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: _buildButtons(context),
+    );
   }
 
   List<Widget> _buildButtons(context) {

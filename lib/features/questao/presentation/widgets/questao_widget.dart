@@ -35,9 +35,11 @@ class QuestaoConteudoWidget extends StatelessWidget {
               ],
             ),
             SizedBox(height: 8),
-            QuestaoAdminWidget(
-              questao: questaoCompleta.questao,
-              alternativas: questaoCompleta.alternativas,
+            SelectionArea(
+              child: QuestaoAdminWidget(
+                questao: questaoCompleta.questao,
+                alternativas: questaoCompleta.alternativas,
+              ),
             ),
             SizedBox(height: 8),
           ],
