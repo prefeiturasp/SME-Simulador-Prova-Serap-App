@@ -16,7 +16,6 @@ abstract class QuestaoCompletaSalvarModel with _$QuestaoCompletaSalvarModel {
     required QuestaoSalvarModel questao,
     required List<AlternativaSalvarModel> alternativas,
   }) = _QuestaoCompletaSalvarModel;
-
   factory QuestaoCompletaSalvarModel.fromJson(Map<String, dynamic> json) => _$QuestaoCompletaSalvarModelFromJson(json);
 
   factory QuestaoCompletaSalvarModel.fromEntity(QuestaoCompletaSalvar questaoCompletaSalvar) {
