@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:floor/floor.dart';
+import 'package:serap_simulador/features/questao/domain/entities/alternativa_salvar_entity.dart';
 
 @entity
 class Alternativa extends Equatable {
@@ -30,6 +31,13 @@ class Alternativa extends Equatable {
       descricao: descricao ?? '',
       ordem: ordem,
       numeracao: numeracao,
+    );
+  }
+
+  AlternativaSalvar toAlternativaSalvar() {
+    return AlternativaSalvar(
+      id: id,
+      descricao: descricao,
     );
   }
 }

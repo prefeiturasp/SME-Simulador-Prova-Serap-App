@@ -5,6 +5,7 @@ import 'package:serap_simulador/features/questao/domain/entities/arquivo_video_e
 import 'package:serap_simulador/features/questao/domain/entities/questao_completa_entity.dart';
 import 'package:serap_simulador/features/questao/presentation/widgets/botoes_controle_widget.dart';
 import 'package:serap_simulador/shared/presentation/widgets/player_audio/player_audio_widget.dart';
+import 'package:serap_simulador/shared/presentation/widgets/separador.dart';
 import 'package:serap_simulador/shared/presentation/widgets/video_player/video_player.widget.dart';
 
 import 'questao_widget.dart';
@@ -15,11 +16,13 @@ class QuestaoCompletaWidget extends StatefulWidget {
     required this.cadernoId,
     required this.questaoCompleta,
     this.exibirBotoes = true,
+    this.botoesBuilder,
   });
 
   final int cadernoId;
   final QuestaoCompleta questaoCompleta;
   final bool exibirBotoes;
+  final Widget? botoesBuilder;
 
   @override
   State<QuestaoCompletaWidget> createState() => _QuestaoCompletaWidgetState();
@@ -44,6 +47,10 @@ class _QuestaoCompletaWidgetState extends State<QuestaoCompletaWidget> {
 
                     // Botões
                     _buildBotoesControle(),
+                    widget.botoesBuilder ?? SizedBox.shrink(),
+                    Separador(
+                      espacamento: 2,
+                    )
                   ],
                 ),
               ),

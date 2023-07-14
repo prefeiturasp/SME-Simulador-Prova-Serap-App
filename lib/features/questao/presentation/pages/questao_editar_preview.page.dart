@@ -1,7 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:serap_simulador/shared/presentation/widgets/buttons/botao_default.widget.dart';
 import 'package:serap_simulador/shared/presentation/widgets/cabecalho.dart';
+import 'package:serap_simulador/shared/presentation/widgets/dialog/dialogs.dart';
 
 import '../../../../app/router/app_router.gr.dart';
 import '../cubits/questao_editar/questao_editar_cubit.dart';
@@ -71,6 +73,15 @@ class _QuestaoEditarPreviewPageState extends State<QuestaoEditarPreviewPage> {
                 questaoCompleta: state.questaoCompleta!,
                 cadernoId: widget.cadernoId,
                 exibirBotoes: false,
+                botoesBuilder: BotaoDefaultWidget(
+                  largura: 350,
+                  textoBotao: 'Salvar',
+                  onPressed: () async {
+                    var provasId = await mostrarDialogSelecaoProva(context, widget.questaoId);
+
+                    context.read<QuestaoEditarCubit>().salvarQuestao(provasId!);
+                  },
+                ),
               );
 
             default:
