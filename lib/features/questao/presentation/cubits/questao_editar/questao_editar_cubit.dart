@@ -93,6 +93,10 @@ class QuestaoEditarCubit extends Cubit<QuestaoEditarState> {
   }
 
   salvarQuestao(List<int> provasId) async {
+    if (provasId.isEmpty) {
+      return;
+    }
+
     var response = await _salvarAlteracoesUseCase.call(ParamsSalvarAlteracoes(
       provasId: provasId,
       questaoCompleta: state.questaoCompleta!,

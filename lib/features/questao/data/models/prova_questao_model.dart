@@ -12,14 +12,18 @@ abstract class ProvaQuestaoModel with _$ProvaQuestaoModel {
     required int id,
     required String descricao,
     required DateTime dataInicioAplicacao,
+    @Default('Não definido') String componenteCurricular,
+    @Default(1) int versao,
   }) = _ProvaQuestaoModel;
   factory ProvaQuestaoModel.fromJson(Map<String, dynamic> json) => _$ProvaQuestaoModelFromJson(json);
 
   ProvaQuestao toModel() {
     return ProvaQuestao(
-      id,
-      descricao,
-      dataInicioAplicacao,
+      id: id,
+      descricao: descricao,
+      dataInicioAplicacao: dataInicioAplicacao,
+      componenteCurricular: componenteCurricular,
+      versao: versao,
     );
   }
 }
