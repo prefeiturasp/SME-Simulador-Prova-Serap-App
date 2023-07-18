@@ -6,6 +6,7 @@ import 'package:serap_simulador/shared/presentation/widgets/cabecalho.dart';
 import 'package:serap_simulador/shared/presentation/widgets/dialog/dialogs.dart';
 
 import '../../../../app/router/app_router.gr.dart';
+import '../../../../shared/presentation/widgets/buttons/botao_secundario.widget.dart';
 import '../cubits/questao_editar/questao_editar_cubit.dart';
 import '../widgets/base_widget.dart';
 import '../widgets/questao_completa_widget.dart';
@@ -60,7 +61,17 @@ class _QuestaoEditarPreviewPageState extends State<QuestaoEditarPreviewPage> {
         mostrarBotaoSair: false,
         leading: _buildBotaoVoltarLeading(context),
       ),
-      child: BlocBuilder<QuestaoEditarCubit, QuestaoEditarState>(
+      child: BlocConsumer<QuestaoEditarCubit, QuestaoEditarState>(
+        listener: (context, state) {
+          if (state.status == Status.salvo) {
+            context.router.navigate(
+              ResumoCadernoProvaRoute(
+                key: Key('${widget.cadernoId}'),
+                cadernoId: widget.cadernoId,
+              ),
+            );
+          }
+        },
         builder: (context, state) {
           switch (state.status) {
             case Status.carregando:
@@ -73,14 +84,32 @@ class _QuestaoEditarPreviewPageState extends State<QuestaoEditarPreviewPage> {
                 questaoCompleta: state.questaoCompleta!,
                 cadernoId: widget.cadernoId,
                 exibirBotoes: false,
-                botoesBuilder: BotaoDefaultWidget(
-                  largura: 350,
-                  textoBotao: 'Salvar',
-                  onPressed: () async {
-                    var provasId = await mostrarDialogSelecaoProva(context, widget.questaoId);
+                botoesBuilder: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    BotaoSecundarioWidget(
+                      textoBotao: 'Cancelar',
+                      onPressed: () async {
+                        context.router.replace(
+                          QuestaoRoute(
+                            key: Key('${widget.cadernoId}-${widget.questaoId}'),
+                            cadernoId: widget.cadernoId,
+                            questaoId: widget.questaoId,
+                          ),
+                        );
+                      },
+                    ),
+                    BotaoDefaultWidget(
+                      textoBotao: 'Salvar',
+                      onPressed: () async {
+                        var provasId = await mostrarDialogSelecaoProva(context, widget.questaoId);
 
-                    context.read<QuestaoEditarCubit>().salvarQuestao(provasId!);
-                  },
+                        if (provasId != null) {
+                          context.read<QuestaoEditarCubit>().salvarQuestao(provasId);
+                        }
+                      },
+                    ),
+                  ],
                 ),
               );
 

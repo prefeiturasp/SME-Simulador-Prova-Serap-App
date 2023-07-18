@@ -4,6 +4,7 @@ enum Status {
   inicial,
   carregando,
   carregado,
+  salvo,
   erro,
 }
 

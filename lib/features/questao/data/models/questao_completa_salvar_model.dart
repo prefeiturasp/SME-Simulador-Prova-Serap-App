@@ -16,14 +16,13 @@ abstract class QuestaoCompletaSalvarModel with _$QuestaoCompletaSalvarModel {
     required QuestaoSalvarModel questao,
     required List<AlternativaSalvarModel> alternativas,
   }) = _QuestaoCompletaSalvarModel;
-
   factory QuestaoCompletaSalvarModel.fromJson(Map<String, dynamic> json) => _$QuestaoCompletaSalvarModelFromJson(json);
 
-  factory QuestaoCompletaSalvarModel.fromModel(QuestaoCompletaSalvar questaoCompletaSalvar) {
+  factory QuestaoCompletaSalvarModel.fromEntity(QuestaoCompletaSalvar questaoCompletaSalvar) {
     return QuestaoCompletaSalvarModel(
       provasId: questaoCompletaSalvar.provasId,
-      questao: QuestaoSalvarModel.fromModel(questaoCompletaSalvar.questao),
-      alternativas: questaoCompletaSalvar.alternativas.map((e) => AlternativaSalvarModel.fromModel(e)).toList(),
+      questao: QuestaoSalvarModel.fromEntity(questaoCompletaSalvar.questao),
+      alternativas: questaoCompletaSalvar.alternativas.map((e) => AlternativaSalvarModel.fromEntity(e)).toList(),
     );
   }
 }

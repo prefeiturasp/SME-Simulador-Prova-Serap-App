@@ -21,9 +21,9 @@ abstract class QuestaoRemoteService {
   });
 
   @POST('questao/salvar-alteracao')
-  Future<HttpResponse<bool>> salvarAlteracao({
-    @Body() required QuestaoCompletaSalvarModel questaoCompleta,
-  });
+  Future<HttpResponse<bool>> salvarAlteracao(
+    @Body() QuestaoCompletaSalvarModel questaoCompleta,
+  );
 
   @GET('questao/{questaoId}/provas')
   Future<HttpResponse<List<ProvaQuestaoModel>>> getProvasPorQuestao({

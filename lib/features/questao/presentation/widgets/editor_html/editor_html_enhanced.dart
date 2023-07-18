@@ -64,6 +64,8 @@ class _EditorHtmlEnhancedState extends State<EditorHtmlEnhanced> {
 
   _setToolbarOptions() {
     return HtmlToolbarOptions(
+      htmlEditorStrings: TraducaoString(),
+      allowImagePicking: false,
       toolbarType: ToolbarType.nativeScrollable,
       defaultToolbarButtons: [
         OtherButtons(
@@ -94,8 +96,29 @@ class _EditorHtmlEnhancedState extends State<EditorHtmlEnhanced> {
           video: false,
           link: false,
           otherFile: false,
+          table: false,
         ),
       ],
     );
   }
+}
+
+class TraducaoString extends DefaultHtmlEditorStrings {
+  @override
+  String get cancel => "Cancelar";
+
+  @override
+  String get text => 'Texto';
+
+  @override
+  String get close => 'Fechar';
+
+  @override
+  String get selectFromFiles => 'Selecionar dos arquivos';
+
+  @override
+  String get chooseImage => 'Escolher imagem';
+
+  @override
+  String get insertLink => 'Inserir Link';
 }

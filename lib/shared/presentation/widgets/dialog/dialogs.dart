@@ -112,8 +112,7 @@ Future<List<int>?> mostrarDialogSelecaoProva(BuildContext context, int questaoId
                             ...state.data!
                                 .map((e) => CheckboxListTile(
                                       controlAffinity: ListTileControlAffinity.leading,
-                                      contentPadding: EdgeInsets.zero,
-                                      isThreeLine: true,
+                                      contentPadding: EdgeInsets.symmetric(horizontal: 8),
                                       value: state.provasMarcadas.contains(e.id),
                                       onChanged: (value) {
                                         if (value != null && value) {
@@ -126,7 +125,8 @@ Future<List<int>?> mostrarDialogSelecaoProva(BuildContext context, int questaoId
                                         e.descricao,
                                         style: TextStyle(fontWeight: FontWeight.bold),
                                       ),
-                                      subtitle: Text('ID: ${e.id}'),
+                                      subtitle: Text('ID: ${e.id} / ${e.componenteCurricular}'),
+                                      secondary: Text('Versão: ${e.versao}'),
                                     ))
                                 .toList()
                           ],
@@ -145,6 +145,12 @@ Future<List<int>?> mostrarDialogSelecaoProva(BuildContext context, int questaoId
           ),
         ),
         botoes: [
+          BotaoSecundarioWidget(
+            textoBotao: 'Cancelar',
+            onPressed: () async {
+              Navigator.pop(context, null);
+            },
+          ),
           BotaoDefaultWidget(
             textoBotao: "Salvar",
             onPressed: () {

@@ -92,10 +92,18 @@ class QuestaoEditarCubit extends Cubit<QuestaoEditarState> {
     emit(state.copyWith(questaoCompleta: questaoCompleta));
   }
 
-  void salvarQuestao(List<int> provasId) {
-    _salvarAlteracoesUseCase.call(ParamsSalvarAlteracoes(
+  salvarQuestao(List<int> provasId) async {
+    if (provasId.isEmpty) {
+      return;
+    }
+
+    var response = await _salvarAlteracoesUseCase.call(ParamsSalvarAlteracoes(
       provasId: provasId,
       questaoCompleta: state.questaoCompleta!,
     ));
+
+    if (response.getOrElse(() => false)) {
+      emit(state.copyWith(status: Status.salvo));
+    }
   }
 }

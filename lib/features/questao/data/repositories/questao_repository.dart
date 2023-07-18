@@ -70,7 +70,7 @@ class QuestaoRepository implements IQuestaoRepository {
     required QuestaoCompleta questaoCompleta,
   }) async {
     try {
-      var result = await _localStorage.saveQuestaoCompleta(QuestaoCompletaModel.fromModel(questaoCompleta));
+      var result = await _localStorage.saveQuestaoCompleta(QuestaoCompletaModel.fromEntity(questaoCompleta));
 
       if (result) {
         return Right(true);
@@ -105,7 +105,7 @@ class QuestaoRepository implements IQuestaoRepository {
   Future<Either<Failure, bool>> salvarAlteracao({required QuestaoCompletaSalvar questaoCompleta}) async {
     try {
       var result = await _provaRemoteDataSource.salvarAlteracao(
-          questaoCompleta: QuestaoCompletaSalvarModel.fromModel(questaoCompleta));
+          questaoCompleta: QuestaoCompletaSalvarModel.fromEntity(questaoCompleta));
 
       if (result) {
         return Right(true);
