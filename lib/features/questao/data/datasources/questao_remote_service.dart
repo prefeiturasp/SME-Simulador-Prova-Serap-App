@@ -23,9 +23,9 @@ abstract class QuestaoRemoteService {
 
   @POST('questao/salvar-alteracao')
   Future<HttpResponse<bool>> salvarAlteracao({
-    required List<int> provasId,
-    required QuestaoSalvarModel questao,
-    required List<AlternativaSalvarModel> alternativas,
+    @Field() required List<int> provasId,
+    @Field() required QuestaoSalvarModel questao,
+    @Field() required List<AlternativaSalvarModel> alternativas,
   });
 
   @GET('questao/{questaoId}/provas')
