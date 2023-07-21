@@ -9,5 +9,6 @@ class QuestaoProvasState with _$QuestaoProvasState {
     List<ProvaQuestao>? data,
     @Default([]) List<int> provasMarcadas,
     @Default('') String errorMessage,
+    @Default(true) bool podeSalvar,
   }) = _Inicial;
 }
