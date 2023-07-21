@@ -151,10 +151,15 @@ Future<List<int>?> mostrarDialogSelecaoProva(BuildContext context, int questaoId
               Navigator.pop(context, null);
             },
           ),
-          BotaoDefaultWidget(
-            textoBotao: "Salvar",
-            onPressed: () {
-              Navigator.pop(context, context.read<QuestaoProvasCubit>().state.provasMarcadas);
+          BlocBuilder<QuestaoProvasCubit, QuestaoProvasState>(
+            builder: (context, state) {
+              return BotaoDefaultWidget(
+                desabilitado: !state.podeSalvar,
+                textoBotao: "Salvar",
+                onPressed: () {
+                  Navigator.pop(context, context.read<QuestaoProvasCubit>().state.provasMarcadas);
+                },
+              );
             },
           ),
         ],

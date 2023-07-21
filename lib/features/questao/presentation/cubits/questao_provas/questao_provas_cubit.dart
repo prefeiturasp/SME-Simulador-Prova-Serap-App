@@ -32,6 +32,7 @@ class QuestaoProvasCubit extends Cubit<QuestaoProvasState> {
           status: Status.carregado,
           data: r,
           provasMarcadas: r.map((e) => e.id).toList(),
+          podeSalvar: true,
         ));
       },
     );
@@ -41,13 +42,19 @@ class QuestaoProvasCubit extends Cubit<QuestaoProvasState> {
     var provasMarcadas = List.of(state.provasMarcadas);
     provasMarcadas.add(provaId);
 
-    emit(state.copyWith(provasMarcadas: provasMarcadas));
+    emit(state.copyWith(
+      provasMarcadas: provasMarcadas,
+      podeSalvar: provasMarcadas.isNotEmpty,
+    ));
   }
 
   void removeProva(int provaId) {
     var provasMarcadas = List.of(state.provasMarcadas);
     provasMarcadas.remove(provaId);
 
-    emit(state.copyWith(provasMarcadas: provasMarcadas));
+    emit(state.copyWith(
+      provasMarcadas: provasMarcadas,
+      podeSalvar: provasMarcadas.isNotEmpty,
+    ));
   }
 }
