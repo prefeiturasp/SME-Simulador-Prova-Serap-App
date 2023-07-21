@@ -145,11 +145,14 @@ class TraducaoString extends DefaultHtmlEditorStrings {
   String get close => 'Fechar';
 
   @override
-  String get selectFromFiles => 'Selecionar dos arquivos';
+  String get selectFromFiles => 'Inserir dos arquivos';
+
+  @override
+  String get url => 'Inserir da URL';
 
   @override
   String get chooseImage => 'Escolher imagem';
 
   @override
-  String get insertLink => 'Inserir Link';
+  String get insertLink => 'Inserir Imagem';
 }
