@@ -3,10 +3,11 @@ import 'package:file_picker/file_picker.dart';
 
 import 'package:flutter/material.dart';
 import 'package:html_editor_enhanced/html_editor.dart';
-import 'package:serap_simulador/features/questao/domain/entities/arquivo_upload_entity.dart';
-import 'package:serap_simulador/features/questao/domain/usecases/upload_arquivo_usecase.dart';
-import 'package:serap_simulador/injector.dart';
-import 'package:serap_simulador/shared/enums/file_type.enum.dart';
+
+import '../../../../../injector.dart';
+import '../../../../../shared/enums/file_type.enum.dart';
+import '../../../domain/entities/arquivo_upload_entity.dart';
+import '../../../domain/usecases/upload_arquivo_usecase.dart';
 
 class EditorHtmlEnhanced extends StatefulWidget {
   const EditorHtmlEnhanced({
@@ -18,7 +19,7 @@ class EditorHtmlEnhanced extends StatefulWidget {
   });
 
   final String text;
-  final Function(String?) onTextChanged;
+  final Function(String) onTextChanged;
   final double height;
   final EnumFileType fileType;
 
@@ -50,7 +51,9 @@ class _EditorHtmlEnhancedState extends State<EditorHtmlEnhanced> {
       child: HtmlEditor(
         controller: controller,
         callbacks: Callbacks(
-          onChangeContent: widget.onTextChanged,
+          onChangeContent: (text) {
+            widget.onTextChanged(text ?? '');
+          },
           onInit: () {
             // Correção de tratamento de quebras de linhas e espaços
             var text = widget.text.replaceAll('\n', " ");

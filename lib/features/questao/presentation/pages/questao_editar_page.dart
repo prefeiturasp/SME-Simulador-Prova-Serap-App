@@ -3,15 +3,15 @@ import 'dart:async';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:serap_simulador/shared/enums/file_type.enum.dart';
 
 import '../../../../app/router/app_router.gr.dart';
 import '../../../../core/utils/colors.dart';
+import '../../../../shared/enums/file_type.enum.dart';
 import '../../../../shared/presentation/widgets/cabecalho.dart';
 import '../../../../shared/presentation/widgets/separador.dart';
 import '../../domain/entities/alternativa_entity.dart';
 import '../cubits/questao_editar/questao_editar_cubit.dart';
-import '../widgets/editor_html/editor_html_enhanced.dart';
+import '../widgets/editor_html/editor_html.dart';
 import '../widgets/titulo_editar_widget.dart';
 
 @RoutePage()
@@ -151,7 +151,7 @@ class _QuestaoEditarPageState extends State<QuestaoEditarPage> {
     return _buildExpansionTile(
       titulo: titulo,
       children: [
-        EditorHtmlEnhanced(
+        EditorHtml(
           fileType: fileType,
           text: content ?? '',
           onTextChanged: onTextChanged,
@@ -196,7 +196,7 @@ class _QuestaoEditarPageState extends State<QuestaoEditarPage> {
           espacamento: 2,
         ),
         TituloEditarWidget(alternativa.numeracao),
-        EditorHtmlEnhanced(
+        EditorHtml(
           fileType: EnumFileType.alternativa,
           text: alternativa.descricao,
           onTextChanged: (text) {

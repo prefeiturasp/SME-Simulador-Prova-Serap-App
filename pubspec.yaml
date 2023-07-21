@@ -93,8 +93,7 @@ dependencies:
   # Editor de texto
   html_editor_enhanced: #^2.5.1
     git: https://github.com/PJ7536/html-editor-enhanced.git
-
-  quill_html_editor: ^2.2.0
+  quill_html_editor: ^2.2.2
 
   # Reprodução
   audioplayers: ^4.1.0
