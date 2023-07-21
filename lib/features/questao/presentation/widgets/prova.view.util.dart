@@ -21,6 +21,8 @@ mixin ProvaViewUtil {
       return "";
     }
 
+    texto = texto.replaceAll('<br></p>', '</p>');
+
     texto = texto.replaceAllMapped(RegExp(r'(<img[^>]*>)'), (match) {
       return '<div style="text-align: center; position:relative">${match.group(0)}<p><span>Toque na imagem para ampliar</span></p></div>';
     });
