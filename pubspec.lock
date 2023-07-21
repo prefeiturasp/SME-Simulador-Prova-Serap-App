@@ -443,7 +443,7 @@ packages:
     source: hosted
     version: "6.1.4"
   file_picker:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: file_picker
       sha256: b1729fc96627dd44012d0a901558177418818d6bd428df59dcfeb594e5f66432

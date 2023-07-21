@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:serap_simulador/shared/enums/file_type.enum.dart';
 
 import '../../../../app/router/app_router.gr.dart';
 import '../../../../core/utils/colors.dart';
@@ -98,8 +99,9 @@ class _QuestaoEditarPageState extends State<QuestaoEditarPage> {
 
                           Separador(espacamento: 2),
 
-                          // Titulo
+                          // Texto Base
                           _buildEditor(
+                            fileType: EnumFileType.texto_base,
                             titulo: 'Texto base',
                             content: questao.textoBase,
                             onTextChanged: (text) {
@@ -109,8 +111,9 @@ class _QuestaoEditarPageState extends State<QuestaoEditarPage> {
 
                           Separador(espacamento: 3),
 
-                          // Descricao
+                          // Enunciado
                           _buildEditor(
+                            fileType: EnumFileType.enunciado,
                             titulo: 'Enunciado',
                             content: questao.enunciado,
                             onTextChanged: (text) {
@@ -139,11 +142,17 @@ class _QuestaoEditarPageState extends State<QuestaoEditarPage> {
     );
   }
 
-  Widget _buildEditor({required String titulo, String? content, required Function(String? text) onTextChanged}) {
+  Widget _buildEditor({
+    required EnumFileType fileType,
+    required String titulo,
+    String? content,
+    required Function(String? text) onTextChanged,
+  }) {
     return _buildExpansionTile(
       titulo: titulo,
       children: [
         EditorHtmlEnhanced(
+          fileType: fileType,
           text: content ?? '',
           onTextChanged: onTextChanged,
         ),
@@ -188,6 +197,7 @@ class _QuestaoEditarPageState extends State<QuestaoEditarPage> {
         ),
         TituloEditarWidget(alternativa.numeracao),
         EditorHtmlEnhanced(
+          fileType: EnumFileType.alternativa,
           text: alternativa.descricao,
           onTextChanged: (text) {
             context.read<QuestaoEditarCubit>().changeAlternativa(alternativa.ordem, text);

@@ -1,5 +1,12 @@
+import 'dart:convert';
+import 'package:file_picker/file_picker.dart';
+
 import 'package:flutter/material.dart';
 import 'package:html_editor_enhanced/html_editor.dart';
+import 'package:serap_simulador/features/questao/domain/entities/arquivo_upload_entity.dart';
+import 'package:serap_simulador/features/questao/domain/usecases/upload_arquivo_usecase.dart';
+import 'package:serap_simulador/injector.dart';
+import 'package:serap_simulador/shared/enums/file_type.enum.dart';
 
 class EditorHtmlEnhanced extends StatefulWidget {
   const EditorHtmlEnhanced({
@@ -7,11 +14,13 @@ class EditorHtmlEnhanced extends StatefulWidget {
     required this.text,
     required this.onTextChanged,
     this.height = 350,
+    required this.fileType,
   });
 
   final String text;
   final Function(String?) onTextChanged;
   final double height;
+  final EnumFileType fileType;
 
   @override
   State<EditorHtmlEnhanced> createState() => _EditorHtmlEnhancedState();
@@ -64,6 +73,28 @@ class _EditorHtmlEnhancedState extends State<EditorHtmlEnhanced> {
 
   _setToolbarOptions() {
     return HtmlToolbarOptions(
+      mediaUploadInterceptor: (PlatformFile file, InsertFileType type) async {
+        if (file.bytes != null) {
+          String base64Data = base64.encode(file.bytes!);
+
+          var arquivoUpload = ArquivoUpload(
+            contentLength: file.size,
+            contentType: file.extension!,
+            fileName: file.name,
+            inputStream: base64Data,
+            fileType: widget.fileType,
+          );
+
+          var result = await sl<UploadArquivoUseCase>().call(Params(arquivoUpload: arquivoUpload));
+          result.fold((l) {
+            debugPrint(l.toString());
+          }, (r) {
+            controller.insertNetworkImage(r.fileLink, filename: file.name);
+          });
+        }
+
+        return false;
+      },
       htmlEditorStrings: TraducaoString(),
       allowImagePicking: false,
       toolbarType: ToolbarType.nativeScrollable,
