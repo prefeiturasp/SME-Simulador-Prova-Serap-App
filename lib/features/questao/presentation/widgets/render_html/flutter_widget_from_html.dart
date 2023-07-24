@@ -34,23 +34,3 @@ class _FlutterWidgetFromHtmlState extends State<FlutterWidgetFromHtml> {
     );
   }
 }
-
-class _WidgetFactory extends WidgetFactory {
-  @override
-  void parseStyleDisplay(BuildTree tree, String? value) {
-    // TODO: implement parseStyleDisplay
-    print(value);
-    super.parseStyleDisplay(tree, value);
-  }
-
-// @override
-// void parseStyle(NodeMetadata meta, String key, String value) {
-//   switch (key) {
-//     case "font-size":
-//       return super.parseStyle(meta, key, "18px");
-//     case "font-family":
-//       return super.parseStyle(meta, key, "GTWalsheimPro");
-//     default:
-//       super.parseStyle(meta, key, value);
-//   }
-}
