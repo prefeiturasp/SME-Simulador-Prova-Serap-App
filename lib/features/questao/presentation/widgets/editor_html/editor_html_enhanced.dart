@@ -65,6 +65,14 @@ class _EditorHtmlEnhancedState extends State<EditorHtmlEnhanced> {
         ),
         htmlToolbarOptions: _setToolbarOptions(),
         htmlEditorOptions: HtmlEditorOptions(
+          customOptions: """
+          popover: {
+            image: [
+              ['image', ['resizeFull', 'resizeHalf', 'resizeQuarter', 'resizeNone']],
+              ['remove', ['removeMedia']]
+            ],
+          },
+          """,
           autoAdjustHeight: true,
         ),
         otherOptions: OtherOptions(
