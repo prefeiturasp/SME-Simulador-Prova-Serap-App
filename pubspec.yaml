@@ -25,6 +25,7 @@ dependencies:
   idb_shim: ^2.0.1
   http: ^1.0.0
   logger: ^1.4.0
+  file_picker: ^5.3.2
 
   # Scrool Listagem infinita
   infinite_scroll_pagination: ^3.2.0
@@ -88,12 +89,12 @@ dependencies:
   # Render html
   flutter_html: ^3.0.0-beta.2
   flutter_html_all: ^3.0.0-beta.2
+  flutter_widget_from_html: ^0.13.0-alpha.1
 
   # Editor de texto
   html_editor_enhanced: #^2.5.1
     git: https://github.com/PJ7536/html-editor-enhanced.git
-
-  quill_html_editor: ^2.2.0
+  quill_html_editor: ^2.2.2
 
   # Reprodução
   audioplayers: ^4.1.0
