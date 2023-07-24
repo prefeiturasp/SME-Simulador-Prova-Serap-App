@@ -1,18 +1,30 @@
+import 'dart:convert';
+
+import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:quill_html_editor/quill_html_editor.dart';
-import 'package:serap_simulador/core/utils/colors.dart';
+
+import '../../../../../core/utils/colors.dart';
+import '../../../../../injector.dart';
+import '../../../../../shared/enums/file_type.enum.dart';
+import '../../../domain/entities/arquivo_upload_entity.dart';
+import '../../../domain/usecases/upload_arquivo_usecase.dart';
 
 class EditorHtmlQuill extends StatefulWidget {
   const EditorHtmlQuill({
     super.key,
     required this.text,
-    this.onTextChanged,
+    required this.onTextChanged,
     this.height = 300,
+    required this.fileType,
   });
 
   final String text;
-  final Function(String)? onTextChanged;
+  final Function(String) onTextChanged;
   final double height;
+  final EnumFileType fileType;
 
   @override
   State<EditorHtmlQuill> createState() => _EditorHtmlQuillState();
@@ -49,6 +61,7 @@ class _EditorHtmlQuillState extends State<EditorHtmlQuill> {
     ToolBarStyle.editTable,
     ToolBarStyle.align,
     ToolBarStyle.clean,
+    ToolBarStyle.separator,
   ];
 
   @override
@@ -56,14 +69,20 @@ class _EditorHtmlQuillState extends State<EditorHtmlQuill> {
     super.initState();
 
     controller = QuillEditorController();
-    controller.setText(widget.text);
-    controller.onTextChanged(widget.onTextChanged);
+
+    controller.onEditorLoaded(() {
+      controller.setText(widget.text);
+      controller.onTextChanged(
+        (text) {
+          widget.onTextChanged(text);
+        },
+      );
+    });
   }
 
   @override
   void dispose() {
     controller.dispose();
-
     super.dispose();
   }
 
@@ -89,24 +108,71 @@ class _EditorHtmlQuillState extends State<EditorHtmlQuill> {
             toolBarConfig: _customToolBarList,
             customButtons: [
               InkWell(
-                child: const Icon(Icons.code),
-                onTap: () {},
+                child: const Icon(Icons.image),
+                onTap: () async {
+                  try {
+                    FilePickerResult? result = await FilePicker.platform.pickFiles(
+                      allowMultiple: false,
+                      type: FileType.image,
+                      withData: true,
+                    );
+
+                    if (result != null) {
+                      PlatformFile file = result.files.first;
+                      Uint8List? bytes = file.bytes;
+                      if (bytes != null) {
+                        String base64Data = base64.encode(file.bytes!);
+
+                        var arquivoUpload = ArquivoUpload(
+                          contentLength: file.size,
+                          contentType: file.extension!,
+                          fileName: file.name,
+                          inputStream: base64Data,
+                          fileType: widget.fileType,
+                        );
+
+                        var result = await sl<UploadArquivoUseCase>().call(Params(arquivoUpload: arquivoUpload));
+                        result.fold((l) {
+                          debugPrint(l.toString());
+                        }, (r) async {
+                          await controller.embedImage(
+                            r.fileLink,
+                          );
+                        });
+                      }
+                    }
+                  } on PlatformException catch (e) {
+                    debugPrint('Unsupported operation $e');
+                  } catch (e) {
+                    debugPrint('File Picker ${e.toString()}');
+                  }
+                },
               ),
+              // InkWell(
+              //   child: const Icon(Icons.code),
+              //   onTap: () {},
+              // ),
             ],
           ),
           QuillHtmlEditor(
-            text: widget.text,
             hintText: 'Digite o texto',
             controller: controller,
             isEnabled: true,
-            minHeight: 300,
+            minHeight: widget.height,
             textStyle: _editorTextStyle,
             hintTextStyle: _hintTextStyle,
             hintTextAlign: TextAlign.start,
             padding: const EdgeInsets.only(left: 10, top: 5),
             hintTextPadding: EdgeInsets.zero,
             backgroundColor: _backgroundColor,
-            onTextChanged: widget.onTextChanged,
+            loadingBuilder: (context) {
+              return Container(
+                constraints: BoxConstraints(minHeight: widget.height),
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              );
+            },
           ),
         ],
       ),

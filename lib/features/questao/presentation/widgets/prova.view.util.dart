@@ -2,12 +2,11 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:http/http.dart';
 import 'package:photo_view/photo_view.dart';
-import 'package:flutter_html_all/flutter_html_all.dart';
 import 'package:serap_simulador/core/utils/colors.dart';
+import 'package:serap_simulador/features/questao/presentation/widgets/render_html/render_html.dart';
 import 'package:serap_simulador/shared/enums/tipo_imagem.enum.dart';
 import 'package:serap_simulador/shared/enums/tratamento_imagem.enum.dart';
 
@@ -21,39 +20,18 @@ mixin ProvaViewUtil {
       return "";
     }
 
+    // Remocao fonte e tamanho do texto
+    texto = texto.replaceAll(RegExp(r"font-family:[^;']*(;)?"), '');
+    texto = texto.replaceAll(RegExp(r"font-size:[^;']*(;)?"), '');
+
+    // Remocao quebra desnecessaria
+    texto = texto.replaceAll('<br></p>', '</p>');
+
     texto = texto.replaceAllMapped(RegExp(r'(<img[^>]*>)'), (match) {
       return '<div style="text-align: center; position:relative">${match.group(0)}<p><span>Toque na imagem para ampliar</span></p></div>';
     });
 
     return texto;
-
-    // if (tipoImagem == EnumTipoImagem.QUESTAO) {
-    //   texto = texto.replaceAllMapped(RegExp(r'(<img[^>]*>)'), (match) {
-    //     return '<div style="text-align: center; position:relative">${match.group(0)}<p><span>Toque na imagem para ampliar</span></p></div>';
-    //   });
-    // }
-
-    // for (var arquivo in arquivos) {
-    //   switch (tratamentoImagem) {
-    //     case TratamentoImagemEnum.BASE64:
-    //       var obterTipo = arquivo.caminho.split(".");
-    //       texto = texto!.replaceAll(
-    //         "#${arquivo.legadoId}#",
-    //         "data:image/${obterTipo[obterTipo.length - 1]};base64,${arquivo.base64}",
-    //       );
-    //       break;
-    //     case TratamentoImagemEnum.URL:
-    //       texto = texto!.replaceAll(
-    //         "#${arquivo.legadoId}#",
-    //         arquivo.caminho,
-    //       );
-    //       break;
-    //   }
-    // }
-
-    // texto = texto!.replaceAll("#0#", Assets.images.notFound);
-
-    // return texto;
   }
 
   Widget renderizarHtml(
@@ -62,45 +40,10 @@ mixin ProvaViewUtil {
     EnumTipoImagem tipoImagem,
     TratamentoImagemEnum tratamentoImagem,
   ) {
-    return Html(
-      extensions: [
-        // Audio e vídeo
-        AudioHtmlExtension(),
-        VideoHtmlExtension(),
-
-        // Iframe
-        IframeHtmlExtension(),
-
-        // Math
-        MathHtmlExtension(),
-
-        // Imagem
-        SvgHtmlExtension(),
-
-        // Tabela
-        TableHtmlExtension(),
-
-        // Image Tap
-        OnImageTapExtension(
-          onImageTap: (src, imgAttributes, element) async {
-            await _exibirImagem(context, src);
-          },
-        ),
-      ],
-      data: tratarArquivos(texto, tipoImagem, tratamentoImagem),
-      style: {
-        '*': Style.fromTextStyle(
-          TextStyle(
-            color: TemaUtil.preto,
-            fontSize: 16,
-          ),
-        ),
-        'span': Style.fromTextStyle(
-          TextStyle(
-            fontSize: 16,
-            color: TemaUtil.pretoSemFoco3,
-          ),
-        ),
+    return RenderHtml(
+      html: tratarArquivos(texto, tipoImagem, tratamentoImagem),
+      onImageTap: (String src) async {
+        await _exibirImagem(context, src);
       },
     );
   }
