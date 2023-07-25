@@ -34,8 +34,7 @@ class QuestaoEditarCubit extends Cubit<QuestaoEditarState> {
   carregarQuestao(int cadernoId, int questaoId) async {
     emit(state.copyWith(status: Status.carregando));
 
-    var result = await _obterQuestaoCompletaLocalUseCase(
-        Params(cadernoId: cadernoId, questaoId: questaoId));
+    var result = await _obterQuestaoCompletaLocalUseCase(Params(cadernoId: cadernoId, questaoId: questaoId));
 
     result.fold((f) {
       emit(state.copyWith(
@@ -55,8 +54,7 @@ class QuestaoEditarCubit extends Cubit<QuestaoEditarState> {
 
     Questao questao = questaoCompleta.questao.copyWith(textoBase: textoBase);
 
-    emit(state.copyWith(
-        questaoCompleta: questaoCompleta.copyWith(questao: questao)));
+    emit(state.copyWith(questaoCompleta: questaoCompleta.copyWith(questao: questao)));
   }
 
   changeEnunciado(String enunciado) {
@@ -64,8 +62,7 @@ class QuestaoEditarCubit extends Cubit<QuestaoEditarState> {
 
     Questao questao = questaoCompleta.questao.copyWith(enunciado: enunciado);
 
-    emit(state.copyWith(
-        questaoCompleta: questaoCompleta.copyWith(questao: questao)));
+    emit(state.copyWith(questaoCompleta: questaoCompleta.copyWith(questao: questao)));
   }
 
   changeAlternativa(int ordem, String? descricao) {
@@ -81,8 +78,7 @@ class QuestaoEditarCubit extends Cubit<QuestaoEditarState> {
       }
     }
 
-    var novaQuestaoCompleta =
-        questaoCompleta.copyWith(alternativas: novaAlternativas);
+    var novaQuestaoCompleta = questaoCompleta.copyWith(alternativas: novaAlternativas);
 
     emit(state.copyWith(questaoCompleta: novaQuestaoCompleta));
   }
