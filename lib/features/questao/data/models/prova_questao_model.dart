@@ -10,6 +10,7 @@ abstract class ProvaQuestaoModel with _$ProvaQuestaoModel {
 
   factory ProvaQuestaoModel({
     required int id,
+    required int questaoId,
     required String descricao,
     required DateTime dataInicioAplicacao,
     @Default('Não definido') String componenteCurricular,
@@ -20,6 +21,7 @@ abstract class ProvaQuestaoModel with _$ProvaQuestaoModel {
   ProvaQuestao toModel() {
     return ProvaQuestao(
       id: id,
+      questaoId: questaoId,
       descricao: descricao,
       dataInicioAplicacao: dataInicioAplicacao,
       componenteCurricular: componenteCurricular,

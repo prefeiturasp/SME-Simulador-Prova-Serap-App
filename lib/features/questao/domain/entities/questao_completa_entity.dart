@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:serap_simulador/features/questao/domain/entities/prova_questao_salvar_entity.dart';
 
 import 'alternativa_entity.dart';
 import 'arquivo_entity.dart';
@@ -46,9 +47,9 @@ class QuestaoCompleta extends Equatable {
     );
   }
 
-  QuestaoCompletaSalvar toQuestaoSalvar(List<int> provasId) {
+  QuestaoCompletaSalvar toQuestaoSalvar(List<ProvaQuestaoSalvar> provasQuestao) {
     return QuestaoCompletaSalvar(
-      provasId: provasId,
+      provasQuestoes: provasQuestao,
       questao: questao.toQuestaoSalvar(),
       alternativas: alternativas.map((e) => e.toAlternativaSalvar()).toList(),
     );
