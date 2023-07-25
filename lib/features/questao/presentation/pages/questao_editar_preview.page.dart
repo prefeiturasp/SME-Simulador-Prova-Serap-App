@@ -104,10 +104,10 @@ class _QuestaoEditarPreviewPageState extends State<QuestaoEditarPreviewPage> {
                     BotaoDefaultWidget(
                       textoBotao: 'Salvar',
                       onPressed: () async {
-                        var provasId = await mostrarDialogSelecaoProva(context, widget.questaoId);
+                        List<String>? provasQuestao = await mostrarDialogSelecaoProva(context, widget.questaoId);
 
-                        if (provasId != null) {
-                          context.read<QuestaoEditarCubit>().salvarQuestao(provasId);
+                        if (provasQuestao != null) {
+                          context.read<QuestaoEditarCubit>().salvarQuestao(provasQuestao);
                         }
                       },
                     ),

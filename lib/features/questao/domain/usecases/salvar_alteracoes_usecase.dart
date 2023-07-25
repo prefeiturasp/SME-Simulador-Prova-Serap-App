@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:serap_simulador/core/interfaces/i_usecase.dart';
+import 'package:serap_simulador/features/questao/domain/entities/prova_questao_salvar_entity.dart';
 import 'package:serap_simulador/features/questao/domain/entities/questao_completa_entity.dart';
 import 'package:serap_simulador/features/questao/domain/repositories/i_questao_repository.dart';
 
@@ -15,7 +16,7 @@ class SalvarAlteracoesUseCase implements IUseCaseOption<bool, ParamsSalvarAltera
   @override
   Future<Option<bool>> call(ParamsSalvarAlteracoes params) async {
     var result = await _repository.salvarAlteracao(
-      questaoCompleta: params.questaoCompleta.toQuestaoSalvar(params.provasId),
+      questaoCompleta: params.questaoCompleta.toQuestaoSalvar(params.provasQuestoes),
     );
 
     return result.fold((l) {
@@ -28,14 +29,14 @@ class SalvarAlteracoesUseCase implements IUseCaseOption<bool, ParamsSalvarAltera
 }
 
 class ParamsSalvarAlteracoes extends Equatable {
-  final List<int> provasId;
+  final List<ProvaQuestaoSalvar> provasQuestoes;
   final QuestaoCompleta questaoCompleta;
 
   const ParamsSalvarAlteracoes({
-    required this.provasId,
+    required this.provasQuestoes,
     required this.questaoCompleta,
   });
 
   @override
-  List<Object> get props => [provasId, questaoCompleta];
+  List<Object> get props => [provasQuestoes, questaoCompleta];
 }

@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:serap_simulador/features/questao/domain/entities/alternativa_entity.dart';
+import 'package:serap_simulador/features/questao/domain/entities/prova_questao_salvar_entity.dart';
 import 'package:serap_simulador/features/questao/domain/entities/questao_completa_entity.dart';
 import 'package:serap_simulador/features/questao/domain/entities/questao_entity.dart';
 import 'package:serap_simulador/features/questao/domain/usecases/obter_questao_completa_local.dart';
@@ -92,15 +93,24 @@ class QuestaoEditarCubit extends Cubit<QuestaoEditarState> {
     emit(state.copyWith(questaoCompleta: questaoCompleta));
   }
 
-  salvarQuestao(List<int> provasId) async {
-    if (provasId.isEmpty) {
+  salvarQuestao(List<String> provasQuestao) async {
+    if (provasQuestao.isEmpty) {
       return;
     }
 
-    var response = await _salvarAlteracoesUseCase.call(ParamsSalvarAlteracoes(
-      provasId: provasId,
-      questaoCompleta: state.questaoCompleta!,
-    ));
+    var response = await _salvarAlteracoesUseCase.call(
+      ParamsSalvarAlteracoes(
+        provasQuestoes: provasQuestao.map((e) {
+          var data = e.split('-');
+
+          return ProvaQuestaoSalvar(
+            provaId: int.parse(data[0]),
+            questaoId: int.parse(data[1]),
+          );
+        }).toList(),
+        questaoCompleta: state.questaoCompleta!,
+      ),
+    );
 
     if (response.getOrElse(() => false)) {
       emit(state.copyWith(status: Status.salvo));

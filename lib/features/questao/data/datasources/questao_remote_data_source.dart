@@ -53,7 +53,7 @@ class QuestaoRemoteDataSource implements IQuestaoRemoteDataSource {
   Future<bool> salvarAlteracao({required QuestaoCompletaSalvarModel questaoCompleta}) async {
     try {
       final HttpResponse<bool> response = await questaoRemoteService.salvarAlteracao(
-          provasId: questaoCompleta.provasId,
+          provasQuestoes: questaoCompleta.provasQuestoes,
           questao: questaoCompleta.questao,
           alternativas: questaoCompleta.alternativas);
 

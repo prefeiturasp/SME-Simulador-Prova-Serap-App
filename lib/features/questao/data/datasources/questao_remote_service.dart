@@ -4,6 +4,7 @@ import 'package:retrofit/retrofit.dart';
 import 'package:serap_simulador/features/questao/data/models/prova_questao_model.dart';
 
 import '../models/alternativa_salvar_model.dart';
+import '../models/prova_questao_salvar_model.dart';
 import '../models/questao_completa_model.dart';
 import '../models/questao_salvar_model.dart';
 
@@ -23,7 +24,7 @@ abstract class QuestaoRemoteService {
 
   @POST('questao/salvar-alteracao')
   Future<HttpResponse<bool>> salvarAlteracao({
-    @Field() required List<int> provasId,
+    @Field() required List<ProvaQuestaoSalvarModel> provasQuestoes,
     @Field() required QuestaoSalvarModel questao,
     @Field() required List<AlternativaSalvarModel> alternativas,
   });

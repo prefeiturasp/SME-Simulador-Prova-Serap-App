@@ -9,7 +9,6 @@ abstract class QuestaoSalvarModel with _$QuestaoSalvarModel {
   QuestaoSalvarModel._();
 
   factory QuestaoSalvarModel({
-    required int id,
     String? textoBase,
     required String enunciado,
   }) = _QuestaoSalvarModel;
@@ -18,7 +17,6 @@ abstract class QuestaoSalvarModel with _$QuestaoSalvarModel {
 
   factory QuestaoSalvarModel.fromEntity(QuestaoSalvar questao) {
     return QuestaoSalvarModel(
-      id: questao.id,
       textoBase: questao.textoBase,
       enunciado: questao.enunciado,
     );
