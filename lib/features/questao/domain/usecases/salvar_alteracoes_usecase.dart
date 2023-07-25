@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:serap_simulador/core/interfaces/i_usecase.dart';
 import 'package:serap_simulador/features/questao/domain/entities/prova_questao_salvar_entity.dart';
@@ -14,11 +15,16 @@ class SalvarAlteracoesUseCase implements IUseCaseOption<bool, ParamsSalvarAltera
 
   @override
   Future<Option<bool>> call(ParamsSalvarAlteracoes params) async {
-    await _repository.salvarAlteracao(
+    var result = await _repository.salvarAlteracao(
       questaoCompleta: params.questaoCompleta.toQuestaoSalvar(params.provasQuestoes),
     );
 
-    return optionOf(true);
+    return result.fold((l) {
+      debugPrint(l.toString());
+      return optionOf(false);
+    }, (r) {
+      return optionOf(r);
+    });
   }
 }
 
