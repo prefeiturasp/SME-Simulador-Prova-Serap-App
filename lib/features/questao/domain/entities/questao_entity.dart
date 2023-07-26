@@ -44,6 +44,7 @@ class Questao extends Equatable {
 
   QuestaoSalvar toQuestaoSalvar() {
     return QuestaoSalvar(
+      id: id,
       textoBase: textoBase,
       enunciado: enunciado,
     );
