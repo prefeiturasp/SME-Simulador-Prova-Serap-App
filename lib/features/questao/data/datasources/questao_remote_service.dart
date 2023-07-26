@@ -22,7 +22,7 @@ abstract class QuestaoRemoteService {
     @Query('questaoId') required int questaoId,
   });
 
-  @POST('questao/salvar-alteracao')
+  @POST('questao/salvar-alteracao2')
   Future<HttpResponse<bool>> salvarAlteracao({
     @Field() required List<ProvaQuestaoSalvarModel> provasQuestoes,
     @Field() required QuestaoSalvarModel questao,
