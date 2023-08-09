@@ -1,6 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
-import 'package:serap_simulador/injector.config.dart';
+
+import 'injector.config.dart';
 
 final sl = GetIt.instance;
 
