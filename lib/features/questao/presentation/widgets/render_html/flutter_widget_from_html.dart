@@ -3,8 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 
-import '../../../../../core/utils/colors.dart';
-
 class FlutterWidgetFromHtml extends StatefulWidget {
   const FlutterWidgetFromHtml({
     super.key,
@@ -28,7 +26,6 @@ class _FlutterWidgetFromHtmlState extends State<FlutterWidgetFromHtml> {
         await widget.onImageTap(imageMetadata.sources.first.url);
       },
       textStyle: TextStyle(
-        color: TemaUtil.pretoSemFoco3,
         fontSize: 16,
       ),
     );
