@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:serap_simulador/core/utils/colors.dart';
+import 'package:serap_simulador/injector.dart';
 import 'package:serap_simulador/shared/presentation/widgets/cabecalho.dart';
 
 class BaseWidget extends StatefulWidget {
@@ -51,7 +53,7 @@ class _BaseWidgetState extends State<BaseWidget> {
     return [
       Center(
         child: Text(
-          '1.0.0',
+          '${sl<PackageInfo>().version} Build ${sl<PackageInfo>().buildNumber}',
           style: TextStyle(
             color: TemaUtil.preto,
             fontSize: 14,

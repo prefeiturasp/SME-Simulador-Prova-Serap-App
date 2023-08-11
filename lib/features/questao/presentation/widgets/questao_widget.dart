@@ -19,28 +19,30 @@ class QuestaoConteudoWidget extends StatelessWidget {
       width: getWidth(context, questaoCompleta),
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Text(
-                  'Questão ${questaoCompleta.questao.ordem + 1} ',
-                  style: TextStyle(
-                    color: TemaUtil.preto,
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600,
+        child: SelectionArea(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Text(
+                    'Questão ${questaoCompleta.questao.ordem + 1} ',
+                    style: TextStyle(
+                      color: TemaUtil.preto,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
-                ),
-              ],
-            ),
-            SizedBox(height: 8),
-            QuestaoAdminWidget(
-              questao: questaoCompleta.questao,
-              alternativas: questaoCompleta.alternativas,
-            ),
-            SizedBox(height: 8),
-          ],
+                ],
+              ),
+              SizedBox(height: 8),
+              QuestaoAdminWidget(
+                questao: questaoCompleta.questao,
+                alternativas: questaoCompleta.alternativas,
+              ),
+              SizedBox(height: 8),
+            ],
+          ),
         ),
       ),
     );
