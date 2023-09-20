@@ -3,8 +3,10 @@ import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:serap_simulador/features/questao/data/models/prova_questao_model.dart';
 
+import '../models/alternativa_salvar_model.dart';
+import '../models/prova_questao_salvar_model.dart';
 import '../models/questao_completa_model.dart';
-import '../models/questao_completa_salvar_model.dart';
+import '../models/questao_salvar_model.dart';
 
 part 'questao_remote_service.g.dart';
 
@@ -21,9 +23,11 @@ abstract class QuestaoRemoteService {
   });
 
   @POST('questao/salvar-alteracao')
-  Future<HttpResponse<bool>> salvarAlteracao(
-    @Body() QuestaoCompletaSalvarModel questaoCompleta,
-  );
+  Future<HttpResponse<bool>> salvarAlteracao({
+    @Field() required List<ProvaQuestaoSalvarModel> provasQuestoes,
+    @Field() required QuestaoSalvarModel questao,
+    @Field() required List<AlternativaSalvarModel> alternativas,
+  });
 
   @GET('questao/{questaoId}/provas')
   Future<HttpResponse<List<ProvaQuestaoModel>>> getProvasPorQuestao({

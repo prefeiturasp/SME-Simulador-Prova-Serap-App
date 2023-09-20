@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 
 class ProvaQuestao extends Equatable {
   final int id;
+  final int questaoId;
   final String descricao;
   final DateTime dataInicioAplicacao;
   final String componenteCurricular;
@@ -10,6 +11,7 @@ class ProvaQuestao extends Equatable {
 
   ProvaQuestao({
     required this.id,
+    required this.questaoId,
     required this.descricao,
     required this.dataInicioAplicacao,
     required this.componenteCurricular,
@@ -17,5 +19,5 @@ class ProvaQuestao extends Equatable {
   });
 
   @override
-  List<Object> get props => [id, descricao, dataInicioAplicacao, componenteCurricular, versao];
+  List<Object> get props => [id, questaoId, descricao, dataInicioAplicacao, componenteCurricular, versao];
 }

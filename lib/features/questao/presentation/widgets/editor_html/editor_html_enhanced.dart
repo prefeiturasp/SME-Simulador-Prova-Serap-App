@@ -1,5 +1,13 @@
+import 'dart:convert';
+import 'package:file_picker/file_picker.dart';
+
 import 'package:flutter/material.dart';
 import 'package:html_editor_enhanced/html_editor.dart';
+
+import '../../../../../injector.dart';
+import '../../../../../shared/enums/file_type.enum.dart';
+import '../../../domain/entities/arquivo_upload_entity.dart';
+import '../../../domain/usecases/upload_arquivo_usecase.dart';
 
 class EditorHtmlEnhanced extends StatefulWidget {
   const EditorHtmlEnhanced({
@@ -7,11 +15,13 @@ class EditorHtmlEnhanced extends StatefulWidget {
     required this.text,
     required this.onTextChanged,
     this.height = 350,
+    required this.fileType,
   });
 
   final String text;
-  final Function(String?) onTextChanged;
+  final Function(String) onTextChanged;
   final double height;
+  final EnumFileType fileType;
 
   @override
   State<EditorHtmlEnhanced> createState() => _EditorHtmlEnhancedState();
@@ -41,7 +51,9 @@ class _EditorHtmlEnhancedState extends State<EditorHtmlEnhanced> {
       child: HtmlEditor(
         controller: controller,
         callbacks: Callbacks(
-          onChangeContent: widget.onTextChanged,
+          onChangeContent: (text) {
+            widget.onTextChanged(text ?? '');
+          },
           onInit: () {
             // Correção de tratamento de quebras de linhas e espaços
             var text = widget.text.replaceAll('\n', " ");
@@ -53,6 +65,14 @@ class _EditorHtmlEnhancedState extends State<EditorHtmlEnhanced> {
         ),
         htmlToolbarOptions: _setToolbarOptions(),
         htmlEditorOptions: HtmlEditorOptions(
+          customOptions: """
+          popover: {
+            image: [
+              ['image', ['resizeFull', 'resizeHalf', 'resizeQuarter', 'resizeNone']],
+              ['remove', ['removeMedia']]
+            ],
+          },
+          """,
           autoAdjustHeight: true,
         ),
         otherOptions: OtherOptions(
@@ -64,6 +84,30 @@ class _EditorHtmlEnhancedState extends State<EditorHtmlEnhanced> {
 
   _setToolbarOptions() {
     return HtmlToolbarOptions(
+      mediaUploadInterceptor: (PlatformFile file, InsertFileType type) async {
+        if (file.bytes != null) {
+          String base64Data = base64.encode(file.bytes!);
+
+          var arquivoUpload = ArquivoUpload(
+            contentLength: file.size,
+            contentType: file.extension!,
+            fileName: file.name,
+            inputStream: base64Data,
+            fileType: widget.fileType,
+          );
+
+          var result = await sl<UploadArquivoUseCase>().call(Params(arquivoUpload: arquivoUpload));
+          result.fold((l) {
+            debugPrint(l.toString());
+          }, (r) {
+            controller.insertNetworkImage(r.fileLink, filename: file.name);
+          });
+        }
+
+        return false;
+      },
+      htmlEditorStrings: TraducaoString(),
+      allowImagePicking: false,
       toolbarType: ToolbarType.nativeScrollable,
       defaultToolbarButtons: [
         OtherButtons(
@@ -94,8 +138,32 @@ class _EditorHtmlEnhancedState extends State<EditorHtmlEnhanced> {
           video: false,
           link: false,
           otherFile: false,
+          table: false,
         ),
       ],
     );
   }
+}
+
+class TraducaoString extends DefaultHtmlEditorStrings {
+  @override
+  String get cancel => "Cancelar";
+
+  @override
+  String get text => 'Texto';
+
+  @override
+  String get close => 'Fechar';
+
+  @override
+  String get selectFromFiles => 'Inserir dos arquivos';
+
+  @override
+  String get url => 'Inserir da URL';
+
+  @override
+  String get chooseImage => 'Escolher imagem';
+
+  @override
+  String get insertLink => 'Inserir Imagem';
 }

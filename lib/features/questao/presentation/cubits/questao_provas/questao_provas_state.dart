@@ -7,7 +7,9 @@ class QuestaoProvasState with _$QuestaoProvasState {
   factory QuestaoProvasState.inicial({
     @Default(Status.inicial) Status status,
     List<ProvaQuestao>? data,
-    @Default([]) List<int> provasMarcadas,
+    @Default([]) List<String> provasMarcadas,
     @Default('') String errorMessage,
+    @Default(true) bool podeSalvar,
   }) = _Inicial;
 }
+

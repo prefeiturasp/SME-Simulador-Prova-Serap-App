@@ -90,22 +90,24 @@ class _QuestaoEditarPreviewPageState extends State<QuestaoEditarPreviewPage> {
                     BotaoSecundarioWidget(
                       textoBotao: 'Cancelar',
                       onPressed: () async {
-                        context.router.replace(
-                          QuestaoRoute(
-                            key: Key('${widget.cadernoId}-${widget.questaoId}'),
-                            cadernoId: widget.cadernoId,
-                            questaoId: widget.questaoId,
-                          ),
+                        context.router.popUntil(
+                          (route) {
+                            if ((route.data?.name ?? '') == QuestaoRoute.name) {
+                              return true;
+                            }
+
+                            return false;
+                          },
                         );
                       },
                     ),
                     BotaoDefaultWidget(
                       textoBotao: 'Salvar',
                       onPressed: () async {
-                        var provasId = await mostrarDialogSelecaoProva(context, widget.questaoId);
+                        List<String>? provasQuestao = await mostrarDialogSelecaoProva(context, widget.questaoId);
 
-                        if (provasId != null) {
-                          context.read<QuestaoEditarCubit>().salvarQuestao(provasId);
+                        if (provasQuestao != null) {
+                          context.read<QuestaoEditarCubit>().salvarQuestao(provasQuestao);
                         }
                       },
                     ),

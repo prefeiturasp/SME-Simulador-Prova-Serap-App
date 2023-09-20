@@ -18,7 +18,14 @@ pipeline {
     stages {
 
         stage('CheckOut') {            
-            steps { checkout scm }            
+            steps { 
+              checkout scm 
+              script {
+                APP_VERSION = sh(returnStdout: true, script: "cat pubspec.yaml | grep version: | awk '{print \$2}'") .trim()
+                sh("echo ${APP_VERSION}")
+                sh("echo ${BUILD_NUMBER}")
+              }
+            }            
         }
 
       stage('Build Dev') {when { anyOf {  branch 'develop'; } }
@@ -29,7 +36,7 @@ pipeline {
               sh 'cp ${ENVS} .env'
               sh 'if [ -d "envs" ]; then rm -f envs; fi'
               imagename1 = "registry.sme.prefeitura.sp.gov.br/${env.branchname}/sme-simulador-prova-serap-front"
-              dockerImage1 = docker.build(imagename1, " --build-arg ENVIRONMENT=development -f Dockerfile .")
+              dockerImage1 = docker.build(imagename1, " --build-arg ENVIRONMENT=development --build-arg APP_VERSION=${APP_VERSION} --build-arg BUILD_NUMBER=${BUILD_NUMBER} -f Dockerfile .")
               docker.withRegistry( 'https://registry.sme.prefeitura.sp.gov.br', registryCredential ) {
               dockerImage1.push()
               }
@@ -47,7 +54,7 @@ pipeline {
               sh 'cp ${ENVS} .env'
               sh 'if [ -d "envs" ]; then rm -f envs; fi'
               imagename1 = "registry.sme.prefeitura.sp.gov.br/${env.branchname}/sme-simulador-prova-serap-front"
-              dockerImage1 = docker.build(imagename1, " --build-arg ENVIRONMENT=staging -f Dockerfile .")
+              dockerImage1 = docker.build(imagename1, " --build-arg ENVIRONMENT=staging --build-arg APP_VERSION=${APP_VERSION} --build-arg BUILD_NUMBER=${BUILD_NUMBER} -f Dockerfile .")
               docker.withRegistry( 'https://registry.sme.prefeitura.sp.gov.br', registryCredential ) {
               dockerImage1.push()
               }
@@ -65,7 +72,7 @@ pipeline {
               sh 'cp ${ENVS} .env'
               sh 'if [ -d "envs" ]; then rm -f envs; fi'
               imagename1 = "registry.sme.prefeitura.sp.gov.br/${env.branchname}/sme-simulador-prova-serap-front"
-              dockerImage1 = docker.build(imagename1, " --build-arg ENVIRONMENT=production -f Dockerfile .")
+              dockerImage1 = docker.build(imagename1, " --build-arg ENVIRONMENT=production --build-arg APP_VERSION=${APP_VERSION} --build-arg BUILD_NUMBER=${BUILD_NUMBER} -f Dockerfile .")
               docker.withRegistry( 'https://registry.sme.prefeitura.sp.gov.br', registryCredential ) {
               dockerImage1.push()
               }

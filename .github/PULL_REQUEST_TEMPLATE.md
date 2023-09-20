@@ -1,5 +1,11 @@
 ## Descrição
 
+Sincronização `develop` -> `release`
+
+Sincronização `release` -> `develop`
+
+Sincronização `release` -> `master`
+
 AB#
 
 
