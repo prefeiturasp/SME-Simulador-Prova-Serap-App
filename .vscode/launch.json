@@ -27,7 +27,9 @@
         "--flavor",
         "staging",
         "--target",
-        "lib/main_staging.dart"
+        "lib/main_staging.dart",
+        "--dart-define=LOGIN_CODE=${input:loginCode}",
+        "--dart-define=CADERNO_ID=${input:cadernoId}"
       ]
     },
     {
@@ -39,7 +41,9 @@
         "--flavor",
         "production",
         "--target",
-        "lib/main_production.dart"
+        "lib/main_production.dart",
+        "--dart-define=LOGIN_CODE=${input:loginCode}",
+        "--dart-define=CADERNO_ID=${input:cadernoId}"
       ]
     }
   ],

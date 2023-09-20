@@ -6,11 +6,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../app/router/app_router.gr.dart';
 import '../../../../core/utils/colors.dart';
+import '../../../../shared/enums/file_type.enum.dart';
 import '../../../../shared/presentation/widgets/cabecalho.dart';
 import '../../../../shared/presentation/widgets/separador.dart';
 import '../../domain/entities/alternativa_entity.dart';
 import '../cubits/questao_editar/questao_editar_cubit.dart';
-import '../widgets/editor_html/editor_html_enhanced.dart';
+import '../widgets/editor_html/editor_html.dart';
 import '../widgets/titulo_editar_widget.dart';
 
 @RoutePage()
@@ -98,8 +99,9 @@ class _QuestaoEditarPageState extends State<QuestaoEditarPage> {
 
                           Separador(espacamento: 2),
 
-                          // Titulo
+                          // Texto Base
                           _buildEditor(
+                            fileType: EnumFileType.texto_base,
                             titulo: 'Texto base',
                             content: questao.textoBase,
                             onTextChanged: (text) {
@@ -109,8 +111,9 @@ class _QuestaoEditarPageState extends State<QuestaoEditarPage> {
 
                           Separador(espacamento: 3),
 
-                          // Descricao
+                          // Enunciado
                           _buildEditor(
+                            fileType: EnumFileType.enunciado,
                             titulo: 'Enunciado',
                             content: questao.enunciado,
                             onTextChanged: (text) {
@@ -139,11 +142,17 @@ class _QuestaoEditarPageState extends State<QuestaoEditarPage> {
     );
   }
 
-  Widget _buildEditor({required String titulo, String? content, required Function(String? text) onTextChanged}) {
+  Widget _buildEditor({
+    required EnumFileType fileType,
+    required String titulo,
+    String? content,
+    required Function(String? text) onTextChanged,
+  }) {
     return _buildExpansionTile(
       titulo: titulo,
       children: [
-        EditorHtmlEnhanced(
+        EditorHtml(
+          fileType: fileType,
           text: content ?? '',
           onTextChanged: onTextChanged,
         ),
@@ -156,14 +165,14 @@ class _QuestaoEditarPageState extends State<QuestaoEditarPage> {
       data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
       child: ExpansionTile(
         initiallyExpanded: true,
-        collapsedIconColor: TemaUtil.preto01,
+        collapsedIconColor: TemaUtil.preto,
         collapsedBackgroundColor: TemaUtil.branco,
         collapsedShape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         title: TituloEditarWidget(titulo),
         backgroundColor: TemaUtil.branco,
-        iconColor: TemaUtil.preto01,
-        textColor: TemaUtil.preto01,
+        iconColor: TemaUtil.preto,
+        textColor: TemaUtil.preto,
         childrenPadding: EdgeInsets.all(8),
         children: children,
       ),
@@ -187,7 +196,8 @@ class _QuestaoEditarPageState extends State<QuestaoEditarPage> {
           espacamento: 2,
         ),
         TituloEditarWidget(alternativa.numeracao),
-        EditorHtmlEnhanced(
+        EditorHtml(
+          fileType: EnumFileType.alternativa,
           text: alternativa.descricao,
           onTextChanged: (text) {
             context.read<QuestaoEditarCubit>().changeAlternativa(alternativa.ordem, text);

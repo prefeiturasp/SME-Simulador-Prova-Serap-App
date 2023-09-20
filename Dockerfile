@@ -5,9 +5,11 @@ WORKDIR /usr/src/app
 COPY . .
 
 ARG ENVIRONMENT
+ARG APP_VERSION
+ARG BUILD_NUMBER
 RUN flutter pub get
 RUN flutter pub run build_runner build --delete-conflicting-outputs
-RUN flutter build web --web-renderer html  --base-href '/simulador/' --profile -t lib/main_$ENVIRONMENT.dart
+RUN flutter build web --web-renderer html --build-name=$APP_VERSION --build-number=$BUILD_NUMBER --base-href '/simulador/' --profile -t lib/main_$ENVIRONMENT.dart
 
 FROM nginx:1.20.1-alpine
 

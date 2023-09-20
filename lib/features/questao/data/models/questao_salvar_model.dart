@@ -10,7 +10,7 @@ abstract class QuestaoSalvarModel with _$QuestaoSalvarModel {
 
   factory QuestaoSalvarModel({
     required int id,
-    required String? textoBase,
+    String? textoBase,
     required String enunciado,
   }) = _QuestaoSalvarModel;
 

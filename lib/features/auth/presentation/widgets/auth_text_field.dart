@@ -85,7 +85,7 @@ class _AuthTextFieldState extends State<AuthTextField> {
               fillColor: Colors.white,
               labelText: widget.isRequiredField ? '${widget.labelText}*' : widget.labelText,
               labelStyle: TextStyle(
-                color: widget.error != null || widget.hasError ? TemaUtil.vermelhoErro : TemaUtil.preto01,
+                color: widget.error != null || widget.hasError ? TemaUtil.vermelhoErro : TemaUtil.preto,
                 fontSize: 16,
               ),
               hintText: widget.isRequiredField ? '${widget.hint}*' : widget.hint,

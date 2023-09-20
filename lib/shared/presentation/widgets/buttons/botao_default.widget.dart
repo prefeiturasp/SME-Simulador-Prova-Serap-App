@@ -20,18 +20,23 @@ class BotaoDefaultWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      borderRadius: BorderRadius.circular(12.0),
-      onTap: onPressed,
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12.0),
-          color: TemaUtil.laranja01,
+    return Container(
+      width: largura,
+      constraints: BoxConstraints(minHeight: 40),
+      child: TextButton(
+        onPressed: desabilitado ? null : onPressed,
+        style: ButtonStyle(
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+          ),
+          backgroundColor: MaterialStateProperty.all<Color>(desabilitado ? Colors.grey : TemaUtil.laranja01),
+          padding: MaterialStateProperty.all(
+            EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+          ),
         ),
-        width: largura,
-        padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
-        child: Container(
-          constraints: BoxConstraints(minHeight: 40),
+        child: Center(
           child: _buildChild(),
         ),
       ),

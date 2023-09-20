@@ -59,7 +59,7 @@ Future<bool?> mostrarDialogSairSistema(BuildContext context) {
   );
 }
 
-Future<List<int>?> mostrarDialogSelecaoProva(BuildContext context, int questaoId) {
+Future<List<String>?> mostrarDialogSelecaoProva(BuildContext context, int questaoId) {
   String titulo = 'Nova versão do item';
   String mensagemCorpo1 = "Este item está cadastrado em algumas provas não iniciadas.";
   String mensagemCorpo2 = "Selecione em quais  provas deseja alterar o item para esta nova versão:";
@@ -113,12 +113,12 @@ Future<List<int>?> mostrarDialogSelecaoProva(BuildContext context, int questaoId
                                 .map((e) => CheckboxListTile(
                                       controlAffinity: ListTileControlAffinity.leading,
                                       contentPadding: EdgeInsets.symmetric(horizontal: 8),
-                                      value: state.provasMarcadas.contains(e.id),
+                                      value: state.provasMarcadas.contains('${e.id}-${e.questaoId}'),
                                       onChanged: (value) {
                                         if (value != null && value) {
-                                          context.read<QuestaoProvasCubit>().adicionarProva(e.id);
+                                          context.read<QuestaoProvasCubit>().adicionarProva(e.id, e.questaoId);
                                         } else {
-                                          context.read<QuestaoProvasCubit>().removeProva(e.id);
+                                          context.read<QuestaoProvasCubit>().removeProva(e.id, e.questaoId);
                                         }
                                       },
                                       title: Text(
@@ -151,10 +151,15 @@ Future<List<int>?> mostrarDialogSelecaoProva(BuildContext context, int questaoId
               Navigator.pop(context, null);
             },
           ),
-          BotaoDefaultWidget(
-            textoBotao: "Salvar",
-            onPressed: () {
-              Navigator.pop(context, context.read<QuestaoProvasCubit>().state.provasMarcadas);
+          BlocBuilder<QuestaoProvasCubit, QuestaoProvasState>(
+            builder: (context, state) {
+              return BotaoDefaultWidget(
+                desabilitado: !state.podeSalvar,
+                textoBotao: "Salvar",
+                onPressed: () {
+                  Navigator.pop(context, context.read<QuestaoProvasCubit>().state.provasMarcadas);
+                },
+              );
             },
           ),
         ],
