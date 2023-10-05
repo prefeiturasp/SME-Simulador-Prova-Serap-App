@@ -180,6 +180,8 @@ class _QuestaoEditarPageState extends State<QuestaoEditarPage> {
   }
 
   Widget _buildEditorAlternativas(List<Alternativa> alternativas) {
+    alternativas.sort((a, b) => a.ordem.compareTo(b.ordem));
+
     return _buildExpansionTile(
       titulo: 'Alternativas',
       children: [
