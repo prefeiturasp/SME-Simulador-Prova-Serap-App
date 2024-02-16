@@ -165,14 +165,14 @@ class _QuestaoEditarPageState extends State<QuestaoEditarPage> {
       data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
       child: ExpansionTile(
         initiallyExpanded: true,
-        collapsedIconColor: TemaUtil.preto01,
+        collapsedIconColor: TemaUtil.preto,
         collapsedBackgroundColor: TemaUtil.branco,
         collapsedShape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         title: TituloEditarWidget(titulo),
         backgroundColor: TemaUtil.branco,
-        iconColor: TemaUtil.preto01,
-        textColor: TemaUtil.preto01,
+        iconColor: TemaUtil.preto,
+        textColor: TemaUtil.preto,
         childrenPadding: EdgeInsets.all(8),
         children: children,
       ),
@@ -180,6 +180,8 @@ class _QuestaoEditarPageState extends State<QuestaoEditarPage> {
   }
 
   Widget _buildEditorAlternativas(List<Alternativa> alternativas) {
+    alternativas.sort((a, b) => a.ordem.compareTo(b.ordem));
+
     return _buildExpansionTile(
       titulo: 'Alternativas',
       children: [

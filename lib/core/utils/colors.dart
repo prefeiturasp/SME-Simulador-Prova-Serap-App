@@ -36,8 +36,6 @@ abstract class TemaUtil {
   static const appBar = Color(0xFF2F304E);
 
   static const amarelo01 = Color(0xffFFD037);
-  static const preto01 = Color(0xff42474A);
-  static const preto02 = Color(0xff232526);
 
   static const laranja01 = Color(0xFFFF7755);
   static const laranja02 = Color(0xFFF2945B);
@@ -48,7 +46,8 @@ abstract class TemaUtil {
   static const cinza01 = Colors.grey;
   static const cinza02 = Color(0xffE6E6E6);
   static const preto = Colors.black;
-  static final preto2 = Colors.black.withOpacity(0.7);
+  static final preto02 = Colors.black.withOpacity(0.7);
+  static final preto03 = Colors.black.withOpacity(0.87);
   static const pretoSemFoco = Colors.black54;
   static const pretoSemFoco2 = Colors.black38;
   static const pretoSemFoco3 = Color(0xFF4D4D4D);

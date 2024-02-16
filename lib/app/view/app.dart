@@ -74,8 +74,8 @@ class App extends StatelessWidget {
                       color: TemaUtil.appBar,
                     ),
                     textTheme: Theme.of(context).textTheme.apply(
-                          bodyColor: TemaUtil.preto01,
-                          displayColor: TemaUtil.preto01,
+                          bodyColor: TemaUtil.preto,
+                          displayColor: TemaUtil.preto,
                           fontFamily: 'Poppins',
                         ),
                     textButtonTheme: TextButtonThemeData(
