@@ -4,9 +4,6 @@ WORKDIR /usr/src/app
 
 COPY . .
 
-ENV URL_API=https://serap-estudante.sme.prefeitura.sp.gov.br/simulador/api/v1/
-ENV CHAVE_API=B07E87044FE24077A69C3110CF032320
-
 
 ARG ENVIRONMENT
 ARG APP_VERSION
